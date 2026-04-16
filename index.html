@@ -744,36 +744,62 @@
 
             function renderResults(matches) {
                 matches.forEach((student, index) => {
+                    // Fetching Complete Data
                     const name = getValue(student, ['name', 'student name', 'student_name']);
                     const father = getValue(student, ['father_name', 'father name', "father's name", 'father']);
+                    const mother = getValue(student, ['mother_name', 'mother name', "mother's name", 'mother']);
                     const dob = getValue(student, ['dob', 'date of birth', 'birth_date']);
+                    const studentClass = getValue(student, ['class', 'class_name']);
+                    const section = getValue(student, ['section', 'sec']);
+                    const gender = getValue(student, ['gender', 'sex']);
                     const penNo = getValue(student, ['pen_no', 'pen no', 'pen number', 'pen']);
+
+                    // Badges (Premium Transparent Design)
+                    const classBadge = studentClass !== 'N/A' ? `<span class="text-[11px] font-bold bg-ios-blueLight/10 text-ios-blueLight dark:bg-ios-blueDark/20 dark:text-ios-blueDark px-2.5 py-1 rounded-md uppercase border border-ios-blueLight/20">Class ${studentClass}</span>` : '';
+                    const secBadge = section !== 'N/A' ? `<span class="text-[11px] font-bold bg-ios-purple/10 text-ios-purple dark:bg-ios-purple/20 dark:text-ios-purple px-2.5 py-1 rounded-md uppercase border border-ios-purple/20">Sec ${section}</span>` : '';
+                    const genderBadge = gender !== 'N/A' ? `<span class="text-[11px] font-bold bg-ios-green/10 text-ios-green px-2.5 py-1 rounded-md uppercase border border-ios-green/20">${gender}</span>` : '';
+
+                    let badgesHtml = '';
+                    if (classBadge || secBadge || genderBadge) {
+                        badgesHtml = `<div class="flex flex-wrap gap-2 mt-2.5">${classBadge} ${secBadge} ${genderBadge}</div>`;
+                    } else {
+                        badgesHtml = `<span class="text-[13px] text-ios-subLight dark:text-ios-subDark font-semibold mt-1.5 inline-block bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 px-2.5 py-1 rounded-md">Student Record</span>`;
+                    }
 
                     const card = document.createElement('div');
                     card.className = "ios-card p-6 result-card shadow-lg border border-ios-separatorLight/30 dark:border-ios-separatorDark/30";
                     
                     card.innerHTML = `
-                        <div class="flex items-center gap-4 border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-4 mb-4">
-                            <div class="bg-gradient-to-br from-ios-blueLight to-ios-purple w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md">
+                        <!-- Student Header Area -->
+                        <div class="flex items-center gap-4 border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-5 mb-5">
+                            <div class="bg-gradient-to-br from-ios-blueLight to-ios-purple w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md shrink-0">
                                 <i data-lucide="user" class="w-6 h-6"></i>
                             </div>
                             <div>
                                 <h2 class="text-xl font-extrabold text-ios-textLight dark:text-ios-textDark leading-none capitalize">${name}</h2>
-                                <span class="text-[13px] text-ios-subLight dark:text-ios-subDark font-semibold mt-1.5 inline-block bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 px-2 py-0.5 rounded-md">Student Record</span>
+                                ${badgesHtml}
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-2 gap-4 mb-5">
+                        <!-- Parent & Details Grid -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
                             <div>
                                 <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Father's Name</p>
                                 <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${father}</p>
                             </div>
                             <div>
+                                <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Mother's Name</p>
+                                <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${mother}</p>
+                            </div>
+                            ${dob !== 'N/A' ? `
+                            <div class="col-span-2 mt-[-2px]">
                                 <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Date of Birth</p>
                                 <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words">${dob}</p>
                             </div>
+                            ` : ''}
                         </div>
                         
+                        <!-- PEN Number Highlight -->
                         <div class="bg-gradient-to-r from-ios-blueLight/10 to-ios-purple/10 dark:from-ios-blueDark/20 dark:to-ios-purple/20 rounded-2xl p-4 flex justify-between items-center border border-ios-blueLight/20 dark:border-ios-blueDark/30">
                             <div class="flex items-center gap-2 text-ios-blueLight dark:text-ios-blueDark">
                                 <i data-lucide="hash" class="w-5 h-5"></i>
