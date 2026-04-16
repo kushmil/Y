@@ -48,71 +48,128 @@
         body {
             background-color: #F2F2F7; color: #000000; margin: 0;
             overflow-x: hidden; font-size: 17px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
             -webkit-font-smoothing: antialiased; min-height: 100vh;
         }
         .dark body { background-color: #000000; color: #FFFFFF; }
 
         /* SPA View Management */
-        .spa-view { display: none; opacity: 0; }
-        .spa-view.active { display: block; opacity: 1; }
+        .spa-view { display: none; opacity: 0; transform: scale(0.98); }
+        .spa-view.active { display: block; opacity: 1; transform: scale(1); }
 
-        /* iOS Nav Bar & Tab Bar Blur */
-        .ios-nav, .ios-tab-bar {
-            background: rgba(242, 242, 247, 0.85);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        /* Glassmorphism Header */
+        .ios-nav {
+            background: rgba(242, 242, 247, 0.7);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 0.5px solid rgba(198, 198, 200, 0.5);
         }
-        .ios-nav { border-bottom: 0.5px solid #C6C6C8; }
-        .ios-tab-bar { border-top: 0.5px solid #C6C6C8; padding-bottom: env(safe-area-inset-bottom); }
-        .dark .ios-nav, .dark .ios-tab-bar { background: rgba(28, 28, 30, 0.85); }
-        .dark .ios-nav { border-bottom: 0.5px solid #38383A; }
-        .dark .ios-tab-bar { border-top: 0.5px solid #38383A; }
+        .dark .ios-nav { 
+            background: rgba(28, 28, 30, 0.7); 
+            border-bottom: 0.5px solid rgba(56, 56, 58, 0.5); 
+        }
+
+        /* ✨ FLOATING NAVIGATION PANEL ✨ */
+        .floating-nav {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0,0,0,0.04);
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            gap: 12px;
+            z-index: 50;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .floating-nav {
+            background: rgba(28, 28, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tab Bar Icons */
+        .tab-link { 
+            color: #8E8E93; 
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+        }
+        .tab-link:active { transform: scale(0.85); }
+        
+        /* Active Tab Styling */
+        .tab-link.active-tab { 
+            color: #FFFFFF; 
+            background: #007AFF;
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+            transform: translateY(-4px);
+        }
+        .dark .tab-link.active-tab { 
+            color: #FFFFFF;
+            background: #0A84FF; 
+            box-shadow: 0 8px 20px rgba(10, 132, 255, 0.4);
+        }
 
         /* Components */
-        .ios-card { background-color: #FFFFFF; border-radius: 14px; transition: background-color 0.3s ease; }
+        .ios-card { 
+            background-color: #FFFFFF; border-radius: 20px; 
+            transition: all 0.3s ease; 
+        }
         .dark .ios-card { background-color: #1C1C1E; }
         
-        .ios-list-item:not(:last-child) .list-content { border-bottom: 0.5px solid #C6C6C8; }
-        .dark .ios-list-item:not(:last-child) .list-content { border-bottom: 0.5px solid #38383A; }
+        .ios-list-item:not(:last-child) .list-content { border-bottom: 0.5px solid rgba(198, 198, 200, 0.5); }
+        .dark .ios-list-item:not(:last-child) .list-content { border-bottom: 0.5px solid rgba(56, 56, 58, 0.5); }
 
-        /* Buttons & Inputs */
+        /* Smooth Buttons & Inputs */
         .btn-3d {
-            background-color: #007AFF; color: #FFFFFF; border-radius: 14px;
-            font-weight: 600; font-size: 17px; padding: 14px 24px;
+            background: linear-gradient(135deg, #007AFF, #0056b3);
+            color: #FFFFFF; border-radius: 16px;
+            font-weight: 600; font-size: 17px; padding: 16px 24px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 4px 0 #0056b3, 0 8px 10px rgba(0,0,0,0.1);
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             width: 100%; border: none; cursor: pointer;
         }
-        .btn-3d:active { transform: translateY(4px); box-shadow: 0 0px 0 #0056b3, 0 2px 4px rgba(0,0,0,0.1); }
-        .dark .btn-3d { background-color: #0A84FF; box-shadow: 0 4px 0 #004085, 0 8px 10px rgba(0,0,0,0.4); }
-        .dark .btn-3d:active { box-shadow: 0 0px 0 #004085, 0 2px 4px rgba(0,0,0,0.4); }
+        .btn-3d:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2); }
+        .dark .btn-3d { background: linear-gradient(135deg, #0A84FF, #004085); box-shadow: 0 8px 20px rgba(10, 132, 255, 0.3); }
 
         .ios-input {
-            width: 100%; padding: 16px; border-radius: 14px; font-size: 17px;
-            background-color: #FFFFFF; border: 1px solid #C6C6C8;
-            color: #000; outline: none; transition: all 0.2s;
+            width: 100%; padding: 16px; border-radius: 16px; font-size: 17px;
+            background-color: #FFFFFF; border: 1.5px solid transparent;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            color: #000; outline: none; transition: all 0.3s ease;
         }
-        .ios-input:focus { border-color: #007AFF; box-shadow: 0 0 0 3px rgba(0,122,255,0.2); }
-        .dark .ios-input { background-color: #1C1C1E; border: 1px solid #38383A; color: #FFF; }
-        .dark .ios-input:focus { border-color: #0A84FF; box-shadow: 0 0 0 3px rgba(10,132,255,0.2); }
+        .ios-input:focus { 
+            border-color: #007AFF; 
+            box-shadow: 0 0 0 4px rgba(0,122,255,0.15), 0 4px 12px rgba(0,0,0,0.03); 
+            transform: translateY(-2px);
+        }
+        .dark .ios-input { background-color: #1C1C1E; color: #FFF; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .dark .ios-input:focus { border-color: #0A84FF; box-shadow: 0 0 0 4px rgba(10,132,255,0.15); }
 
         /* Splash Screen */
         #splash-screen {
             position: fixed; inset: 0; z-index: 9999;
             display: flex; align-items: center; justify-content: center;
             background-color: #F2F2F7; flex-direction: column; gap: 10px;
+            backdrop-filter: blur(10px);
         }
         .dark #splash-screen { background-color: #000000; }
         .letter-b { display: inline-block; }
         .letter-rest { display: inline-flex; overflow: hidden; width: 0; opacity: 0; white-space: nowrap; }
 
-        .result-card { opacity: 0; transform: translateY(20px); }
-        
-        /* Tab Bar Icons */
-        .tab-link { color: #8E8E93; transition: color 0.2s; }
-        .tab-link.active-tab { color: #007AFF; }
-        .dark .tab-link.active-tab { color: #0A84FF; }
+        .result-card { opacity: 0; transform: translateY(30px) scale(0.95); }
     </style>
 </head>
 <body class="bg-ios-bgLight dark:bg-ios-bgDark">
@@ -123,20 +180,26 @@
             <span id="splash-b" class="letter-b text-ios-blueLight dark:text-ios-blueDark">BN</span>
             <span id="splash-rest" class="letter-rest ml-2">Jha College</span>
         </h1>
-        <p class="text-ios-subLight dark:text-ios-subDark font-medium text-sm tracking-widest uppercase mt-2">PEN Portal</p>
+        <div class="mt-4 flex gap-2" id="splash-loader">
+            <div class="w-2 h-2 rounded-full bg-ios-blueLight dark:bg-ios-blueDark animate-bounce"></div>
+            <div class="w-2 h-2 rounded-full bg-ios-blueLight dark:bg-ios-blueDark animate-bounce" style="animation-delay: 0.1s"></div>
+            <div class="w-2 h-2 rounded-full bg-ios-blueLight dark:bg-ios-blueDark animate-bounce" style="animation-delay: 0.2s"></div>
+        </div>
     </div>
 
     <!-- DYNAMIC TOP NAV -->
     <header class="ios-nav sticky top-0 z-40 w-full">
         <div class="max-w-2xl mx-auto px-4 py-3 flex justify-between items-center h-[60px]">
             <div class="w-1/3 flex justify-start items-center">
-                <i data-lucide="graduation-cap" class="w-6 h-6 text-ios-blueLight dark:text-ios-blueDark"></i>
+                <div class="p-2 bg-ios-blueLight/10 dark:bg-ios-blueDark/10 rounded-full">
+                    <i data-lucide="graduation-cap" class="w-5 h-5 text-ios-blueLight dark:text-ios-blueDark"></i>
+                </div>
             </div>
             <div class="w-1/3 flex justify-center items-center whitespace-nowrap">
                 <span id="nav-title" class="font-brand text-xl text-ios-textLight dark:text-ios-textDark tracking-tight transition-opacity">BN Jha</span>
             </div>
             <div class="w-1/3 flex justify-end items-center">
-                <button id="theme-toggle" class="p-2 rounded-full bg-ios-separatorLight/30 dark:bg-ios-separatorDark/50 text-ios-textLight dark:text-ios-textDark transition-transform active:scale-90 outline-none">
+                <button id="theme-toggle" class="p-2.5 rounded-full bg-ios-separatorLight/30 dark:bg-ios-separatorDark/50 text-ios-textLight dark:text-ios-textDark transition-all active:scale-75 outline-none hover:bg-ios-separatorLight/50">
                     <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden dark:block"></i>
                     <i data-lucide="moon" id="theme-icon-moon" class="w-5 h-5 block dark:hidden"></i>
                 </button>
@@ -145,195 +208,269 @@
     </header>
 
     <!-- SPA ROUTER CONTAINER -->
-    <main id="app-router" class="max-w-2xl mx-auto w-full px-4 pt-6 pb-28 min-h-screen">
+    <main id="app-router" class="max-w-2xl mx-auto w-full px-4 pt-6 pb-36 min-h-screen">
 
         <!-- ==================== VIEW: HOME (SEARCH) ==================== -->
         <div id="view-home" class="spa-view active" data-title="BN Jha">
-            
             <!-- Warning Banner -->
-            <div class="bg-ios-orange/10 dark:bg-ios-orange/20 border border-ios-orange/30 rounded-xl p-3 mb-6 flex gap-3 items-start ui-elem opacity-0">
+            <div class="bg-gradient-to-r from-ios-orange/10 to-ios-orange/5 border border-ios-orange/20 rounded-2xl p-4 mb-8 flex gap-3 items-start ui-elem opacity-0 shadow-sm backdrop-blur-sm">
                 <i data-lucide="info" class="w-5 h-5 text-ios-orange shrink-0 mt-0.5"></i>
                 <div class="text-[13px] text-ios-textLight dark:text-ios-textDark leading-tight">
                     <strong class="font-semibold block mb-1">Informational Only</strong>
-                    Not an official BN Jha College website. See <a href="#about" class="text-ios-blueLight dark:text-ios-blueDark font-medium underline">About</a> for details.
+                    Not an official BN Jha College website. See <a href="#about" class="text-ios-blueLight dark:text-ios-blueDark font-medium underline decoration-ios-blueLight/30 underline-offset-2">About</a> for details.
                 </div>
             </div>
 
             <!-- Search Header -->
             <section class="mb-8 ui-elem opacity-0">
-                <h1 class="text-4xl font-bold tracking-tight mb-2 text-ios-textLight dark:text-ios-textDark">Find PEN No.</h1>
+                <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-ios-textLight dark:text-ios-textDark">Find PEN No.</h1>
                 <p class="text-[15px] text-ios-subLight dark:text-ios-subDark leading-relaxed">
-                    Simply enter your <strong>Full Name</strong> or partial name to fetch your Permanent Enrollment Number (PEN) and details.
+                    Simply enter your <strong>Full Name</strong> or partial name to fetch your Permanent Enrollment Number (PEN) instantly.
                 </p>
             </section>
 
             <!-- Search Form -->
-            <section class="mb-8 ui-elem opacity-0">
-                <div class="relative mb-4">
-                    <i data-lucide="search" class="absolute left-4 top-4 text-ios-subLight dark:text-ios-subDark w-5 h-5"></i>
-                    <input type="text" id="searchInput" class="ios-input pl-12 shadow-sm" placeholder="Enter Student Name (e.g. Rahul Kumar)" autocomplete="off" />
-                    <button id="clearSearch" class="hidden absolute right-4 top-4 text-ios-subLight active:scale-90 transition-transform"><i data-lucide="x-circle" class="w-5 h-5"></i></button>
+            <section class="mb-10 ui-elem opacity-0">
+                <div class="relative mb-5">
+                    <i data-lucide="search" class="absolute left-4 top-4 text-ios-subLight dark:text-ios-subDark w-6 h-6"></i>
+                    <input type="text" id="searchInput" class="ios-input pl-14" placeholder="Student Name (e.g. Rahul)" autocomplete="off" />
+                    <button id="clearSearch" class="hidden absolute right-4 top-4 text-ios-subLight active:scale-75 transition-all bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 rounded-full p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
                 </div>
-                <button id="searchBtn" class="btn-3d">
-                    <i data-lucide="sparkles" class="w-5 h-5"></i> Search Student
+                <button id="searchBtn" class="btn-3d group">
+                    <i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database
                 </button>
             </section>
 
             <!-- Recent Searches -->
             <section id="recentSearchesSection" class="mb-8 hidden ui-elem opacity-0">
-                <h3 class="text-[13px] uppercase font-semibold text-ios-subLight dark:text-ios-subDark mb-3 ml-1 tracking-wide">Recent Searches</h3>
-                <div id="recentTags" class="flex flex-wrap gap-2">
-                    <!-- Tags injected via JS -->
-                </div>
+                <h3 class="text-[12px] uppercase font-bold text-ios-subLight dark:text-ios-subDark mb-3 ml-1 tracking-wider">Recent Searches</h3>
+                <div id="recentTags" class="flex flex-wrap gap-2"></div>
             </section>
 
             <!-- Data Status -->
-            <div id="dataStatus" class="flex items-center justify-center gap-2 text-sm font-medium text-ios-blueLight dark:text-ios-blueDark mb-6">
-                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Securely syncing database...
+            <div id="dataStatus" class="flex items-center justify-center gap-2 text-sm font-medium text-ios-blueLight dark:text-ios-blueDark mb-6 bg-ios-blueLight/5 py-2 px-4 rounded-full w-fit mx-auto">
+                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Securely syncing...
             </div>
             
-            <div id="searchCount" class="hidden text-center mb-4 text-sm font-semibold text-ios-green">
-                <!-- Search Result Count -->
-            </div>
+            <div id="searchCount" class="hidden text-center mb-6 text-sm font-semibold text-ios-green bg-ios-green/10 py-2 px-4 rounded-full w-fit mx-auto backdrop-blur-sm"></div>
 
             <!-- Results Area -->
-            <section id="resultsContainer" class="flex flex-col gap-4">
-                <!-- Cards injected here -->
-            </section>
+            <section id="resultsContainer" class="flex flex-col gap-5"></section>
 
             <!-- No Results Fallback -->
-            <div id="noResults" class="hidden flex-col items-center justify-center py-10 text-center bg-ios-cardLight dark:bg-ios-cardDark rounded-2xl border border-ios-separatorLight/30 dark:border-ios-separatorDark/30">
-                <div class="bg-ios-separatorLight/30 dark:bg-ios-separatorDark/30 p-4 rounded-full mb-4">
-                    <i data-lucide="file-question" class="w-8 h-8 text-ios-subLight dark:text-ios-subDark"></i>
+            <div id="noResults" class="hidden flex-col items-center justify-center py-12 text-center bg-ios-cardLight dark:bg-ios-cardDark rounded-3xl border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-sm">
+                <div class="bg-ios-separatorLight/20 dark:bg-ios-separatorDark/20 p-5 rounded-full mb-5">
+                    <i data-lucide="file-question" class="w-10 h-10 text-ios-subLight dark:text-ios-subDark"></i>
                 </div>
-                <h3 class="text-lg font-semibold text-ios-textLight dark:text-ios-textDark">No matching student found</h3>
-                <p class="text-[14px] text-ios-subLight dark:text-ios-subDark mt-1 max-w-[250px]">Check the spelling or try searching with only your first name.</p>
+                <h3 class="text-xl font-bold text-ios-textLight dark:text-ios-textDark mb-1">No match found</h3>
+                <p class="text-[15px] text-ios-subLight dark:text-ios-subDark mt-1 max-w-[250px]">Check the spelling or try searching with only your first name.</p>
             </div>
         </div>
 
+        <!-- ==================== VIEW: SETTINGS ==================== -->
+        <div id="view-settings" class="spa-view" data-title="Settings">
+            <section class="mb-8 ui-elem opacity-0 mt-2">
+                <h1 class="text-4xl font-extrabold tracking-tight mb-2 text-ios-textLight dark:text-ios-textDark">Settings</h1>
+                <p class="text-[15px] text-ios-subLight dark:text-ios-subDark leading-relaxed">
+                    Manage your app preferences and clear local search data.
+                </p>
+            </section>
+
+            <!-- Appearance Group -->
+            <h2 class="text-[12px] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider ui-elem opacity-0">Appearance</h2>
+            <div class="ios-card overflow-hidden mb-8 shadow-md border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 ui-elem opacity-0">
+                <div class="ios-list-item flex items-center pl-4 block transition-colors bg-ios-cardLight dark:bg-ios-cardDark">
+                    <div class="bg-gradient-to-tr from-gray-700 to-gray-900 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="moon" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <span class="block text-[17px] font-semibold text-ios-textLight dark:text-ios-textDark">Dark Mode</span>
+                        <!-- Custom Toggle Switch -->
+                        <button id="settings-theme-toggle" class="w-14 h-8 bg-ios-separatorLight dark:bg-ios-green rounded-full relative transition-colors duration-300 shadow-inner">
+                            <div class="w-6 h-6 bg-white rounded-full absolute top-1 left-1 dark:translate-x-6 transition-transform duration-300 shadow-md"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Group -->
+            <h2 class="text-[12px] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider ui-elem opacity-0">Data & Storage</h2>
+            <div class="ios-card overflow-hidden mb-8 shadow-md border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 ui-elem opacity-0">
+                <button id="clearDataBtn" class="w-full text-left ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
+                    <div class="bg-gradient-to-tr from-ios-red to-red-400 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <span class="block text-[17px] font-semibold text-ios-red">Clear Search History</span>
+                    </div>
+                </button>
+            </div>
+            
+            <!-- App Info -->
+            <div class="flex flex-col items-center justify-center mt-12 opacity-50 ui-elem opacity-0">
+                <i data-lucide="graduation-cap" class="w-10 h-10 mb-2 text-ios-subLight dark:text-ios-subDark"></i>
+                <p class="text-sm font-bold text-ios-textLight dark:text-ios-textDark">BN Jha PEN Portal</p>
+                <p class="text-xs text-ios-subLight dark:text-ios-subDark mt-1">Version 2.0 • Pure Premium</p>
+            </div>
+        </div>
 
         <!-- ==================== VIEW: ABOUT / DISCLAIMER ==================== -->
-        <div id="view-about" class="spa-view" data-title="Disclaimer">
-            <div class="flex flex-col items-center justify-center text-center mt-6 mb-8">
-                <div class="w-16 h-16 bg-ios-red/10 text-ios-red rounded-full flex items-center justify-center mb-4">
-                    <i data-lucide="alert-triangle" class="w-8 h-8"></i>
+        <div id="view-about" class="spa-view" data-title="Notice">
+            <div class="flex flex-col items-center justify-center text-center mt-6 mb-10">
+                <div class="w-20 h-20 bg-ios-red/10 text-ios-red rounded-full flex items-center justify-center mb-5 relative">
+                    <div class="absolute inset-0 bg-ios-red/20 rounded-full animate-ping opacity-20"></div>
+                    <i data-lucide="shield-alert" class="w-10 h-10 relative z-10"></i>
                 </div>
-                <h1 class="text-3xl font-bold tracking-tight text-ios-textLight dark:text-ios-textDark">Important Notice</h1>
+                <h1 class="text-3xl font-extrabold tracking-tight text-ios-textLight dark:text-ios-textDark">Important Notice</h1>
             </div>
 
-            <div class="ios-card p-6 mb-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-sm">
-                <h3 class="text-lg font-semibold border-b border-ios-separatorLight dark:border-ios-separatorDark pb-2 mb-4 text-ios-textLight dark:text-ios-textDark">English Disclaimer</h3>
+            <div class="ios-card p-6 mb-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md">
+                <h3 class="text-lg font-bold border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-3 mb-4 text-ios-textLight dark:text-ios-textDark flex items-center gap-2">
+                    <i data-lucide="globe" class="w-5 h-5 text-ios-blueLight"></i> English Disclaimer
+                </h3>
                 <p class="text-ios-subLight dark:text-ios-subDark text-[15px] leading-relaxed mb-4">
-                    This platform is <strong>not officially affiliated, associated, authorized, endorsed by, or in any way officially connected</strong> with BN Jha College, Deoghar, or any of its subsidiaries or its affiliates.
+                    This platform is <strong class="text-ios-red dark:text-red-400">not officially affiliated, associated, authorized, or endorsed by</strong> BN Jha College, Deoghar, or any of its subsidiaries.
                 </p>
                 <p class="text-ios-subLight dark:text-ios-subDark text-[15px] leading-relaxed">
-                    This is an independent informational project developed solely by Anshu Rajhans to help students easily locate their Permanent Enrollment Number (PEN) and basic details using publicly shared or provided data sheets.
+                    This is an independent informational project developed solely by Anshu Rajhans to help students easily locate their Permanent Enrollment Number (PEN) using publicly shared data.
                 </p>
             </div>
 
-            <div class="ios-card p-6 mb-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-sm">
-                <h3 class="text-lg font-semibold border-b border-ios-separatorLight dark:border-ios-separatorDark pb-2 mb-4 text-ios-textLight dark:text-ios-textDark">हिंदी सूचना (Hindi)</h3>
+            <div class="ios-card p-6 mb-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md">
+                <h3 class="text-lg font-bold border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-3 mb-4 text-ios-textLight dark:text-ios-textDark flex items-center gap-2">
+                    <i data-lucide="languages" class="w-5 h-5 text-ios-orange"></i> हिंदी सूचना
+                </h3>
                 <p class="text-ios-subLight dark:text-ios-subDark text-[15px] leading-relaxed mb-4">
-                    यह वेबसाइट <strong>बी. एन. झा कॉलेज, देवघर</strong> या किसी भी सरकारी/निजी शैक्षणिक संस्थान से आधिकारिक रूप से संबंधित नहीं है।
+                    यह वेबसाइट <strong class="text-ios-textLight dark:text-ios-textDark">बी. एन. झा कॉलेज, देवघर</strong> या किसी भी सरकारी/निजी शैक्षणिक संस्थान से आधिकारिक रूप से संबंधित नहीं है।
                 </p>
                 <p class="text-ios-subLight dark:text-ios-subDark text-[15px] leading-relaxed">
-                    यह एक स्वतंत्र और केवल सूचनात्मक (Informational) पोर्टल है, जिसे <strong>अंशु राजहंस (Anshu Rajhans)</strong> द्वारा केवल छात्रों की सुविधा के लिए विकसित किया गया है, ताकि वे आसानी से अपना PEN नंबर खोज सकें।
+                    यह एक स्वतंत्र पोर्टल है, जिसे केवल छात्रों की सुविधा के लिए विकसित किया गया है, ताकि वे आसानी से अपना PEN नंबर खोज सकें।
                 </p>
             </div>
             
-            <div class="text-center mt-8">
-                <p class="text-[13px] text-ios-subLight dark:text-ios-subDark">Anshu Rajhans All Rights Reserved</p>
+            <div class="text-center mt-10 opacity-60">
+                <p class="text-[13px] font-medium text-ios-textLight dark:text-ios-textDark">© Anshu Rajhans • All Rights Reserved</p>
             </div>
         </div>
-
 
         <!-- ==================== VIEW: DEVELOPER ==================== -->
         <div id="view-dev" class="spa-view" data-title="Developer">
-            <div class="flex flex-col items-center mt-6 mb-8 text-center">
-                <div class="w-28 h-28 rounded-full bg-gradient-to-tr from-ios-blueLight via-ios-purple to-ios-orange shadow-xl flex items-center justify-center text-white mb-4 relative p-1">
+            <!-- Header Profile -->
+            <div class="flex flex-col items-center mt-8 mb-10 text-center">
+                <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-ios-blueLight via-ios-purple to-ios-orange shadow-2xl flex items-center justify-center text-white mb-5 relative p-1.5 transform hover:scale-105 transition-transform duration-500">
                     <div class="w-full h-full bg-ios-bgLight dark:bg-ios-bgDark rounded-full flex items-center justify-center overflow-hidden">
-                        <img src="https://ui-avatars.com/api/?name=Anshu+Rajhans&background=007AFF&color=fff&size=150&font-size=0.4" alt="Anshu" class="w-full h-full object-cover relative z-10 rounded-full">
+                        <img src="https://ui-avatars.com/api/?name=Anshu+Rajhans&background=007AFF&color=fff&size=200&font-size=0.35&bold=true" alt="Anshu" class="w-full h-full object-cover relative z-10 rounded-full">
                     </div>
                 </div>
-                <h1 class="text-3xl font-bold tracking-tight text-ios-textLight dark:text-ios-textDark">Anshu Rajhans</h1>
-                <p class="text-ios-subLight dark:text-ios-subDark font-medium mt-1">System Architect & Developer</p>
+                <h1 class="text-3xl font-extrabold tracking-tight text-ios-textLight dark:text-ios-textDark">Anshu Rajhans</h1>
+                <p class="text-ios-blueLight dark:text-ios-blueDark font-semibold mt-1 bg-ios-blueLight/10 dark:bg-ios-blueDark/20 px-4 py-1 rounded-full text-sm inline-block">System Architect</p>
             </div>
 
-            <h2 class="text-[13px] uppercase font-semibold text-ios-subLight dark:text-ios-subDark ml-4 mb-2 tracking-wide">Connect With Me</h2>
-            <div class="ios-card overflow-hidden mb-8 shadow-sm border border-ios-separatorLight/30 dark:border-ios-separatorDark/30">
+            <!-- Social Links -->
+            <h2 class="text-[12px] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider">Connect With Me</h2>
+            <div class="ios-card overflow-hidden mb-10 shadow-md border border-ios-separatorLight/30 dark:border-ios-separatorDark/30">
                 
+                <!-- Instagram -->
                 <a href="https://instagram.com/anshurajhans" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
-                    <div class="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-white">
+                    <div class="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
                         <i data-lucide="instagram" class="w-5 h-5"></i>
                     </div>
                     <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
                         <div>
-                            <span class="block text-[17px] font-medium text-ios-textLight dark:text-ios-textDark">Instagram</span>
-                            <span class="block text-[13px] text-ios-subLight dark:text-ios-subDark">@anshurajhans</span>
+                            <span class="block text-[17px] font-semibold text-ios-textLight dark:text-ios-textDark">Instagram</span>
+                            <span class="block text-[13px] text-ios-subLight dark:text-ios-subDark mt-0.5">@anshurajhans</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
+                    </div>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://youtube.com/@vitcoore" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
+                    <div class="bg-gradient-to-tr from-red-600 to-red-500 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <div>
+                            <span class="block text-[17px] font-semibold text-ios-textLight dark:text-ios-textDark">YouTube</span>
+                            <span class="block text-[13px] text-ios-subLight dark:text-ios-subDark mt-0.5">@vitcoore</span>
                         </div>
                         <i data-lucide="external-link" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
                     </div>
                 </a>
 
+                <!-- Email -->
+                <a href="mailto:vipwebff@gmail.com" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
+                    <div class="bg-gradient-to-tr from-blue-400 to-ios-blueLight w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <div>
+                            <span class="block text-[17px] font-semibold text-ios-textLight dark:text-ios-textDark">Email Me</span>
+                            <span class="block text-[13px] text-ios-subLight dark:text-ios-subDark mt-0.5">vipwebff@gmail.com</span>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
+                    </div>
+                </a>
+
+                <!-- GitHub -->
                 <a href="#" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
-                    <div class="bg-[#333] dark:bg-gray-700 w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-white">
+                    <div class="bg-[#24292e] dark:bg-white w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white dark:text-black shadow-sm">
                         <i data-lucide="github" class="w-5 h-5"></i>
                     </div>
                     <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
                         <div>
-                            <span class="block text-[17px] font-medium text-ios-textLight dark:text-ios-textDark">GitHub</span>
-                            <span class="block text-[13px] text-ios-subLight dark:text-ios-subDark">View open source projects</span>
+                            <span class="block text-[17px] font-semibold text-ios-textLight dark:text-ios-textDark">GitHub</span>
+                            <span class="block text-[13px] text-ios-subLight dark:text-ios-subDark mt-0.5">Open source projects</span>
                         </div>
-                        <i data-lucide="external-link" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
                     </div>
                 </a>
             </div>
 
-            <h2 class="text-[13px] uppercase font-semibold text-ios-subLight dark:text-ios-subDark ml-4 mb-2 tracking-wide">Project Tech Stack</h2>
-            <div class="ios-card p-5 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-sm flex flex-wrap gap-3">
-                <span class="bg-ios-bgLight dark:bg-[#121212] px-3 py-1.5 rounded-md text-[13px] font-medium border border-ios-separatorLight/50 dark:border-ios-separatorDark/50">HTML5/JS</span>
-                <span class="bg-ios-bgLight dark:bg-[#121212] px-3 py-1.5 rounded-md text-[13px] font-medium border border-ios-separatorLight/50 dark:border-ios-separatorDark/50">Tailwind CSS</span>
-                <span class="bg-ios-bgLight dark:bg-[#121212] px-3 py-1.5 rounded-md text-[13px] font-medium border border-ios-separatorLight/50 dark:border-ios-separatorDark/50">Google Sheets API</span>
-                <span class="bg-ios-bgLight dark:bg-[#121212] px-3 py-1.5 rounded-md text-[13px] font-medium border border-ios-separatorLight/50 dark:border-ios-separatorDark/50">PapaParse Data Fetch</span>
+            <!-- Tech Stack -->
+            <h2 class="text-[12px] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider">Tech Stack</h2>
+            <div class="ios-card p-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md flex flex-wrap gap-3">
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[13px] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="file-code" class="w-4 h-4 text-ios-orange"></i> HTML/JS</span>
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[13px] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-cyan-500"></i> Tailwind CSS</span>
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[13px] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-ios-green"></i> Google Sheets API</span>
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[13px] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-ios-purple"></i> GSAP Animation</span>
             </div>
         </div>
 
     </main>
 
-    <!-- BOTTOM TAB BAR (iOS Style) -->
-    <nav class="ios-tab-bar fixed bottom-0 w-full z-50">
-        <div class="max-w-2xl mx-auto flex justify-around items-center h-[70px]">
-            <a href="#home" class="tab-link active-tab flex flex-col items-center justify-center w-full h-full" data-target="home">
-                <i data-lucide="search" class="w-6 h-6 mb-1"></i>
-                <span class="text-[10px] font-semibold tracking-wide">Search</span>
-            </a>
-            <a href="#about" class="tab-link flex flex-col items-center justify-center w-full h-full" data-target="about">
-                <i data-lucide="info" class="w-6 h-6 mb-1"></i>
-                <span class="text-[10px] font-semibold tracking-wide">About</span>
-            </a>
-            <a href="#developer" class="tab-link flex flex-col items-center justify-center w-full h-full" data-target="developer">
-                <i data-lucide="code-2" class="w-6 h-6 mb-1"></i>
-                <span class="text-[10px] font-semibold tracking-wide">Developer</span>
-            </a>
-        </div>
+    <!-- ✨ FLOATING TAB BAR (4 Icons, with Spinning Settings) ✨ -->
+    <nav class="floating-nav">
+        <a href="#home" class="tab-link active-tab" data-target="home" title="Search">
+            <i data-lucide="search" class="w-6 h-6"></i>
+        </a>
+        <a href="#about" class="tab-link" data-target="about" title="About">
+            <i data-lucide="info" class="w-6 h-6"></i>
+        </a>
+        <a href="#developer" class="tab-link" data-target="developer" title="Developer">
+            <i data-lucide="code-2" class="w-6 h-6"></i>
+        </a>
+        <a href="#settings" class="tab-link group" data-target="settings" title="Settings">
+            <!-- Smooth slow spin animation -->
+            <i data-lucide="settings" class="w-6 h-6 animate-[spin_4s_linear_infinite]"></i>
+        </a>
     </nav>
 
     <!-- Scripts -->
     <script>
-        // Real Published Google Sheet CSV URL
         const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQsBLC2zCga5oQ706Eb9tt77wXzK0mbFFGPyGGH19ob6AMSAGBfVU8dzx3KxRHzJbj-26dgv05-wFpr/pub?output=csv';
         
-        let studentData =[];
-        let recentSearches = JSON.parse(localStorage.getItem('pen_recent_searches')) ||[];
+        let studentData = [];
+        let recentSearches = JSON.parse(localStorage.getItem('pen_recent_searches')) || [];
 
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
             const html = document.documentElement;
 
-            // --- 1. SPA Routing Engine ---
+            // --- 1. SPA Routing Engine (Smooth Spring Animations) ---
             const routes = {
                 '': 'view-home', '#': 'view-home', '#home': 'view-home',
-                '#about': 'view-about', '#developer': 'view-dev'
+                '#about': 'view-about', '#developer': 'view-dev', '#settings': 'view-settings'
             };
 
             const navTitle = document.getElementById('nav-title');
@@ -348,14 +485,16 @@
                 const currentEl = document.getElementById(currentActiveId);
                 const targetEl = document.getElementById(targetId);
                 
+                // Spring Out current view
                 gsap.to(currentEl, {
-                    opacity: 0, y: -10, duration: 0.2, 
+                    opacity: 0, scale: 0.95, y: -20, duration: 0.3, ease: "power2.inOut",
                     onComplete: () => {
                         currentEl.classList.remove('active');
                         targetEl.classList.add('active');
                         window.scrollTo(0, 0);
                         
-                        gsap.to(navTitle, {opacity: 0, duration: 0.1, onComplete: () => {
+                        // Header Title Animation
+                        gsap.to(navTitle, {opacity: 0, y: -5, duration: 0.15, onComplete: () => {
                             if(hash === '#home' || hash === '') {
                                 navTitle.style.fontFamily = "'Kavoon', serif";
                                 navTitle.innerText = "BN Jha";
@@ -363,16 +502,24 @@
                                 navTitle.style.fontFamily = "'Inter', sans-serif";
                                 navTitle.innerText = targetEl.getAttribute('data-title');
                             }
-                            gsap.to(navTitle, {opacity: 1, duration: 0.2});
+                            gsap.to(navTitle, {opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.5)"});
                         }});
 
+                        // Update Active Tab Icon
                         tabLinks.forEach(link => link.classList.remove('active-tab'));
                         document.querySelector(`.tab-link[href="${hash}"]`)?.classList.add('active-tab');
 
+                        // Spring In new view
                         gsap.fromTo(targetEl, 
-                            { opacity: 0, y: 15 }, 
-                            { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+                            { opacity: 0, scale: 0.95, y: 30 }, 
+                            { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.2)" }
                         );
+                        
+                        // Reveal Settings UI elements if navigating to settings
+                        if(targetId === 'view-settings') {
+                            gsap.to("#view-settings .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)", delay: 0.1 });
+                        }
+
                         currentActiveId = targetId;
                     }
                 });
@@ -384,41 +531,87 @@
                 document.getElementById('view-home').classList.remove('active');
                 document.getElementById(initialTarget).classList.add('active');
                 document.querySelector(`.tab-link[href="${window.location.hash}"]`)?.classList.add('active-tab');
-                document.querySelector('.tab-link[href="#home"]').classList.remove('active-tab');
+                document.querySelector('.tab-link[href="#home"]')?.classList.remove('active-tab');
                 
                 navTitle.style.fontFamily = "'Inter', sans-serif";
                 navTitle.innerText = document.getElementById(initialTarget).getAttribute('data-title');
                 currentActiveId = initialTarget;
+                
+                if(initialTarget === 'view-settings') {
+                    gsap.to("#view-settings .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" });
+                }
             }
 
-            // --- 2. Theme Toggle Logic ---
-            const themeBtn = document.getElementById('theme-toggle');
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                html.classList.add('dark');
-            } else { html.classList.remove('dark'); }
+            // --- 2. Theme Toggle Logic (Sync with Settings Page) ---
+            const themeBtnHeader = document.getElementById('theme-toggle');
+            const themeBtnSettings = document.getElementById('settings-theme-toggle');
 
-            themeBtn.addEventListener('click', () => {
-                html.classList.toggle('dark');
-                gsap.fromTo(themeBtn, {rotation: -45}, {rotation: 0, duration: 0.3});
-                localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
-                if(navigator.vibrate) navigator.vibrate(10);
+            function applyTheme(isDark) {
+                if (isDark) {
+                    html.classList.add('dark');
+                    localStorage.theme = 'dark';
+                } else {
+                    html.classList.remove('dark');
+                    localStorage.theme = 'light';
+                }
+            }
+
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                applyTheme(true);
+            } else { applyTheme(false); }
+
+            // Header Button Click
+            themeBtnHeader.addEventListener('click', () => {
+                const willBeDark = !html.classList.contains('dark');
+                applyTheme(willBeDark);
+                gsap.fromTo(themeBtnHeader, {rotation: -180, scale: 0.5}, {rotation: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)"});
+                if(navigator.vibrate) navigator.vibrate(15);
+            });
+
+            // Settings Menu Toggle Click
+            themeBtnSettings.addEventListener('click', () => {
+                const willBeDark = !html.classList.contains('dark');
+                applyTheme(willBeDark);
+                if(navigator.vibrate) navigator.vibrate(15);
+            });
+
+            // Settings Clear Data Button
+            document.getElementById('clearDataBtn').addEventListener('click', () => {
+                Swal.fire({
+                    title: 'Clear History?',
+                    text: "Your recent searches will be deleted.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#FF3B30',
+                    cancelButtonColor: '#8E8E93',
+                    confirmButtonText: 'Yes, clear it',
+                    background: html.classList.contains('dark') ? '#1C1C1E' : '#FFFFFF',
+                    color: html.classList.contains('dark') ? '#FFFFFF' : '#000000',
+                    customClass: { popup: 'rounded-3xl' }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        localStorage.removeItem('pen_recent_searches');
+                        recentSearches = [];
+                        updateRecentSearches();
+                        iziToast.success({ title: 'Cleared', message: 'History removed successfully.', position: 'topCenter', theme: html.classList.contains('dark') ? 'dark' : 'light' });
+                    }
+                })
             });
 
             // --- 3. Splash Animation ---
             const tl = gsap.timeline();
             document.body.style.overflow = "hidden";
             tl.fromTo("#splash-b", { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "bounce.out" })
-              .to("#splash-rest", { width: "auto", opacity: 1, duration: 0.5, ease: "power2.out" }, "-=0.2")
-              .to({}, { duration: 0.4 }) 
+              .to("#splash-rest", { width: "auto", opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
+              .to("#splash-loader", { opacity: 0, duration: 0.3, delay: 0.5 })
               .to("#splash-screen", {
-                  opacity: 0, duration: 0.4,
+                  opacity: 0, backdropFilter: "blur(0px)", duration: 0.5,
                   onComplete: () => {
                       document.getElementById("splash-screen").style.display = "none";
                       document.body.style.overflow = ""; 
                   }
               });
-            tl.to("#" + currentActiveId + " .ui-elem", { y: 0, opacity: 1, duration: 0.5, stagger: 0.1 }, "-=0.2");
-
+            tl.to("#" + currentActiveId + " .ui-elem", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }, "-=0.2");
 
             // --- 4. Google Sheets Fetch & Parsing ---
             const statusEl = document.getElementById('dataStatus');
@@ -428,34 +621,19 @@
                     header: true,
                     skipEmptyLines: true,
                     transformHeader: function(header) {
-                        // Normalize headers to lowercase for easy mapping
                         return header.trim().toLowerCase();
                     },
                     complete: function(results) {
                         studentData = results.data;
-                        statusEl.classList.add('hidden');
-                        
-                        iziToast.success({ 
-                            title: 'Ready', 
-                            message: 'Database synced securely.', 
-                            position: 'topCenter',
-                            timeout: 2000,
-                            theme: html.classList.contains('dark') ? 'dark' : 'light'
-                        });
+                        gsap.to(statusEl, {opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => statusEl.classList.add('hidden')});
                     },
                     error: function(err) {
                         statusEl.classList.add('hidden');
-                        iziToast.error({ 
-                            title: 'Error', 
-                            message: 'Failed to connect to database. Please refresh.', 
-                            position: 'topCenter',
-                            theme: html.classList.contains('dark') ? 'dark' : 'light'
-                        });
+                        iziToast.error({ title: 'Error', message: 'Connection failed. Please refresh.', position: 'topCenter', theme: html.classList.contains('dark') ? 'dark' : 'light' });
                     }
                 });
             }
             loadData();
-
 
             // --- 5. Search Engine & Logic ---
             const searchInput = document.getElementById('searchInput');
@@ -476,7 +654,7 @@
                 recentTags.innerHTML = '';
                 recentSearches.forEach(term => {
                     const chip = document.createElement('button');
-                    chip.className = "bg-ios-separatorLight/30 dark:bg-ios-separatorDark/40 px-3 py-1.5 rounded-full text-[13px] font-medium text-ios-textLight dark:text-ios-textDark active:scale-95 transition-transform";
+                    chip.className = "bg-ios-separatorLight/30 dark:bg-ios-separatorDark/40 px-4 py-2 rounded-full text-[13px] font-semibold text-ios-textLight dark:text-ios-textDark active:scale-90 transition-all hover:bg-ios-separatorLight/50";
                     chip.innerText = term;
                     chip.onclick = () => {
                         searchInput.value = term;
@@ -488,20 +666,23 @@
             updateRecentSearches();
 
             searchInput.addEventListener('input', () => {
-                if(searchInput.value.length > 0) clearSearch.classList.remove('hidden');
-                else clearSearch.classList.add('hidden');
+                if(searchInput.value.length > 0) {
+                    clearSearch.classList.remove('hidden');
+                    gsap.to(clearSearch, {opacity: 1, scale: 1, duration: 0.2});
+                } else {
+                    gsap.to(clearSearch, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearch.classList.add('hidden')});
+                }
             });
             
             clearSearch.addEventListener('click', () => {
                 searchInput.value = '';
-                clearSearch.classList.add('hidden');
+                gsap.to(clearSearch, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearch.classList.add('hidden')});
                 resultsContainer.innerHTML = '';
                 noResults.classList.add('hidden');
                 searchCount.classList.add('hidden');
                 searchInput.focus();
             });
 
-            // Helper to handle multiple possible header names from CSV
             function getValue(obj, keys) {
                 for (let key of keys) {
                     if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
@@ -518,17 +699,17 @@
                 searchCount.classList.add('hidden');
 
                 if (studentData.length === 0) {
-                    iziToast.warning({ title: 'Wait', message: 'Syncing Data... Please wait a second.', position: 'topCenter' });
+                    iziToast.warning({ title: 'Wait', message: 'Syncing Data... Please wait.', position: 'topCenter' });
                     return;
                 }
 
                 if (!query) {
-                    iziToast.error({ title: 'Empty Field', message: 'Please enter a name first.', theme: html.classList.contains('dark') ? 'dark' : 'light' });
+                    iziToast.error({ title: 'Empty', message: 'Please enter a name.', theme: html.classList.contains('dark') ? 'dark' : 'light' });
                     if(navigator.vibrate) navigator.vibrate([10, 30, 10]);
+                    gsap.fromTo(searchInput, {x: -5}, {x: 5, duration: 0.1, yoyo: true, repeat: 3, onComplete: ()=>gsap.to(searchInput, {x:0})});
                     return;
                 }
 
-                // Save Recent Search
                 if(!recentSearches.includes(searchInput.value.trim())) {
                     recentSearches.unshift(searchInput.value.trim());
                     if(recentSearches.length > 5) recentSearches.pop();
@@ -536,100 +717,76 @@
                     updateRecentSearches();
                 }
 
-                if(navigator.vibrate) navigator.vibrate(10);
-                searchBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Searching Database...';
+                if(navigator.vibrate) navigator.vibrate(15);
+                searchBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Searching...';
                 
                 setTimeout(() => {
                     const matches = studentData.filter(student => {
-                        // Based on the screenshot header: "student name"
-                        const studentName = getValue(student, ['student name', 'name', 'student_name']).toLowerCase();
+                        const studentName = getValue(student, ['name', 'student name', 'student_name']).toLowerCase();
                         return studentName.includes(query) && studentName !== 'n/a';
                     });
 
-                    searchBtn.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5"></i> Search Student';
+                    searchBtn.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database';
                     lucide.createIcons();
 
                     if (matches.length === 0) {
                         noResults.classList.remove('hidden');
-                        gsap.fromTo(noResults, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.3});
+                        gsap.fromTo(noResults, {opacity: 0, scale: 0.9, y: 20}, {opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)"});
                     } else {
                         searchCount.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 inline-block mr-1 relative -top-0.5"></i> Found ${matches.length} result(s) for "${searchInput.value.trim()}"`;
                         searchCount.classList.remove('hidden');
+                        gsap.fromTo(searchCount, {opacity: 0, y: -10}, {opacity: 1, y: 0, duration: 0.3});
                         lucide.createIcons();
-                        
                         renderResults(matches);
                     }
                 }, 400); 
             }
 
             function renderResults(matches) {
-                matches.forEach((student) => {
-                    // Extracting All Details Based on Screenshot Headers
-                    const name = getValue(student, ['student name', 'name', 'student_name']);
-                    const father = getValue(student,['father name', 'father_name', 'father']);
-                    const mother = getValue(student,['mother name', 'mother_name', 'mother']);
-                    const studentClass = getValue(student, ['class', 'class_name']);
-                    const section = getValue(student, ['section', 'sec']);
-                    const gender = getValue(student, ['gender', 'sex']);
-                    const penNo = getValue(student,['pen_no', 'pen no', 'pen number']);
-
-                    // Create Conditional Badges
-                    const classBadge = studentClass !== 'N/A' ? `<span class="text-[11px] font-bold bg-ios-blueLight/10 text-ios-blueLight dark:bg-ios-blueDark/20 dark:text-ios-blueDark px-2 py-0.5 rounded uppercase">Class ${studentClass}</span>` : '';
-                    const secBadge = section !== 'N/A' ? `<span class="text-[11px] font-bold bg-ios-purple/10 text-ios-purple dark:bg-ios-purple/20 dark:text-ios-purple px-2 py-0.5 rounded uppercase">Sec ${section}</span>` : '';
-                    const genderBadge = gender !== 'N/A' ? `<span class="text-[11px] font-bold bg-ios-green/10 text-ios-green px-2 py-0.5 rounded uppercase">${gender}</span>` : '';
+                matches.forEach((student, index) => {
+                    const name = getValue(student, ['name', 'student name', 'student_name']);
+                    const father = getValue(student, ['father_name', 'father name', "father's name", 'father']);
+                    const dob = getValue(student, ['dob', 'date of birth', 'birth_date']);
+                    const penNo = getValue(student, ['pen_no', 'pen no', 'pen number', 'pen']);
 
                     const card = document.createElement('div');
-                    card.className = "ios-card p-5 result-card shadow-sm border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 relative overflow-hidden";
+                    card.className = "ios-card p-6 result-card shadow-lg border border-ios-separatorLight/30 dark:border-ios-separatorDark/30";
                     
                     card.innerHTML = `
-                        <!-- Header: Name & Badges -->
-                        <div class="flex items-center gap-4 border-b border-ios-separatorLight/60 dark:border-ios-separatorDark/60 pb-4 mb-4">
-                            <div class="bg-gradient-to-br from-ios-blueLight to-ios-purple w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md shrink-0">
+                        <div class="flex items-center gap-4 border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-4 mb-4">
+                            <div class="bg-gradient-to-br from-ios-blueLight to-ios-purple w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md">
                                 <i data-lucide="user" class="w-6 h-6"></i>
                             </div>
-                            <div class="flex-1">
-                                <h2 class="text-[20px] font-bold text-ios-textLight dark:text-ios-textDark leading-tight capitalize mb-1.5">${name}</h2>
-                                <div class="flex flex-wrap gap-1.5">
-                                    ${classBadge}
-                                    ${secBadge}
-                                    ${genderBadge}
-                                </div>
+                            <div>
+                                <h2 class="text-xl font-extrabold text-ios-textLight dark:text-ios-textDark leading-none capitalize">${name}</h2>
+                                <span class="text-[13px] text-ios-subLight dark:text-ios-subDark font-semibold mt-1.5 inline-block bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 px-2 py-0.5 rounded-md">Student Record</span>
                             </div>
                         </div>
                         
-                        <!-- Body: Parents Info -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
-                            <div class="bg-ios-bgLight dark:bg-[#121212] p-3.5 rounded-xl border border-ios-separatorLight/30 dark:border-ios-separatorDark/30">
-                                <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1 flex items-center gap-1.5">
-                                    <i data-lucide="user-check" class="w-3.5 h-3.5 text-ios-blueLight"></i> Father's Name
-                                </p>
-                                <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize pl-5">${father}</p>
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Father's Name</p>
+                                <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${father}</p>
                             </div>
-                            
-                            <div class="bg-ios-bgLight dark:bg-[#121212] p-3.5 rounded-xl border border-ios-separatorLight/30 dark:border-ios-separatorDark/30">
-                                <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1 flex items-center gap-1.5">
-                                    <i data-lucide="users" class="w-3.5 h-3.5 text-ios-purple"></i> Mother's Name
-                                </p>
-                                <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize pl-5">${mother}</p>
+                            <div>
+                                <p class="text-[11px] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Date of Birth</p>
+                                <p class="text-[15px] font-semibold text-ios-textLight dark:text-ios-textDark break-words">${dob}</p>
                             </div>
                         </div>
                         
-                        <!-- Footer: PEN Number Highlight -->
-                        <div class="bg-gradient-to-r from-ios-blueLight/10 to-ios-purple/10 dark:from-ios-blueDark/20 dark:to-ios-purple/20 rounded-xl p-4 flex justify-between items-center border border-ios-blueLight/20 dark:border-ios-blueDark/20 shadow-sm">
-                            <div class="flex items-center gap-2.5 text-ios-textLight dark:text-ios-textDark">
-                                <div class="bg-ios-blueLight dark:bg-ios-blueDark w-8 h-8 rounded-full flex items-center justify-center text-white shadow-sm">
-                                    <i data-lucide="hash" class="w-4 h-4"></i>
-                                </div>
-                                <span class="text-[14px] font-bold uppercase tracking-wide">PEN No.</span>
+                        <div class="bg-gradient-to-r from-ios-blueLight/10 to-ios-purple/10 dark:from-ios-blueDark/20 dark:to-ios-purple/20 rounded-2xl p-4 flex justify-between items-center border border-ios-blueLight/20 dark:border-ios-blueDark/30">
+                            <div class="flex items-center gap-2 text-ios-blueLight dark:text-ios-blueDark">
+                                <i data-lucide="hash" class="w-5 h-5"></i>
+                                <span class="text-[14px] font-extrabold uppercase tracking-wide">PEN No.</span>
                             </div>
-                            <span class="text-[20px] font-bold text-ios-blueLight dark:text-ios-blueDark tracking-widest font-mono bg-white dark:bg-[#1C1C1E] px-3 py-1 rounded-lg shadow-sm border border-ios-blueLight/10 dark:border-ios-blueDark/10">${penNo}</span>
+                            <span class="text-xl font-black text-ios-blueLight dark:text-ios-blueDark tracking-wider font-mono">${penNo}</span>
                         </div>
                     `;
                     resultsContainer.appendChild(card);
                 });
 
                 lucide.createIcons();
-                gsap.to(".result-card", { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: "power2.out" });
+                gsap.to(".result-card", { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.4)" });
             }
 
             searchBtn.addEventListener('click', performSearch);
