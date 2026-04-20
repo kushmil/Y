@@ -18,6 +18,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- New CDN for Image Download Feature -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <!-- Tailwind Config for iOS Theme linked with CSS Variables -->
     <script>
@@ -936,7 +939,8 @@
                         : `<span class="text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold mt-1.5 inline-block bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 px-2.5 py-1 rounded-md">Student Record</span>`;
 
                     const card = document.createElement('div');
-                    card.className = "ios-card p-6 result-card shadow-lg border border-ios-separatorLight/30 dark:border-ios-separatorDark/30";
+                    // Added relative class for proper watermark alignment
+                    card.className = "ios-card p-6 result-card shadow-lg border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 relative";
                     
                     card.innerHTML = `
                         <div class="flex items-center gap-4 border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-5 mb-5">
@@ -972,8 +976,82 @@
                             </div>
                             <span class="text-[1.2em] font-black text-ios-blueLight dark:text-ios-blueDark tracking-wider font-mono">${penNo}</span>
                         </div>
+
+                        <!-- ✨ NEW FEATURE: SELECT & DOWNLOAD ✨ -->
+                        <div class="mt-5 border-t border-ios-separatorLight/30 dark:border-ios-separatorDark/30 pt-4 action-area">
+                            <label class="flex items-center gap-2 cursor-pointer select-none w-fit">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-ios-blueLight focus:ring-ios-blueLight cursor-pointer record-checkbox">
+                                <span class="text-[0.85em] font-medium text-ios-textLight dark:text-ios-textDark">Select to Download</span>
+                            </label>
+                            
+                            <button class="btn-3d download-btn hidden mt-3 !py-3 !text-[0.9em]" style="border-radius: 12px;">
+                                <i data-lucide="download" class="w-4 h-4"></i> Download JPG
+                            </button>
+                        </div>
+
+                        <!-- WATERMARK (Hidden normally, visible on export) -->
+                        <div class="watermark hidden text-center mt-6 text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold opacity-60 tracking-wider">
+                            made by @AnshuRajhans
+                        </div>
                     `;
                     resultsContainer.appendChild(card);
+
+                    // --- Download Feature Logic ---
+                    const checkbox = card.querySelector('.record-checkbox');
+                    const downloadBtn = card.querySelector('.download-btn');
+                    const actionArea = card.querySelector('.action-area');
+                    const watermark = card.querySelector('.watermark');
+
+                    checkbox.addEventListener('change', (e) => {
+                        if(e.target.checked) {
+                            downloadBtn.classList.remove('hidden');
+                            gsap.fromTo(downloadBtn, {opacity: 0, y: -10}, {opacity: 1, y: 0, duration: 0.3});
+                        } else {
+                            gsap.to(downloadBtn, {opacity: 0, y: -10, duration: 0.2, onComplete: () => downloadBtn.classList.add('hidden')});
+                        }
+                    });
+
+                    downloadBtn.addEventListener('click', async () => {
+                        const originalBtnHtml = downloadBtn.innerHTML;
+                        downloadBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Processing...';
+                        lucide.createIcons();
+
+                        // Prepare card for clean screenshot
+                        actionArea.style.display = 'none';
+                        watermark.classList.remove('hidden');
+
+                        try {
+                            // Let DOM updates reflect smoothly before capture
+                            await new Promise(r => setTimeout(r, 150));
+                            
+                            const canvas = await html2canvas(card, {
+                                scale: 2, // High resolution image
+                                backgroundColor: prefs.theme === 'dark' ? '#1C1C1E' : (prefs.bg === '#000000' || prefs.bg === '#1C1C1E' ? '#1C1C1E' : '#FFFFFF'),
+                                useCORS: true,
+                                logging: false
+                            });
+
+                            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                            const link = document.createElement('a');
+                            // Name format for the downloaded file
+                            link.download = `PEN_Record_${name.replace(/\s+/g, '_')}.jpg`;
+                            link.href = imgData;
+                            link.click();
+                            
+                            iziToast.success({ title: 'Success', message: 'Image downloaded!', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                        } catch (error) {
+                            console.error(error);
+                            iziToast.error({ title: 'Error', message: 'Download failed.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                        } finally {
+                            // Restore original UI state
+                            actionArea.style.display = 'block';
+                            watermark.classList.add('hidden');
+                            downloadBtn.innerHTML = originalBtnHtml;
+                            lucide.createIcons();
+                            checkbox.checked = false;
+                            downloadBtn.classList.add('hidden');
+                        }
+                    });
                 });
 
                 lucide.createIcons();
