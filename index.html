@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BN Jha College | PEN Finder</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kavoon&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600&family=Merriweather:wght@400;700&family=Montserrat:wght@400;500;600&family=Nunito:wght@400;600;700&family=Oswald:wght@400;500&family=Poppins:wght@400;500;600&family=Raleway:wght@400;500;600&family=Roboto:wght@400;500;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- CDNs -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config for iOS Theme linked with CSS Variables -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['var(--user-font)', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        brand: ['Kavoon', 'serif'],
+                    },
+                    colors: {
+                        ios: {
+                            bgLight: 'var(--user-bg)', cardLight: 'var(--user-surface)', textLight: 'var(--user-text)', subLight: '#8E8E93', blueLight: '#007AFF', separatorLight: '#C6C6C8',
+                            bgDark: 'var(--user-bg)', cardDark: 'var(--user-surface)', textDark: 'var(--user-text)', subDark: '#8E8E93', blueDark: '#0A84FF', separatorDark: '#38383A',
+                            green: '#34C759', orange: '#FF9500', red: '#FF3B30', purple: '#AF52DE', cyan: '#32ADE6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ================= CSS VARIABLES (Live Updates) ================= */
+        :root {
+            --user-font: 'Inter', sans-serif;
+            --user-bg: #F2F2F7;
+            --user-surface: #FFFFFF;
+            --user-text: #000000;
+            --user-font-size: 17px;
+            --user-radius: 20px;
+        }
+
+        /* Base iOS Reset */
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        body {
+            background-color: var(--user-bg); color: var(--user-text); margin: 0;
+            overflow-x: hidden; font-size: var(--user-font-size);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased; min-height: 100vh;
+        }
+
+        /* SPA View Management */
+        .spa-view { display: none; opacity: 0; transform: scale(0.98); }
+        .spa-view.active { display: block; opacity: 1; transform: scale(1); }
+
+        /* Glassmorphism Header */
+        .ios-nav {
+            background: rgba(242, 242, 247, 0.7);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 0.5px solid rgba(198, 198, 200, 0.5);
+        }
+        .dark .ios-nav { 
+            background: rgba(28, 28, 30, 0.7); 
+            border-bottom: 0.5px solid rgba(56, 56, 58, 0.5); 
+        }
+
+        /* ✨ FLOATING NAVIGATION PANEL ✨ */
+        .floating-nav {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0,0,0,0.04);
+            border-radius: 99px; display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 12px; gap: 12px; z-index: 50; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .floating-nav { background: rgba(28, 28, 30, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
+
+        .tab-link { 
+            color: #8E8E93; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: transparent;
+        }
+        .tab-link:active { transform: scale(0.85); }
+        .tab-link.active-tab { color: #FFFFFF; background: #007AFF; box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4); transform: translateY(-4px); }
+        .dark .tab-link.active-tab { background: #0A84FF; box-shadow: 0 8px 20px rgba(10, 132, 255, 0.4); }
+
+        /* Dynamic Border Radius components */
+        .ios-card { background-color: var(--user-surface); border-radius: var(--user-radius); transition: all 0.3s ease; }
+        .ios-list-item:not(:last-child) .list-content { border-bottom: 0.5px solid rgba(198, 198, 200, 0.5); }
+        .dark .ios-list-item:not(:last-child) .list-content { border-bottom: 0.5px solid rgba(56, 56, 58, 0.5); }
+
+        .btn-3d {
+            background: linear-gradient(135deg, #007AFF, #0056b3); color: #FFFFFF; border-radius: calc(var(--user-radius) * 0.8);
+            font-weight: 600; padding: 16px 24px; display: flex; align-items: center; justify-content: center; gap: 8px;
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); width: 100%; border: none; cursor: pointer;
+        }
+        .btn-3d:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2); }
+        .dark .btn-3d { background: linear-gradient(135deg, #0A84FF, #004085); box-shadow: 0 8px 20px rgba(10, 132, 255, 0.3); }
+
+        .ios-input {
+            width: 100%; padding: 16px; border-radius: calc(var(--user-radius) * 0.8); background-color: var(--user-surface); border: 1.5px solid transparent;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03); color: var(--user-text); outline: none; transition: all 0.3s ease;
+        }
+        .ios-input:focus { border-color: #007AFF; box-shadow: 0 0 0 4px rgba(0,122,255,0.15), 0 4px 12px rgba(0,0,0,0.03); transform: translateY(-2px); }
+        .dark .ios-input:focus { border-color: #0A84FF; box-shadow: 0 0 0 4px rgba(10,132,255,0.15); }
+
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;
+            background-color: #F2F2F7; flex-direction: column; gap: 10px; backdrop-filter: blur(10px);
+        }
+        .dark #splash-screen { background-color: #000000; }
+        .letter-b { display: inline-block; }
+        .letter-rest { display: inline-flex; overflow: hidden; width: 0; opacity: 0; white-space: nowrap; }
+
+        /* ================= PREMIUM SETTINGS UI CSS ================= */
+        .setting-group-title { font-size: 12px; text-transform: uppercase; font-weight: 700; color: #8E8E93; margin: 0 0 8px 16px; letter-spacing: 0.05em; }
+        .setting-card { background: var(--user-surface); border-radius: var(--user-radius); margin-bottom: 28px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03); border: 1px solid rgba(198,198,200,0.3); transition: all 0.3s; }
+        .dark .setting-card { border-color: rgba(56,56,58,0.3); }
+
+        .setting-item { display: flex; align-items: center; padding-left: 16px; cursor: pointer; background: var(--user-surface); transition: background 0.2s; }
+        .setting-item:active { background: rgba(0,0,0,0.03); }
+        .dark .setting-item:active { background: rgba(255,255,255,0.05); }
+
+        .setting-icon-box { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .setting-content { flex: 1; margin-left: 14px; padding: 14px 16px 14px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid rgba(198,198,200,0.5); }
+        .dark .setting-content { border-bottom-color: rgba(56,56,58,0.5); }
+        .expand-pill:last-child .setting-content, .setting-item:last-child .setting-content { border-bottom: none; }
+        
+        .setting-title { font-weight: 600; color: var(--user-text); }
+        .setting-value { font-size: 0.9em; color: #8E8E93; display: flex; align-items: center; gap: 4px; }
+        
+        /* Gradients */
+        .grad-gray { background: linear-gradient(135deg, #8E8E93, #48484A); }
+        .grad-blue { background: linear-gradient(135deg, #007AFF, #0056b3); }
+        .grad-green { background: linear-gradient(135deg, #34C759, #28A745); }
+        .grad-orange { background: linear-gradient(135deg, #FF9500, #FF3B30); }
+        .grad-purple { background: linear-gradient(135deg, #AF52DE, #5E5CE6); }
+        .grad-red { background: linear-gradient(135deg, #FF3B30, #D70015); }
+        .grad-cyan { background: linear-gradient(135deg, #32ADE6, #007AFF); }
+
+        /* Expanding Pill Logic */
+        .pill-content { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s; }
+        .expand-pill.open .pill-content { max-height: 500px; opacity: 1; border-top: 0.5px solid rgba(198,198,200,0.2); }
+        .dark .expand-pill.open .pill-content { border-top-color: rgba(56,56,58,0.2); }
+        .expand-pill.open .transform-icon { transform: rotate(180deg); }
+        .pill-inner { padding: 12px 16px 16px 16px; }
+
+        /* Custom OS Toggle */
+        .custom-toggle { width: 50px; height: 30px; border-radius: 15px; background: #E5E5EA; position: relative; transition: background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .dark .custom-toggle { background: #38383A; }
+        .custom-toggle.active { background: #34C759; }
+        .toggle-knob { width: 26px; height: 26px; background: #fff; border-radius: 50%; position: absolute; top: 2px; left: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .custom-toggle.active .toggle-knob { transform: translateX(20px); }
+
+        /* Option Lists & Color Swatches */
+        .option-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .option-item { padding: 10px 12px; border: 1px solid rgba(198,198,200,0.5); border-radius: calc(var(--user-radius) * 0.6); text-align: center; cursor: pointer; transition: all 0.2s; font-weight: 500; color: var(--user-text); }
+        .dark .option-item { border-color: rgba(56,56,58,0.5); }
+        .option-item.selected { background-color: #007AFF; color: white !important; border-color: #007AFF; }
+        
+        .color-palette { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .color-swatch { width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(198,198,200,0.5); cursor: pointer; transition: transform 0.2s; }
+        .dark .color-swatch { border-color: rgba(56,56,58,0.5); }
+        .color-swatch.selected { transform: scale(1.15); border-color: #007AFF; }
+    </style>
+</head>
+<body class="bg-ios-bgLight dark:bg-ios-bgDark">
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <h1 class="font-brand text-5xl md:text-7xl text-ios-textLight dark:text-ios-textDark flex items-center justify-center">
+            <span id="splash-b" class="letter-b text-ios-blueLight dark:text-ios-blueDark">BN</span>
+            <span id="splash-rest" class="letter-rest ml-2">Jha College</span>
+        </h1>
+        <div class="mt-4 flex gap-2" id="splash-loader">
+            <div class="w-2 h-2 rounded-full bg-ios-blueLight dark:bg-ios-blueDark animate-bounce"></div>
+            <div class="w-2 h-2 rounded-full bg-ios-blueLight dark:bg-ios-blueDark animate-bounce" style="animation-delay: 0.1s"></div>
+            <div class="w-2 h-2 rounded-full bg-ios-blueLight dark:bg-ios-blueDark animate-bounce" style="animation-delay: 0.2s"></div>
+        </div>
+    </div>
+
+    <!-- DYNAMIC TOP NAV -->
+    <header class="ios-nav sticky top-0 z-40 w-full">
+        <div class="max-w-2xl mx-auto px-4 py-3 flex justify-between items-center h-[60px]">
+            <div class="w-1/3 flex justify-start items-center">
+                <div class="p-2 bg-ios-blueLight/10 dark:bg-ios-blueDark/10 rounded-full">
+                    <i data-lucide="graduation-cap" class="w-5 h-5 text-ios-blueLight dark:text-ios-blueDark"></i>
+                </div>
+            </div>
+            <div class="w-1/3 flex justify-center items-center whitespace-nowrap">
+                <span id="nav-title" class="font-brand text-xl text-ios-textLight dark:text-ios-textDark tracking-tight transition-opacity">BN Jha</span>
+            </div>
+            <div class="w-1/3 flex justify-end items-center">
+                <button id="theme-toggle" class="p-2.5 rounded-full bg-ios-separatorLight/30 dark:bg-ios-separatorDark/50 text-ios-textLight dark:text-ios-textDark transition-all active:scale-75 outline-none hover:bg-ios-separatorLight/50">
+                    <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" id="theme-icon-moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SPA ROUTER CONTAINER -->
+    <main id="app-router" class="max-w-2xl mx-auto w-full px-4 pt-6 pb-36 min-h-screen">
+
+        <!-- ==================== VIEW: HOME (SEARCH) ==================== -->
+        <div id="view-home" class="spa-view active" data-title="BN Jha">
+            <!-- Warning Banner -->
+            <div class="bg-gradient-to-r from-ios-orange/10 to-ios-orange/5 border border-ios-orange/20 p-4 mb-8 flex gap-3 items-start ui-elem opacity-0 shadow-sm backdrop-blur-sm" style="border-radius: var(--user-radius);">
+                <i data-lucide="info" class="w-5 h-5 text-ios-orange shrink-0 mt-0.5"></i>
+                <div class="text-[0.8em] text-ios-textLight dark:text-ios-textDark leading-tight">
+                    <strong class="font-semibold block mb-1">Informational Only</strong>
+                    Not an official BN Jha College website. See <a href="#about" class="text-ios-blueLight dark:text-ios-blueDark font-medium underline decoration-ios-blueLight/30 underline-offset-2">About</a> for details.
+                </div>
+            </div>
+
+            <!-- Search Header -->
+            <section class="mb-8 ui-elem opacity-0">
+                <h1 class="text-[2.2em] font-extrabold tracking-tight mb-2 text-ios-textLight dark:text-ios-textDark">Find PEN No.</h1>
+                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark leading-relaxed">
+                    Simply enter your <strong>Full Name</strong> or partial name to fetch your Permanent Enrollment Number (PEN) instantly.
+                </p>
+            </section>
+
+            <!-- Search Form -->
+            <section class="mb-10 ui-elem opacity-0">
+                <div class="relative mb-5">
+                    <i data-lucide="search" class="absolute left-4 top-4 text-ios-subLight dark:text-ios-subDark w-6 h-6"></i>
+                    <input type="text" id="searchInput" class="ios-input pl-14" placeholder="Student Name (e.g. Rahul)" autocomplete="off" />
+                    <button id="clearSearch" class="hidden absolute right-4 top-4 text-ios-subLight active:scale-75 transition-all bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 rounded-full p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <button id="searchBtn" class="btn-3d group">
+                    <i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database
+                </button>
+            </section>
+
+            <!-- Recent Searches -->
+            <section id="recentSearchesSection" class="mb-8 hidden ui-elem opacity-0">
+                <h3 class="text-[0.7em] uppercase font-bold text-ios-subLight dark:text-ios-subDark mb-3 ml-1 tracking-wider">Recent Searches</h3>
+                <div id="recentTags" class="flex flex-wrap gap-2"></div>
+            </section>
+
+            <!-- Server Down Message (Hidden by default) -->
+            <div id="serverDownContainer" class="hidden flex-col items-center justify-center py-12 text-center bg-ios-cardLight dark:bg-ios-cardDark border border-ios-red/30 shadow-sm" style="border-radius: var(--user-radius);">
+                <div class="bg-ios-red/10 p-5 rounded-full mb-5 text-ios-red">
+                    <i data-lucide="server-crash" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-[1.2em] font-bold text-ios-textLight dark:text-ios-textDark mb-1">Server Down</h3>
+                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark mt-1 max-w-[280px]">Unable to connect to the central database at the moment. Please try again later.</p>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW: SETTINGS (UPGRADED) ==================== -->
+        <div id="view-settings" class="spa-view" data-title="Settings">
+            <section class="mb-6 ui-elem opacity-0 mt-2">
+                <h1 class="text-[2.2em] font-extrabold tracking-tight mb-2 text-ios-textLight dark:text-ios-textDark">Settings</h1>
+                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark leading-relaxed">
+                    Personalize your app's typography, colors, interface style, and data.
+                </p>
+            </section>
+            
+            <!-- Dynamic Settings Container injected via JS -->
+            <div id="settings-container"></div>
+        </div>
+
+        <!-- ==================== VIEW: ABOUT / DISCLAIMER ==================== -->
+        <div id="view-about" class="spa-view" data-title="Notice">
+            <div class="flex flex-col items-center justify-center text-center mt-6 mb-10">
+                <div class="w-20 h-20 bg-ios-red/10 text-ios-red rounded-full flex items-center justify-center mb-5 relative">
+                    <div class="absolute inset-0 bg-ios-red/20 rounded-full animate-ping opacity-20"></div>
+                    <i data-lucide="shield-alert" class="w-10 h-10 relative z-10"></i>
+                </div>
+                <h1 class="text-[1.8em] font-extrabold tracking-tight text-ios-textLight dark:text-ios-textDark">Important Notice</h1>
+            </div>
+
+            <div class="ios-card p-6 mb-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md">
+                <h3 class="text-[1.1em] font-bold border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-3 mb-4 text-ios-textLight dark:text-ios-textDark flex items-center gap-2">
+                    <i data-lucide="globe" class="w-5 h-5 text-ios-blueLight"></i> English Disclaimer
+                </h3>
+                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed mb-4">
+                    This platform is <strong class="text-ios-red dark:text-red-400">not officially affiliated, associated, authorized, or endorsed by</strong> BN Jha College, Deoghar, or any of its subsidiaries.
+                </p>
+                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed">
+                    This is an independent informational project developed solely by Anshu Rajhans to help students easily locate their Permanent Enrollment Number (PEN) using publicly shared data.
+                </p>
+            </div>
+
+            <div class="ios-card p-6 mb-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md">
+                <h3 class="text-[1.1em] font-bold border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-3 mb-4 text-ios-textLight dark:text-ios-textDark flex items-center gap-2">
+                    <i data-lucide="languages" class="w-5 h-5 text-ios-orange"></i> हिंदी सूचना
+                </h3>
+                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed mb-4">
+                    यह वेबसाइट <strong class="text-ios-textLight dark:text-ios-textDark">बी. एन. झा कॉलेज, देवघर</strong> या किसी भी सरकारी/निजी शैक्षणिक संस्थान से आधिकारिक रूप से संबंधित नहीं है।
+                </p>
+                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed">
+                    यह एक स्वतंत्र पोर्टल है, जिसे केवल छात्रों की सुविधा के लिए विकसित किया गया है, ताकि वे आसानी से अपना PEN नंबर खोज सकें।
+                </p>
+            </div>
+            
+            <div class="text-center mt-10 opacity-60">
+                <p class="text-[0.8em] font-medium text-ios-textLight dark:text-ios-textDark">© Anshu Rajhans • All Rights Reserved</p>
+            </div>
+        </div>
+
+        <!-- ==================== VIEW: DEVELOPER ==================== -->
+        <div id="view-dev" class="spa-view" data-title="Developer">
+            <div class="flex flex-col items-center mt-8 mb-10 text-center">
+                <div class="w-32 h-32 rounded-full bg-gradient-to-tr from-ios-blueLight via-ios-purple to-ios-orange shadow-2xl flex items-center justify-center text-white mb-5 relative p-1.5 transform hover:scale-105 transition-transform duration-500">
+                    <div class="w-full h-full bg-ios-bgLight dark:bg-ios-bgDark rounded-full flex items-center justify-center overflow-hidden">
+                        <img src="https://ui-avatars.com/api/?name=Anshu+Rajhans&background=007AFF&color=fff&size=200&font-size=0.35&bold=true" alt="Anshu" class="w-full h-full object-cover relative z-10 rounded-full">
+                    </div>
+                </div>
+                <h1 class="text-[1.8em] font-extrabold tracking-tight text-ios-textLight dark:text-ios-textDark">Anshu Rajhans</h1>
+                <p class="text-ios-blueLight dark:text-ios-blueDark font-semibold mt-1 bg-ios-blueLight/10 dark:bg-ios-blueDark/20 px-4 py-1 rounded-full text-[0.8em] inline-block">System Architect</p>
+            </div>
+
+            <h2 class="text-[0.7em] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider">Connect With Me</h2>
+            <div class="ios-card overflow-hidden mb-10 shadow-md border border-ios-separatorLight/30 dark:border-ios-separatorDark/30">
+                <a href="https://instagram.com/anshurajhans" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
+                    <div class="bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <div>
+                            <span class="block text-[1em] font-semibold text-ios-textLight dark:text-ios-textDark">Instagram</span>
+                            <span class="block text-[0.8em] text-ios-subLight dark:text-ios-subDark mt-0.5">@anshurajhans</span>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
+                    </div>
+                </a>
+                <a href="https://youtube.com/@vitcoore" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
+                    <div class="bg-gradient-to-tr from-red-600 to-red-500 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="youtube" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <div>
+                            <span class="block text-[1em] font-semibold text-ios-textLight dark:text-ios-textDark">YouTube</span>
+                            <span class="block text-[0.8em] text-ios-subLight dark:text-ios-subDark mt-0.5">@vitcoore</span>
+                        </div>
+                        <i data-lucide="external-link" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
+                    </div>
+                </a>
+                <a href="mailto:vipwebff@gmail.com" class="ios-list-item flex items-center pl-4 block active:bg-ios-separatorLight/20 dark:active:bg-ios-separatorDark/20 transition-colors">
+                    <div class="bg-gradient-to-tr from-blue-400 to-ios-blueLight w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-white shadow-sm">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
+                    </div>
+                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
+                        <div>
+                            <span class="block text-[1em] font-semibold text-ios-textLight dark:text-ios-textDark">Email Me</span>
+                            <span class="block text-[0.8em] text-ios-subLight dark:text-ios-subDark mt-0.5">vipwebff@gmail.com</span>
+                        </div>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-ios-separatorLight dark:text-ios-separatorDark"></i>
+                    </div>
+                </a>
+            </div>
+
+            <h2 class="text-[0.7em] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider">Tech Stack</h2>
+            <div class="ios-card p-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md flex flex-wrap gap-3">
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="file-code" class="w-4 h-4 text-ios-orange"></i> HTML/JS</span>
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-cyan-500"></i> Tailwind CSS</span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ✨ FLOATING TAB BAR ✨ -->
+    <nav class="floating-nav">
+        <a href="#home" class="tab-link active-tab" data-target="home" title="Search">
+            <i data-lucide="search" class="w-6 h-6"></i>
+        </a>
+        <a href="#about" class="tab-link" data-target="about" title="About">
+            <i data-lucide="info" class="w-6 h-6"></i>
+        </a>
+        <a href="#developer" class="tab-link" data-target="developer" title="Developer">
+            <i data-lucide="code-2" class="w-6 h-6"></i>
+        </a>
+        <a href="#settings" class="tab-link group" data-target="settings" title="Settings">
+            <i data-lucide="settings" class="w-6 h-6 animate-[spin_4s_linear_infinite]"></i>
+        </a>
+    </nav>
+
+    <!-- Scripts -->
+    <script>
+        let recentSearches = JSON.parse(localStorage.getItem('pen_recent_searches')) || [];
+
+        /* ================= PREMIUM SETTINGS STATE & LOGIC ================= */
+        const FONTS = ['Inter', 'Poppins', 'Roboto', 'Montserrat', 'Nunito', 'Lora', 'Oswald', 'Raleway', 'Ubuntu', 'Merriweather'];
+        const BG_COLORS = ['#F2F2F7', '#FFFFFF', '#FFF5F5', '#F0FDF4', '#EFF6FF', '#000000', '#1C1C1E'];
+        const TEXT_COLORS = ['#000000', '#333333', '#007AFF', '#FF3B30', '#FFFFFF', '#EBEBF5'];
+        const RADIUS_OPTS = [
+            { label: 'Sharp', val: '0' },
+            { label: 'Medium', val: '12' },
+            { label: 'Rounded', val: '20' },
+            { label: 'Maximum', val: '32' }
+        ];
+
+        let prefs = {
+            font: 'Inter', bg: '#F2F2F7', text: '#000000', fontSize: '17', radius: '20', theme: 'system'
+        };
+
+        function isDarkHex(hex) { return (hex === '#000000' || hex === '#1C1C1E'); }
+
+        function loadPrefs() {
+            const saved = localStorage.getItem('anshu_prefs');
+            if (saved) {
+                prefs = JSON.parse(saved);
+            } else {
+                // Determine system theme default
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    prefs.theme = 'dark';
+                } else {
+                    prefs.theme = 'light';
+                }
+            }
+            if(prefs.theme === 'dark') document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+            applyPrefsGlobally();
+            renderSettingsUI();
+        }
+
+        function savePrefs() {
+            localStorage.setItem('anshu_prefs', JSON.stringify(prefs));
+            applyPrefsGlobally();
+        }
+
+        function applyPrefsGlobally() {
+            const root = document.documentElement;
+            // Update Base Font
+            root.style.setProperty('--user-font', `'${prefs.font}', sans-serif`);
+            document.body.style.fontFamily = `'${prefs.font}', sans-serif`;
+            
+            // Handle Light vs Dark custom colors
+            if (prefs.theme === 'dark') {
+                root.style.setProperty('--user-bg', '#000000');
+                root.style.setProperty('--user-surface', '#1C1C1E');
+                root.style.setProperty('--user-text', '#FFFFFF');
+                document.getElementById('theme-icon-sun')?.classList.replace('hidden', 'block');
+                document.getElementById('theme-icon-moon')?.classList.replace('block', 'hidden');
+            } else {
+                root.style.setProperty('--user-bg', prefs.bg);
+                root.style.setProperty('--user-surface', isDarkHex(prefs.bg) ? '#1C1C1E' : '#FFFFFF');
+                root.style.setProperty('--user-text', prefs.text);
+                document.getElementById('theme-icon-sun')?.classList.replace('block', 'hidden');
+                document.getElementById('theme-icon-moon')?.classList.replace('hidden', 'block');
+            }
+            
+            // Adjust Scales
+            root.style.setProperty('--user-font-size', `${prefs.fontSize}px`);
+            root.style.setProperty('--user-radius', `${prefs.radius}px`);
+            document.body.style.fontSize = `${prefs.fontSize}px`;
+        }
+
+        function renderSettingsUI() {
+            const container = document.getElementById('settings-container');
+            const currentRadiusLabel = RADIUS_OPTS.find(r => r.val === prefs.radius)?.label || 'Rounded';
+
+            container.innerHTML = `
+                <!-- Appearance Group -->
+                <div class="setting-group-title ui-elem opacity-0">Appearance</div>
+                <div class="setting-card ui-elem opacity-0">
+                    
+                    <!-- Theme Toggle -->
+                    <div class="setting-item" onclick="toggleThemeDirectly()">
+                        <div class="setting-icon-box grad-gray">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                        </div>
+                        <div class="setting-content">
+                            <span class="setting-title">Dark Mode</span>
+                            <div class="custom-toggle ${prefs.theme === 'dark' ? 'active' : ''}" id="ui-theme-toggle">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typography -->
+                    <div class="expand-pill" onclick="togglePill(this)">
+                        <div class="setting-item">
+                            <div class="setting-icon-box grad-blue">
+                                <i data-lucide="type" class="w-5 h-5"></i>
+                            </div>
+                            <div class="setting-content">
+                                <span class="setting-title">Typography</span>
+                                <span class="setting-value"><span id="set-font-label">${prefs.font}</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
+                            </div>
+                        </div>
+                        <div class="pill-content"><div class="pill-inner"><div class="option-list">
+                            ${FONTS.map(f => `<div class="option-item ${prefs.font===f?'selected':''}" style="font-family: '${f}', sans-serif;" onclick="event.stopPropagation(); updateSetting('font', '${f}'); resetSettingsSelection(this, 'option-item'); document.getElementById('set-font-label').innerText = '${f}';">${f}</div>`).join('')}
+                        </div></div></div>
+                    </div>
+
+                    <!-- Font Size Slider -->
+                    <div class="expand-pill" onclick="togglePill(this)">
+                        <div class="setting-item">
+                            <div class="setting-icon-box grad-green">
+                                <i data-lucide="a-large-small" class="w-5 h-5"></i>
+                            </div>
+                            <div class="setting-content">
+                                <span class="setting-title">Font Size</span>
+                                <span class="setting-value"><span id="set-fs-label">${prefs.fontSize}px</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
+                            </div>
+                        </div>
+                        <div class="pill-content"><div class="pill-inner">
+                            <input type="range" min="14" max="24" value="${prefs.fontSize}" class="w-full accent-[#007AFF]" oninput="document.getElementById('set-fs-label').innerText = this.value + 'px'; updateSetting('fontSize', this.value)" onclick="event.stopPropagation()">
+                        </div></div>
+                    </div>
+                </div>
+
+                <!-- Colors Group -->
+                <div class="setting-group-title ui-elem opacity-0">Colors (Light Mode)</div>
+                <div class="setting-card ui-elem opacity-0">
+                    <!-- Background Color -->
+                    <div class="expand-pill" onclick="togglePill(this)">
+                        <div class="setting-item">
+                            <div class="setting-icon-box grad-orange">
+                                <i data-lucide="palette" class="w-5 h-5"></i>
+                            </div>
+                            <div class="setting-content">
+                                <span class="setting-title">Background Color</span>
+                                <span class="setting-value"><i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
+                            </div>
+                        </div>
+                        <div class="pill-content"><div class="pill-inner"><div class="color-palette">
+                            ${BG_COLORS.map(c => `<div class="color-swatch ${prefs.bg===c?'selected':''}" style="background: ${c};" onclick="event.stopPropagation(); updateSetting('bg', '${c}'); resetSettingsSelection(this, 'color-swatch');"></div>`).join('')}
+                        </div></div></div>
+                    </div>
+                    
+                    <!-- Text Color -->
+                    <div class="expand-pill" onclick="togglePill(this)">
+                        <div class="setting-item">
+                            <div class="setting-icon-box grad-purple">
+                                <i data-lucide="baseline" class="w-5 h-5"></i>
+                            </div>
+                            <div class="setting-content border-none">
+                                <span class="setting-title">Text Color</span>
+                                <span class="setting-value"><i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
+                            </div>
+                        </div>
+                        <div class="pill-content"><div class="pill-inner"><div class="color-palette">
+                            ${TEXT_COLORS.map(c => `<div class="color-swatch ${prefs.text===c?'selected':''}" style="background: ${c}; border-color: ${isDarkHex(c) ? '#38383A' : '#C6C6C8'};" onclick="event.stopPropagation(); updateSetting('text', '${c}'); resetSettingsSelection(this, 'color-swatch');"></div>`).join('')}
+                        </div></div></div>
+                    </div>
+                </div>
+
+                <!-- Interface Group -->
+                <div class="setting-group-title ui-elem opacity-0">Interface</div>
+                <div class="setting-card ui-elem opacity-0">
+                    <div class="expand-pill" onclick="togglePill(this)">
+                        <div class="setting-item">
+                            <div class="setting-icon-box grad-cyan">
+                                <i data-lucide="square" class="w-5 h-5"></i>
+                            </div>
+                            <div class="setting-content border-none">
+                                <span class="setting-title">UI Style</span>
+                                <span class="setting-value"><span id="set-rad-label">${currentRadiusLabel}</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
+                            </div>
+                        </div>
+                        <div class="pill-content"><div class="pill-inner"><div class="option-list">
+                            ${RADIUS_OPTS.map(r => `<div class="option-item ${prefs.radius===r.val?'selected':''}" onclick="event.stopPropagation(); updateSetting('radius', '${r.val}'); resetSettingsSelection(this, 'option-item'); document.getElementById('set-rad-label').innerText = '${r.label}';">${r.label}</div>`).join('')}
+                        </div></div></div>
+                    </div>
+                </div>
+
+                <!-- Data & Storage Group -->
+                <div class="setting-group-title ui-elem opacity-0">Data & Storage</div>
+                <div class="setting-card ui-elem opacity-0" style="margin-bottom:10px;">
+                    <div class="setting-item" onclick="clearSearchHistory()">
+                        <div class="setting-icon-box grad-gray">
+                            <i data-lucide="eraser" class="w-5 h-5"></i>
+                        </div>
+                        <div class="setting-content">
+                            <span class="setting-title text-ios-textLight dark:text-ios-textDark">Clear Search History</span>
+                        </div>
+                    </div>
+                    <div class="setting-item" onclick="resetApp()">
+                        <div class="setting-icon-box grad-red">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </div>
+                        <div class="setting-content border-none">
+                            <span class="setting-title" style="color: #FF3B30;">Reset App Data</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- App Info -->
+                <div class="flex flex-col items-center justify-center mt-12 opacity-50 ui-elem opacity-0 pb-10">
+                    <i data-lucide="graduation-cap" class="w-10 h-10 mb-2 text-ios-subLight dark:text-ios-subDark"></i>
+                    <p class="text-[0.9em] font-bold text-ios-textLight dark:text-ios-textDark">BN Jha PEN Portal</p>
+                    <p class="text-[0.75em] text-ios-subLight dark:text-ios-subDark mt-1">Version 2.0 • Pure Premium</p>
+                </div>
+            `;
+            lucide.createIcons(); // Instantly bind SVG icons dynamically generated
+        }
+
+        window.togglePill = function(el) { el.classList.toggle('open'); };
+        
+        window.updateSetting = function(key, val) {
+            prefs[key] = val;
+            savePrefs();
+            iziToast.show({ title: 'Updated', message: 'Applied successfully.', position: 'topCenter', timeout: 1000, color: 'green', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+        };
+        
+        window.resetSettingsSelection = function(el, cls) {
+            const siblings = el.parentElement.querySelectorAll('.'+cls);
+            siblings.forEach(s => s.classList.remove('selected'));
+            el.classList.add('selected');
+        };
+
+        window.toggleThemeDirectly = function() {
+            const willBeDark = prefs.theme !== 'dark';
+            applyTheme(willBeDark);
+            
+            const toggle = document.getElementById('ui-theme-toggle');
+            if(toggle) {
+                if(willBeDark) toggle.classList.add('active');
+                else toggle.classList.remove('active');
+            }
+            if(navigator.vibrate) navigator.vibrate(15);
+        };
+
+        function applyTheme(isDark) {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                prefs.theme = 'dark';
+                localStorage.theme = 'dark';
+            } else {
+                document.documentElement.classList.remove('dark');
+                prefs.theme = 'light';
+                localStorage.theme = 'light';
+            }
+            savePrefs();
+        }
+
+        /* App Reset and Data Functions */
+        window.clearSearchHistory = function() {
+            Swal.fire({
+                title: 'Clear History?',
+                text: "Your recent searches will be deleted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#FF3B30',
+                cancelButtonColor: '#8E8E93',
+                confirmButtonText: 'Yes, clear it',
+                background: prefs.theme === 'dark' ? '#1C1C1E' : '#FFFFFF',
+                color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000',
+                customClass: { popup: 'rounded-ios' }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('pen_recent_searches');
+                    recentSearches = [];
+                    updateRecentSearches();
+                    iziToast.success({ title: 'Cleared', message: 'History removed.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                }
+            })
+        };
+
+        window.resetApp = function() {
+            Swal.fire({
+                title: 'Reset App Data?',
+                text: "Your preferences, custom themes, and history will be permanently deleted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#FF3B30',
+                cancelButtonColor: '#8E8E93',
+                confirmButtonText: 'Yes, reset it',
+                background: prefs.theme === 'dark' ? '#1C1C1E' : '#FFFFFF',
+                color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000',
+                customClass: { popup: 'rounded-ios' }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('anshu_prefs');
+                    localStorage.removeItem('pen_recent_searches');
+                    localStorage.removeItem('theme');
+                    window.location.reload();
+                }
+            })
+        };
+
+        /* ================= Core App Initialization ================= */
+        document.addEventListener("DOMContentLoaded", () => {
+            loadPrefs(); // Load premium configurations immediately
+            lucide.createIcons();
+
+            // Setup Header Theme Toggle Click
+            const themeBtnHeader = document.getElementById('theme-toggle');
+            themeBtnHeader.addEventListener('click', () => {
+                window.toggleThemeDirectly();
+                gsap.fromTo(themeBtnHeader, {rotation: -180, scale: 0.5}, {rotation: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)"});
+            });
+
+            // SPA Routing Engine (Smooth Spring Animations)
+            const routes = { '': 'view-home', '#': 'view-home', '#home': 'view-home', '#about': 'view-about', '#developer': 'view-dev', '#settings': 'view-settings' };
+            const navTitle = document.getElementById('nav-title');
+            const tabLinks = document.querySelectorAll('.tab-link');
+            let currentActiveId = 'view-home';
+
+            function handleRouting() {
+                const hash = window.location.hash || '#home';
+                const targetId = routes[hash] || 'view-home';
+                if (targetId === currentActiveId) return;
+
+                const currentEl = document.getElementById(currentActiveId);
+                const targetEl = document.getElementById(targetId);
+                
+                // Spring Out current view
+                gsap.to(currentEl, {
+                    opacity: 0, scale: 0.95, y: -20, duration: 0.3, ease: "power2.inOut",
+                    onComplete: () => {
+                        currentEl.classList.remove('active');
+                        targetEl.classList.add('active');
+                        window.scrollTo(0, 0);
+                        
+                        // Header Title Animation
+                        gsap.to(navTitle, {opacity: 0, y: -5, duration: 0.15, onComplete: () => {
+                            if(hash === '#home' || hash === '') {
+                                navTitle.style.fontFamily = "'Kavoon', serif";
+                                navTitle.innerText = "BN Jha";
+                            } else {
+                                navTitle.style.fontFamily = `var(--user-font), sans-serif`;
+                                navTitle.innerText = targetEl.getAttribute('data-title');
+                            }
+                            gsap.to(navTitle, {opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.5)"});
+                        }});
+
+                        // Update Active Tab Icon
+                        tabLinks.forEach(link => link.classList.remove('active-tab'));
+                        document.querySelector(`.tab-link[href="${hash}"]`)?.classList.add('active-tab');
+
+                        // Spring In new view
+                        gsap.fromTo(targetEl, 
+                            { opacity: 0, scale: 0.95, y: 30 }, 
+                            { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.2)" }
+                        );
+                        
+                        // Reveal dynamically loaded UI elements elegantly
+                        gsap.to("#" + targetId + " .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)", delay: 0.1 });
+
+                        currentActiveId = targetId;
+                    }
+                });
+            }
+
+            window.addEventListener('hashchange', handleRouting);
+            if(window.location.hash && window.location.hash !== '#home') {
+                const initialTarget = routes[window.location.hash] || 'view-home';
+                document.getElementById('view-home').classList.remove('active');
+                document.getElementById(initialTarget).classList.add('active');
+                document.querySelector(`.tab-link[href="${window.location.hash}"]`)?.classList.add('active-tab');
+                document.querySelector('.tab-link[href="#home"]')?.classList.remove('active-tab');
+                
+                navTitle.style.fontFamily = `var(--user-font), sans-serif`;
+                navTitle.innerText = document.getElementById(initialTarget).getAttribute('data-title');
+                currentActiveId = initialTarget;
+                
+                gsap.to("#" + initialTarget + " .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" });
+            }
+
+            // --- Splash Animation ---
+            const tl = gsap.timeline();
+            document.body.style.overflow = "hidden";
+            tl.fromTo("#splash-b", { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "bounce.out" })
+              .to("#splash-rest", { width: "auto", opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
+              .to("#splash-loader", { opacity: 0, duration: 0.3, delay: 0.5 })
+              .to("#splash-screen", {
+                  opacity: 0, backdropFilter: "blur(0px)", duration: 0.5,
+                  onComplete: () => {
+                      document.getElementById("splash-screen").style.display = "none";
+                      document.body.style.overflow = ""; 
+                  }
+              });
+            tl.to("#" + currentActiveId + " .ui-elem", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }, "-=0.2");
+
+            // --- Search Engine Logic ---
+            const searchInput = document.getElementById('searchInput');
+            const clearSearchBtn = document.getElementById('clearSearch');
+            const searchBtn = document.getElementById('searchBtn');
+            const serverDownContainer = document.getElementById('serverDownContainer');
+            const recentSection = document.getElementById('recentSearchesSection');
+            const recentTags = document.getElementById('recentTags');
+
+            window.updateRecentSearches = function() {
+                if(recentSearches.length === 0) {
+                    recentSection.classList.add('hidden');
+                    return;
+                }
+                recentSection.classList.remove('hidden');
+                recentTags.innerHTML = '';
+                recentSearches.forEach(term => {
+                    const chip = document.createElement('button');
+                    chip.className = "bg-ios-separatorLight/30 dark:bg-ios-separatorDark/40 px-4 py-2 rounded-full text-[0.8em] font-semibold text-ios-textLight dark:text-ios-textDark active:scale-90 transition-all hover:bg-ios-separatorLight/50";
+                    chip.innerText = term;
+                    chip.onclick = () => { searchInput.value = term; performSearch(); };
+                    recentTags.appendChild(chip);
+                });
+            }
+            updateRecentSearches();
+
+            searchInput.addEventListener('input', () => {
+                if(searchInput.value.length > 0) {
+                    clearSearchBtn.classList.remove('hidden');
+                    gsap.to(clearSearchBtn, {opacity: 1, scale: 1, duration: 0.2});
+                } else {
+                    gsap.to(clearSearchBtn, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearchBtn.classList.add('hidden')});
+                }
+            });
+            
+            clearSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                gsap.to(clearSearchBtn, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearchBtn.classList.add('hidden')});
+                serverDownContainer.classList.add('hidden');
+                searchInput.focus();
+            });
+
+            function performSearch() {
+                const query = searchInput.value.trim().toLowerCase();
+                serverDownContainer.classList.add('hidden');
+
+                if (!query) {
+                    iziToast.error({ title: 'Empty', message: 'Please enter a name.', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                    if(navigator.vibrate) navigator.vibrate([10, 30, 10]);
+                    gsap.fromTo(searchInput, {x: -5}, {x: 5, duration: 0.1, yoyo: true, repeat: 3, onComplete: ()=>gsap.to(searchInput, {x:0})});
+                    return;
+                }
+
+                if(!recentSearches.includes(searchInput.value.trim())) {
+                    recentSearches.unshift(searchInput.value.trim());
+                    if(recentSearches.length > 5) recentSearches.pop();
+                    localStorage.setItem('pen_recent_searches', JSON.stringify(recentSearches));
+                    updateRecentSearches();
+                }
+
+                if(navigator.vibrate) navigator.vibrate(15);
+                searchBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Searching...';
+                lucide.createIcons();
+                
+                // Simulate network delay before showing "Server Down"
+                setTimeout(() => {
+                    searchBtn.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database';
+                    lucide.createIcons();
+
+                    serverDownContainer.classList.remove('hidden');
+                    gsap.fromTo(serverDownContainer, {opacity: 0, scale: 0.9, y: 20}, {opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)"});
+                }, 800); 
+            }
+
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') { searchInput.blur(); performSearch(); }
+            });
+        });
+    </script>
+</body>
+</html>
