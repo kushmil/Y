@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>BN Jha College | PEN Finder</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (Brand + All Premium User Fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kavoon&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600&family=Merriweather:wght@400;700&family=Montserrat:wght@400;500;600&family=Nunito:wght@400;600;700&family=Oswald:wght@400;500&family=Poppins:wght@400;500;600&family=Raleway:wght@400;500;600&family=Roboto:wght@400;500;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
@@ -17,6 +17,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- New CDN for Image Download Feature -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <!-- Tailwind Config for iOS Theme linked with CSS Variables -->
     <script>
@@ -43,12 +47,12 @@
     <style>
         /* ================= CSS VARIABLES (Live Updates) ================= */
         :root {
-            --user-font: 'Inter', sans-serif;
+            --user-font: 'Ubuntu', sans-serif;
             --user-bg: #F2F2F7;
             --user-surface: #FFFFFF;
             --user-text: #000000;
-            --user-font-size: 17px;
-            --user-radius: 20px;
+            --user-font-size: 22px;
+            --user-radius: 32px;
         }
 
         /* Base iOS Reset */
@@ -122,6 +126,8 @@
         .letter-b { display: inline-block; }
         .letter-rest { display: inline-flex; overflow: hidden; width: 0; opacity: 0; white-space: nowrap; }
 
+        .result-card { opacity: 0; transform: translateY(30px) scale(0.95); }
+
         /* ================= PREMIUM SETTINGS UI CSS ================= */
         .setting-group-title { font-size: 12px; text-transform: uppercase; font-weight: 700; color: #8E8E93; margin: 0 0 8px 16px; letter-spacing: 0.05em; }
         .setting-card { background: var(--user-surface); border-radius: var(--user-radius); margin-bottom: 28px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03); border: 1px solid rgba(198,198,200,0.3); transition: all 0.3s; }
@@ -172,7 +178,87 @@
         .color-swatch { width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(198,198,200,0.5); cursor: pointer; transition: transform 0.2s; }
         .dark .color-swatch { border-color: rgba(56,56,58,0.5); }
         .color-swatch.selected { transform: scale(1.15); border-color: #007AFF; }
+
+        /* ================= NEW PILL THEME TOGGLE ================= */
+        .theme-pill {
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background: rgba(198, 198, 200, 0.4);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            transition: background 0.4s ease;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .dark .theme-pill {
+            background: rgba(56, 56, 58, 0.6);
+            border-color: rgba(255,255,255,0.05);
+        }
+
+        .theme-pill-icon {
+            width: 14px;
+            height: 14px;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+        .theme-pill .icon-moon { color: #8E8E93; }
+        .theme-pill .icon-sun { color: #FF9500; }
+        .dark .theme-pill .icon-moon { color: #32ADE6; }
+        .dark .theme-pill .icon-sun { color: #8E8E93; }
+
+        .theme-pill-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: #FFFFFF;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+        }
+        .dark .theme-pill-knob {
+            transform: translateX(30px);
+            background: #1C1C1E;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
     </style>
+
+    <!-- SECURITY SCRIPT -->
+    <script>
+        // 1. Disable Console Output to hide data/errors
+        if (typeof console !== "undefined") {
+            console.log = function() {};
+            console.warn = function() {};
+            console.error = function() {};
+            console.info = function() {};
+        }
+
+        // 2. Disable Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 3. Disable specific keyboard shortcuts (F12, Inspect Element, Source Code)
+        document.onkeydown = function(e) {
+            // F12
+            if (e.keyCode == 123) return false;
+            // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+            // Ctrl+Shift+C
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
+            // Ctrl+Shift+J
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        };
+    </script>
 </head>
 <body class="bg-ios-bgLight dark:bg-ios-bgDark">
 
@@ -201,10 +287,18 @@
                 <span id="nav-title" class="font-brand text-xl text-ios-textLight dark:text-ios-textDark tracking-tight transition-opacity">BN Jha</span>
             </div>
             <div class="w-1/3 flex justify-end items-center">
-                <button id="theme-toggle" class="p-2.5 rounded-full bg-ios-separatorLight/30 dark:bg-ios-separatorDark/50 text-ios-textLight dark:text-ios-textDark transition-all active:scale-75 outline-none hover:bg-ios-separatorLight/50">
-                    <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden dark:block"></i>
-                    <i data-lucide="moon" id="theme-icon-moon" class="w-5 h-5 block dark:hidden"></i>
-                </button>
+                
+                <!-- ✨ REPLACED THEME TOGGLE ICON HERE ✨ -->
+                <div id="theme-toggle" class="theme-pill">
+                    <!-- Left Icon: Moon -->
+                    <svg class="theme-pill-icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <!-- Right Icon: Sun -->
+                    <svg class="theme-pill-icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    
+                    <!-- Sliding Knob -->
+                    <div class="theme-pill-knob"></div>
+                </div>
+
             </div>
         </div>
     </header>
@@ -249,13 +343,23 @@
                 <div id="recentTags" class="flex flex-wrap gap-2"></div>
             </section>
 
-            <!-- Server Down Message (Hidden by default) -->
-            <div id="serverDownContainer" class="hidden flex-col items-center justify-center py-12 text-center bg-ios-cardLight dark:bg-ios-cardDark border border-ios-red/30 shadow-sm" style="border-radius: var(--user-radius);">
-                <div class="bg-ios-red/10 p-5 rounded-full mb-5 text-ios-red">
-                    <i data-lucide="server-crash" class="w-10 h-10"></i>
+            <!-- Data Status -->
+            <div id="dataStatus" class="flex items-center justify-center gap-2 text-[0.85em] font-medium text-ios-blueLight dark:text-ios-blueDark mb-6 bg-ios-blueLight/5 py-2 px-4 rounded-full w-fit mx-auto">
+                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Securely syncing...
+            </div>
+            
+            <div id="searchCount" class="hidden text-center mb-6 text-[0.85em] font-semibold text-ios-green bg-ios-green/10 py-2 px-4 rounded-full w-fit mx-auto backdrop-blur-sm"></div>
+
+            <!-- Results Area -->
+            <section id="resultsContainer" class="flex flex-col gap-5"></section>
+
+            <!-- No Results Fallback -->
+            <div id="noResults" class="hidden flex-col items-center justify-center py-12 text-center bg-ios-cardLight dark:bg-ios-cardDark border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-sm" style="border-radius: var(--user-radius);">
+                <div class="bg-ios-separatorLight/20 dark:bg-ios-separatorDark/20 p-5 rounded-full mb-5">
+                    <i data-lucide="file-question" class="w-10 h-10 text-ios-subLight dark:text-ios-subDark"></i>
                 </div>
-                <h3 class="text-[1.2em] font-bold text-ios-textLight dark:text-ios-textDark mb-1">Server Down</h3>
-                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark mt-1 max-w-[280px]">Unable to connect to the central database at the moment. Please try again later.</p>
+                <h3 class="text-[1.2em] font-bold text-ios-textLight dark:text-ios-textDark mb-1">No match found</h3>
+                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark mt-1 max-w-[250px]">Check the spelling or try searching with only your first name.</p>
             </div>
         </div>
 
@@ -367,6 +471,7 @@
             <div class="ios-card p-6 border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 shadow-md flex flex-wrap gap-3">
                 <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="file-code" class="w-4 h-4 text-ios-orange"></i> HTML/JS</span>
                 <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-cyan-500"></i> Tailwind CSS</span>
+                <span class="bg-ios-bgLight dark:bg-[#121212] px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-ios-separatorLight/50 dark:border-ios-separatorDark/50 shadow-sm flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-ios-green"></i> Google Sheets API</span>
             </div>
         </div>
 
@@ -390,6 +495,11 @@
 
     <!-- Scripts -->
     <script>
+        // Obfuscated Base64 Encoded Google Sheet URL to hide it from source code view
+        const encodedURL = 'aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlFzQkxDMnpDZ2E1b1E3MDZFYjl0dDc3d1h6SzBtYkZGR1B5R0dIMTlvYjZBTVNBR0JmVlU4ZHp4M0t4Ukh6SmJqLTI2ZGd2MDUtd0Zwci9wdWI/b3V0cHV0PWNzdg==';
+        const GOOGLE_SHEET_CSV_URL = atob(encodedURL);
+        
+        let studentData = [];
         let recentSearches = JSON.parse(localStorage.getItem('pen_recent_searches')) || [];
 
         /* ================= PREMIUM SETTINGS STATE & LOGIC ================= */
@@ -403,8 +513,14 @@
             { label: 'Maximum', val: '32' }
         ];
 
+        // ✨ Default Settings Updated to requested values
         let prefs = {
-            font: 'Inter', bg: '#F2F2F7', text: '#000000', fontSize: '17', radius: '20', theme: 'system'
+            font: 'Ubuntu',     // Changed from Inter
+            bg: '#F2F2F7', 
+            text: '#000000', 
+            fontSize: '22',     // Changed from 17
+            radius: '32',       // Changed from 20 to Maximum
+            theme: 'system'
         };
 
         function isDarkHex(hex) { return (hex === '#000000' || hex === '#1C1C1E'); }
@@ -414,7 +530,6 @@
             if (saved) {
                 prefs = JSON.parse(saved);
             } else {
-                // Determine system theme default
                 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                     prefs.theme = 'dark';
                 } else {
@@ -434,11 +549,9 @@
 
         function applyPrefsGlobally() {
             const root = document.documentElement;
-            // Update Base Font
             root.style.setProperty('--user-font', `'${prefs.font}', sans-serif`);
             document.body.style.fontFamily = `'${prefs.font}', sans-serif`;
             
-            // Handle Light vs Dark custom colors
             if (prefs.theme === 'dark') {
                 root.style.setProperty('--user-bg', '#000000');
                 root.style.setProperty('--user-surface', '#1C1C1E');
@@ -453,7 +566,6 @@
                 document.getElementById('theme-icon-moon')?.classList.replace('hidden', 'block');
             }
             
-            // Adjust Scales
             root.style.setProperty('--user-font-size', `${prefs.fontSize}px`);
             root.style.setProperty('--user-radius', `${prefs.radius}px`);
             document.body.style.fontSize = `${prefs.fontSize}px`;
@@ -464,29 +576,18 @@
             const currentRadiusLabel = RADIUS_OPTS.find(r => r.val === prefs.radius)?.label || 'Rounded';
 
             container.innerHTML = `
-                <!-- Appearance Group -->
                 <div class="setting-group-title ui-elem opacity-0">Appearance</div>
                 <div class="setting-card ui-elem opacity-0">
-                    
-                    <!-- Theme Toggle -->
                     <div class="setting-item" onclick="toggleThemeDirectly()">
-                        <div class="setting-icon-box grad-gray">
-                            <i data-lucide="moon" class="w-5 h-5"></i>
-                        </div>
+                        <div class="setting-icon-box grad-gray"><i data-lucide="moon" class="w-5 h-5"></i></div>
                         <div class="setting-content">
                             <span class="setting-title">Dark Mode</span>
-                            <div class="custom-toggle ${prefs.theme === 'dark' ? 'active' : ''}" id="ui-theme-toggle">
-                                <div class="toggle-knob"></div>
-                            </div>
+                            <div class="custom-toggle ${prefs.theme === 'dark' ? 'active' : ''}" id="ui-theme-toggle"><div class="toggle-knob"></div></div>
                         </div>
                     </div>
-
-                    <!-- Typography -->
                     <div class="expand-pill" onclick="togglePill(this)">
                         <div class="setting-item">
-                            <div class="setting-icon-box grad-blue">
-                                <i data-lucide="type" class="w-5 h-5"></i>
-                            </div>
+                            <div class="setting-icon-box grad-blue"><i data-lucide="type" class="w-5 h-5"></i></div>
                             <div class="setting-content">
                                 <span class="setting-title">Typography</span>
                                 <span class="setting-value"><span id="set-font-label">${prefs.font}</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
@@ -496,13 +597,9 @@
                             ${FONTS.map(f => `<div class="option-item ${prefs.font===f?'selected':''}" style="font-family: '${f}', sans-serif;" onclick="event.stopPropagation(); updateSetting('font', '${f}'); resetSettingsSelection(this, 'option-item'); document.getElementById('set-font-label').innerText = '${f}';">${f}</div>`).join('')}
                         </div></div></div>
                     </div>
-
-                    <!-- Font Size Slider -->
                     <div class="expand-pill" onclick="togglePill(this)">
                         <div class="setting-item">
-                            <div class="setting-icon-box grad-green">
-                                <i data-lucide="a-large-small" class="w-5 h-5"></i>
-                            </div>
+                            <div class="setting-icon-box grad-green"><i data-lucide="a-large-small" class="w-5 h-5"></i></div>
                             <div class="setting-content">
                                 <span class="setting-title">Font Size</span>
                                 <span class="setting-value"><span id="set-fs-label">${prefs.fontSize}px</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
@@ -514,15 +611,11 @@
                     </div>
                 </div>
 
-                <!-- Colors Group -->
                 <div class="setting-group-title ui-elem opacity-0">Colors (Light Mode)</div>
                 <div class="setting-card ui-elem opacity-0">
-                    <!-- Background Color -->
                     <div class="expand-pill" onclick="togglePill(this)">
                         <div class="setting-item">
-                            <div class="setting-icon-box grad-orange">
-                                <i data-lucide="palette" class="w-5 h-5"></i>
-                            </div>
+                            <div class="setting-icon-box grad-orange"><i data-lucide="palette" class="w-5 h-5"></i></div>
                             <div class="setting-content">
                                 <span class="setting-title">Background Color</span>
                                 <span class="setting-value"><i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
@@ -532,13 +625,9 @@
                             ${BG_COLORS.map(c => `<div class="color-swatch ${prefs.bg===c?'selected':''}" style="background: ${c};" onclick="event.stopPropagation(); updateSetting('bg', '${c}'); resetSettingsSelection(this, 'color-swatch');"></div>`).join('')}
                         </div></div></div>
                     </div>
-                    
-                    <!-- Text Color -->
                     <div class="expand-pill" onclick="togglePill(this)">
                         <div class="setting-item">
-                            <div class="setting-icon-box grad-purple">
-                                <i data-lucide="baseline" class="w-5 h-5"></i>
-                            </div>
+                            <div class="setting-icon-box grad-purple"><i data-lucide="baseline" class="w-5 h-5"></i></div>
                             <div class="setting-content border-none">
                                 <span class="setting-title">Text Color</span>
                                 <span class="setting-value"><i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
@@ -550,14 +639,11 @@
                     </div>
                 </div>
 
-                <!-- Interface Group -->
                 <div class="setting-group-title ui-elem opacity-0">Interface</div>
                 <div class="setting-card ui-elem opacity-0">
                     <div class="expand-pill" onclick="togglePill(this)">
                         <div class="setting-item">
-                            <div class="setting-icon-box grad-cyan">
-                                <i data-lucide="square" class="w-5 h-5"></i>
-                            </div>
+                            <div class="setting-icon-box grad-cyan"><i data-lucide="square" class="w-5 h-5"></i></div>
                             <div class="setting-content border-none">
                                 <span class="setting-title">UI Style</span>
                                 <span class="setting-value"><span id="set-rad-label">${currentRadiusLabel}</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
@@ -569,35 +655,29 @@
                     </div>
                 </div>
 
-                <!-- Data & Storage Group -->
                 <div class="setting-group-title ui-elem opacity-0">Data & Storage</div>
                 <div class="setting-card ui-elem opacity-0" style="margin-bottom:10px;">
                     <div class="setting-item" onclick="clearSearchHistory()">
-                        <div class="setting-icon-box grad-gray">
-                            <i data-lucide="eraser" class="w-5 h-5"></i>
-                        </div>
+                        <div class="setting-icon-box grad-gray"><i data-lucide="eraser" class="w-5 h-5"></i></div>
                         <div class="setting-content">
                             <span class="setting-title text-ios-textLight dark:text-ios-textDark">Clear Search History</span>
                         </div>
                     </div>
                     <div class="setting-item" onclick="resetApp()">
-                        <div class="setting-icon-box grad-red">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </div>
+                        <div class="setting-icon-box grad-red"><i data-lucide="trash-2" class="w-5 h-5"></i></div>
                         <div class="setting-content border-none">
                             <span class="setting-title" style="color: #FF3B30;">Reset App Data</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- App Info -->
                 <div class="flex flex-col items-center justify-center mt-12 opacity-50 ui-elem opacity-0 pb-10">
                     <i data-lucide="graduation-cap" class="w-10 h-10 mb-2 text-ios-subLight dark:text-ios-subDark"></i>
                     <p class="text-[0.9em] font-bold text-ios-textLight dark:text-ios-textDark">BN Jha PEN Portal</p>
                     <p class="text-[0.75em] text-ios-subLight dark:text-ios-subDark mt-1">Version 2.0 • Pure Premium</p>
                 </div>
             `;
-            lucide.createIcons(); // Instantly bind SVG icons dynamically generated
+            lucide.createIcons(); 
         }
 
         window.togglePill = function(el) { el.classList.toggle('open'); };
@@ -639,7 +719,6 @@
             savePrefs();
         }
 
-        /* App Reset and Data Functions */
         window.clearSearchHistory = function() {
             Swal.fire({
                 title: 'Clear History?',
@@ -684,19 +763,16 @@
             })
         };
 
-        /* ================= Core App Initialization ================= */
         document.addEventListener("DOMContentLoaded", () => {
-            loadPrefs(); // Load premium configurations immediately
+            loadPrefs(); 
             lucide.createIcons();
 
-            // Setup Header Theme Toggle Click
             const themeBtnHeader = document.getElementById('theme-toggle');
             themeBtnHeader.addEventListener('click', () => {
                 window.toggleThemeDirectly();
                 gsap.fromTo(themeBtnHeader, {rotation: -180, scale: 0.5}, {rotation: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)"});
             });
 
-            // SPA Routing Engine (Smooth Spring Animations)
             const routes = { '': 'view-home', '#': 'view-home', '#home': 'view-home', '#about': 'view-about', '#developer': 'view-dev', '#settings': 'view-settings' };
             const navTitle = document.getElementById('nav-title');
             const tabLinks = document.querySelectorAll('.tab-link');
@@ -710,7 +786,6 @@
                 const currentEl = document.getElementById(currentActiveId);
                 const targetEl = document.getElementById(targetId);
                 
-                // Spring Out current view
                 gsap.to(currentEl, {
                     opacity: 0, scale: 0.95, y: -20, duration: 0.3, ease: "power2.inOut",
                     onComplete: () => {
@@ -718,7 +793,6 @@
                         targetEl.classList.add('active');
                         window.scrollTo(0, 0);
                         
-                        // Header Title Animation
                         gsap.to(navTitle, {opacity: 0, y: -5, duration: 0.15, onComplete: () => {
                             if(hash === '#home' || hash === '') {
                                 navTitle.style.fontFamily = "'Kavoon', serif";
@@ -730,17 +804,14 @@
                             gsap.to(navTitle, {opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.5)"});
                         }});
 
-                        // Update Active Tab Icon
                         tabLinks.forEach(link => link.classList.remove('active-tab'));
                         document.querySelector(`.tab-link[href="${hash}"]`)?.classList.add('active-tab');
 
-                        // Spring In new view
                         gsap.fromTo(targetEl, 
                             { opacity: 0, scale: 0.95, y: 30 }, 
                             { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.2)" }
                         );
                         
-                        // Reveal dynamically loaded UI elements elegantly
                         gsap.to("#" + targetId + " .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)", delay: 0.1 });
 
                         currentActiveId = targetId;
@@ -763,7 +834,6 @@
                 gsap.to("#" + initialTarget + " .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" });
             }
 
-            // --- Splash Animation ---
             const tl = gsap.timeline();
             document.body.style.overflow = "hidden";
             tl.fromTo("#splash-b", { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "bounce.out" })
@@ -778,13 +848,31 @@
               });
             tl.to("#" + currentActiveId + " .ui-elem", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }, "-=0.2");
 
-            // --- Search Engine Logic ---
+            const statusEl = document.getElementById('dataStatus');
+            function loadData() {
+                Papa.parse(GOOGLE_SHEET_CSV_URL, {
+                    download: true, header: true, skipEmptyLines: true,
+                    transformHeader: function(header) { return header.trim().toLowerCase(); },
+                    complete: function(results) {
+                        studentData = results.data;
+                        gsap.to(statusEl, {opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => statusEl.classList.add('hidden')});
+                    },
+                    error: function(err) {
+                        statusEl.classList.add('hidden');
+                        iziToast.error({ title: 'Error', message: 'Connection failed. Please refresh.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                    }
+                });
+            }
+            loadData();
+
             const searchInput = document.getElementById('searchInput');
             const clearSearchBtn = document.getElementById('clearSearch');
             const searchBtn = document.getElementById('searchBtn');
-            const serverDownContainer = document.getElementById('serverDownContainer');
+            const resultsContainer = document.getElementById('resultsContainer');
+            const noResults = document.getElementById('noResults');
             const recentSection = document.getElementById('recentSearchesSection');
             const recentTags = document.getElementById('recentTags');
+            const searchCount = document.getElementById('searchCount');
 
             window.updateRecentSearches = function() {
                 if(recentSearches.length === 0) {
@@ -815,13 +903,41 @@
             clearSearchBtn.addEventListener('click', () => {
                 searchInput.value = '';
                 gsap.to(clearSearchBtn, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearchBtn.classList.add('hidden')});
-                serverDownContainer.classList.add('hidden');
+                resultsContainer.innerHTML = '';
+                noResults.classList.add('hidden');
+                searchCount.classList.add('hidden');
                 searchInput.focus();
             });
 
+            function getValue(obj, keys) {
+                for (let key of keys) {
+                    if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') return obj[key];
+                }
+                return 'N/A';
+            }
+
+            // ✨ FUNCTION TO MASK PARENTS NAME ✨
+            function maskName(str) {
+                if (!str || str === 'N/A') return 'N/A';
+                str = str.trim();
+                // If name is very short, just show 1st letter and mask rest
+                if (str.length <= 4) {
+                    return str.charAt(0) + '***';
+                }
+                // Mask center keeping first 2 and last 2 visible
+                return str.substring(0, 2) + '***' + str.substring(str.length - 2);
+            }
+
             function performSearch() {
                 const query = searchInput.value.trim().toLowerCase();
-                serverDownContainer.classList.add('hidden');
+                resultsContainer.innerHTML = '';
+                noResults.classList.add('hidden');
+                searchCount.classList.add('hidden');
+
+                if (studentData.length === 0) {
+                    iziToast.warning({ title: 'Wait', message: 'Syncing Data... Please wait.', position: 'topCenter' });
+                    return;
+                }
 
                 if (!query) {
                     iziToast.error({ title: 'Empty', message: 'Please enter a name.', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
@@ -841,14 +957,162 @@
                 searchBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Searching...';
                 lucide.createIcons();
                 
-                // Simulate network delay before showing "Server Down"
                 setTimeout(() => {
+                    const matches = studentData.filter(student => {
+                        const studentName = getValue(student, ['name', 'student name', 'student_name']).toLowerCase();
+                        return studentName.includes(query) && studentName !== 'n/a';
+                    });
+
                     searchBtn.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database';
                     lucide.createIcons();
 
-                    serverDownContainer.classList.remove('hidden');
-                    gsap.fromTo(serverDownContainer, {opacity: 0, scale: 0.9, y: 20}, {opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)"});
-                }, 800); 
+                    if (matches.length === 0) {
+                        noResults.classList.remove('hidden');
+                        gsap.fromTo(noResults, {opacity: 0, scale: 0.9, y: 20}, {opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)"});
+                    } else {
+                        searchCount.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 inline-block mr-1 relative -top-0.5"></i> Found ${matches.length} result(s) for "${searchInput.value.trim()}"`;
+                        searchCount.classList.remove('hidden');
+                        gsap.fromTo(searchCount, {opacity: 0, y: -10}, {opacity: 1, y: 0, duration: 0.3});
+                        lucide.createIcons();
+                        renderResults(matches);
+                    }
+                }, 400); 
+            }
+
+            function renderResults(matches) {
+                matches.forEach((student) => {
+                    const name = getValue(student, ['name', 'student name', 'student_name']);
+                    
+                    // ✨ APPLYING MASKING TO FATHER & MOTHER NAME ✨
+                    const rawFather = getValue(student, ['father_name', 'father name', "father's name", 'father']);
+                    const rawMother = getValue(student, ['mother_name', 'mother name', "mother's name", 'mother']);
+                    const father = maskName(rawFather);
+                    const mother = maskName(rawMother);
+                    
+                    const dob = getValue(student, ['dob', 'date of birth', 'birth_date']);
+                    const studentClass = getValue(student, ['class', 'class_name']);
+                    const section = getValue(student, ['section', 'sec']);
+                    const gender = getValue(student, ['gender', 'sex']);
+                    const penNo = getValue(student, ['pen_no', 'pen no', 'pen number', 'pen']);
+
+                    const classBadge = studentClass !== 'N/A' ? `<span class="text-[0.65em] font-bold bg-ios-blueLight/10 text-ios-blueLight dark:bg-ios-blueDark/20 dark:text-ios-blueDark px-2.5 py-1 rounded-md uppercase border border-ios-blueLight/20">Class ${studentClass}</span>` : '';
+                    const secBadge = section !== 'N/A' ? `<span class="text-[0.65em] font-bold bg-ios-purple/10 text-ios-purple dark:bg-ios-purple/20 dark:text-ios-purple px-2.5 py-1 rounded-md uppercase border border-ios-purple/20">Sec ${section}</span>` : '';
+                    const genderBadge = gender !== 'N/A' ? `<span class="text-[0.65em] font-bold bg-ios-green/10 text-ios-green px-2.5 py-1 rounded-md uppercase border border-ios-green/20">${gender}</span>` : '';
+
+                    let badgesHtml = (classBadge || secBadge || genderBadge) 
+                        ? `<div class="flex flex-wrap gap-2 mt-2.5">${classBadge} ${secBadge} ${genderBadge}</div>` 
+                        : `<span class="text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold mt-1.5 inline-block bg-ios-separatorLight/20 dark:bg-ios-separatorDark/30 px-2.5 py-1 rounded-md">Student Record</span>`;
+
+                    const card = document.createElement('div');
+                    card.className = "ios-card p-6 result-card shadow-lg border border-ios-separatorLight/30 dark:border-ios-separatorDark/30 relative";
+                    
+                    card.innerHTML = `
+                        <div class="flex items-center gap-4 border-b border-ios-separatorLight/50 dark:border-ios-separatorDark/50 pb-5 mb-5">
+                            <div class="bg-gradient-to-br from-ios-blueLight to-ios-purple w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md shrink-0">
+                                <i data-lucide="user" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-[1.2em] font-extrabold text-ios-textLight dark:text-ios-textDark leading-none capitalize">${name}</h2>
+                                ${badgesHtml}
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <p class="text-[0.65em] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Father's Name</p>
+                                <p class="text-[0.9em] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${father}</p>
+                            </div>
+                            <div>
+                                <p class="text-[0.65em] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Mother's Name</p>
+                                <p class="text-[0.9em] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${mother}</p>
+                            </div>
+                            ${dob !== 'N/A' ? `
+                            <div class="col-span-2 mt-[-2px]">
+                                <p class="text-[0.65em] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Date of Birth</p>
+                                <p class="text-[0.9em] font-semibold text-ios-textLight dark:text-ios-textDark break-words">${dob}</p>
+                            </div>` : ''}
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-ios-blueLight/10 to-ios-purple/10 dark:from-ios-blueDark/20 dark:to-ios-purple/20 rounded-2xl p-4 flex justify-between items-center border border-ios-blueLight/20 dark:border-ios-blueDark/30" style="border-radius: calc(var(--user-radius) * 0.8)">
+                            <div class="flex items-center gap-2 text-ios-blueLight dark:text-ios-blueDark">
+                                <i data-lucide="hash" class="w-5 h-5"></i>
+                                <span class="text-[0.8em] font-extrabold uppercase tracking-wide">PEN No.</span>
+                            </div>
+                            <span class="text-[1.2em] font-black text-ios-blueLight dark:text-ios-blueDark tracking-wider font-mono">${penNo}</span>
+                        </div>
+
+                        <div class="mt-5 border-t border-ios-separatorLight/30 dark:border-ios-separatorDark/30 pt-4 action-area">
+                            <label class="flex items-center gap-2 cursor-pointer select-none w-fit">
+                                <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-ios-blueLight focus:ring-ios-blueLight cursor-pointer record-checkbox">
+                                <span class="text-[0.85em] font-medium text-ios-textLight dark:text-ios-textDark">Select to Download</span>
+                            </label>
+                            
+                            <button class="btn-3d download-btn hidden mt-3 !py-3 !text-[0.9em]" style="border-radius: 12px;">
+                                <i data-lucide="download" class="w-4 h-4"></i> Download JPG
+                            </button>
+                        </div>
+
+                        <div class="watermark hidden text-center mt-6 text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold opacity-60 tracking-wider">
+                            made by @AnshuRajhans
+                        </div>
+                    `;
+                    resultsContainer.appendChild(card);
+
+                    const checkbox = card.querySelector('.record-checkbox');
+                    const downloadBtn = card.querySelector('.download-btn');
+                    const actionArea = card.querySelector('.action-area');
+                    const watermark = card.querySelector('.watermark');
+
+                    checkbox.addEventListener('change', (e) => {
+                        if(e.target.checked) {
+                            downloadBtn.classList.remove('hidden');
+                            gsap.fromTo(downloadBtn, {opacity: 0, y: -10}, {opacity: 1, y: 0, duration: 0.3});
+                        } else {
+                            gsap.to(downloadBtn, {opacity: 0, y: -10, duration: 0.2, onComplete: () => downloadBtn.classList.add('hidden')});
+                        }
+                    });
+
+                    downloadBtn.addEventListener('click', async () => {
+                        const originalBtnHtml = downloadBtn.innerHTML;
+                        downloadBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Processing...';
+                        lucide.createIcons();
+
+                        actionArea.style.display = 'none';
+                        watermark.classList.remove('hidden');
+
+                        try {
+                            await new Promise(r => setTimeout(r, 150));
+                            
+                            const canvas = await html2canvas(card, {
+                                scale: 2, 
+                                backgroundColor: prefs.theme === 'dark' ? '#1C1C1E' : (prefs.bg === '#000000' || prefs.bg === '#1C1C1E' ? '#1C1C1E' : '#FFFFFF'),
+                                useCORS: true,
+                                logging: false
+                            });
+
+                            const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                            const link = document.createElement('a');
+                            link.download = `PEN_Record_${name.replace(/\s+/g, '_')}.jpg`;
+                            link.href = imgData;
+                            link.click();
+                            
+                            iziToast.success({ title: 'Success', message: 'Image downloaded!', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                        } catch (error) {
+                            // Empty block due to console.error override above, silently handle
+                            iziToast.error({ title: 'Error', message: 'Download failed.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
+                        } finally {
+                            actionArea.style.display = 'block';
+                            watermark.classList.add('hidden');
+                            downloadBtn.innerHTML = originalBtnHtml;
+                            lucide.createIcons();
+                            checkbox.checked = false;
+                            downloadBtn.classList.add('hidden');
+                        }
+                    });
+                });
+
+                lucide.createIcons();
+                gsap.to(".result-card", { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.4)" });
             }
 
             searchBtn.addEventListener('click', performSearch);
