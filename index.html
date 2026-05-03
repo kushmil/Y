@@ -232,32 +232,55 @@
         }
     </style>
 
-    <!-- SECURITY SCRIPT -->
+    <!-- 🔥 MAXIMUM SECURITY SCRIPT (Anti-DevTools & Anti-Inspect) 🔥 -->
     <script>
-        // 1. Disable Console Output to hide data/errors
-        if (typeof console !== "undefined") {
-            console.log = function() {};
-            console.warn = function() {};
-            console.error = function() {};
-            console.info = function() {};
-        }
+        (function() {
+            // 1. Completely Disable Console Object
+            const noop = () => {};
+            const methods = ['log', 'debug', 'info', 'warn', 'error', 'table', 'trace', 'dir', 'dirxml', 'group', 'groupCollapsed', 'groupEnd', 'clear', 'count', 'countReset', 'assert', 'profile', 'profileEnd', 'time', 'timeLog', 'timeEnd', 'timeStamp', 'context', 'memory'];
+            methods.forEach(method => {
+                if (window.console && window.console[method]) {
+                    Object.defineProperty(window.console, method, { get: () => noop, set: noop });
+                }
+            });
 
-        // 2. Disable Right Click
-        document.addEventListener('contextmenu', event => event.preventDefault());
+            // 2. Disable Right Click (Context Menu)
+            document.addEventListener('contextmenu', e => e.preventDefault());
 
-        // 3. Disable specific keyboard shortcuts (F12, Inspect Element, Source Code)
-        document.onkeydown = function(e) {
-            // F12
-            if (e.keyCode == 123) return false;
-            // Ctrl+Shift+I
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
-            // Ctrl+Shift+C
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) return false;
-            // Ctrl+Shift+J
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
-            // Ctrl+U (View Source)
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-        };
+            // 3. Disable Keyboard Shortcuts (Inspect, View Source, etc.)
+            document.addEventListener('keydown', (e) => {
+                if (
+                    e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) || 
+                    (e.ctrlKey && e.key.toUpperCase() === 'U') ||
+                    (e.metaKey && e.altKey && ['I', 'J', 'U'].includes(e.key.toUpperCase()))
+                ) {
+                    e.preventDefault();
+                    triggerLockdown();
+                }
+            });
+
+            // 4. Advanced DevTools Detector Loop
+            const checkDevTools = () => {
+                const start = performance.now();
+                debugger; // Instantly halts execution if DevTools is open
+                if (performance.now() - start > 100) {
+                    triggerLockdown();
+                }
+            };
+            setInterval(checkDevTools, 500); // Check every 500ms
+
+            // 5. Lockdown function if breach is detected
+            function triggerLockdown() {
+                document.body.innerHTML = `
+                    <div style="height:100vh;width:100vw;background:#000;color:red;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:monospace;font-size:20px;text-align:center;padding:20px;">
+                        <h1>🚨 SECURITY BREACH 🚨</h1>
+                        <p>Developer tools and network inspection are strictly prohibited.</p>
+                        <p>Your session has been terminated.</p>
+                    </div>`;
+                while(true) { debugger; } // Freeze the browser tab completely
+            }
+        })();
     </script>
 </head>
 <body class="bg-ios-bgLight dark:bg-ios-bgDark">
@@ -929,6 +952,31 @@
             }
 
             function performSearch() {
+                // ⏱️ 10 MINUTE RATE LIMIT LOGIC ⏱️
+                const COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes in milliseconds
+                const lastSearchTime = localStorage.getItem('bnjha_last_search');
+                
+                if (lastSearchTime) {
+                    const timePassed = Date.now() - parseInt(lastSearchTime, 10);
+                    if (timePassed < COOLDOWN_MS) {
+                        const timeLeft = Math.ceil((COOLDOWN_MS - timePassed) / 1000);
+                        const minutes = Math.floor(timeLeft / 60);
+                        const seconds = timeLeft % 60;
+                        
+                        Swal.fire({
+                            title: 'Rate Limit Reached',
+                            text: `Please wait ${minutes}m ${seconds}s before searching again.`,
+                            icon: 'warning',
+                            confirmButtonColor: '#007AFF',
+                            background: prefs.theme === 'dark' ? '#1C1C1E' : '#FFFFFF',
+                            color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000',
+                            customClass: { popup: 'rounded-ios' },
+                            backdrop: `rgba(0,0,0,0.6)`
+                        });
+                        return; // Block execution
+                    }
+                }
+
                 const query = searchInput.value.trim().toLowerCase();
                 resultsContainer.innerHTML = '';
                 noResults.classList.add('hidden');
@@ -945,6 +993,9 @@
                     gsap.fromTo(searchInput, {x: -5}, {x: 5, duration: 0.1, yoyo: true, repeat: 3, onComplete: ()=>gsap.to(searchInput, {x:0})});
                     return;
                 }
+
+                // Record the time of a valid search attempt
+                localStorage.setItem('bnjha_last_search', Date.now().toString());
 
                 if(!recentSearches.includes(searchInput.value.trim())) {
                     recentSearches.unshift(searchInput.value.trim());
