@@ -1,1312 +1,148 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BN Jha College | PEN Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&family=Kavoon&family=Lora:ital,wght@0,400;0,600&family=Merriweather:wght@400;700&family=Montserrat:wght@400;500;600&family=Nunito:wght@400;600;700&family=Oswald:wght@400;500&family=Poppins:wght@400;500;600&family=Raleway:wght@400;500;600&family=Roboto:wght@400;500;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    <!-- CDNs -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff; /* pure white background taaki GIF seamlessly blend ho jaye */
+            color: #2d3748;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px 0 20px; /* bottom padding zero rakhi hai taaki GIF bottom se touch rahe */
+            text-align: center;
+            overflow-x: hidden;
+        }
 
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['var(--user-font)', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-                        brand: ['Kavoon', 'serif'],
-                        massive: ['Anton', 'sans-serif'],
-                        serifAccent: ['Playfair Display', 'serif']
-                    },
-                    colors: {
-                        ios: {
-                            bgLight: 'var(--user-bg)', cardLight: 'var(--user-surface)', textLight: 'var(--user-text)', subLight: '#71717a', separatorLight: '#e4e4e7',
-                            bgDark: 'var(--user-bg)', cardDark: 'var(--user-surface)', textDark: 'var(--user-text)', subDark: '#a1a1aa', separatorDark: '#27272a'
-                        }
-                    }
-                }
+        .error-container {
+            max-width: 650px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: calc(100vh - 40px);
+        }
+
+        /* Content Area (Top) */
+        .content {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 5.5rem;
+            font-weight: 800;
+            color: #ff9f43; /* Caveman dress color scheme */
+            line-height: 1;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #718096;
+            margin-bottom: 30px;
+            max-width: 480px;
+            line-height: 1.6;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Button styling */
+        .btn-home {
+            display: inline-block;
+            padding: 12px 35px;
+            background-color: #2c3e50; /* Rock/stone dark tone */
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(44, 62, 80, 0.15);
+        }
+
+        .btn-home:hover {
+            background-color: #ff9f43; 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 159, 67, 0.3);
+        }
+
+        .btn-home:active {
+            transform: translateY(0);
+        }
+
+        /* GIF Container (Bottom) */
+        .illustration-container {
+            width: 100%;
+            max-width: 550px;
+            margin-top: auto; /* Ise bottom me push karne ke liye */
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .illustration-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 4rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            p {
+                font-size: 0.95rem;
+            }
+            .btn-home {
+                padding: 10px 28px;
+                font-size: 0.95rem;
             }
         }
-    </script>
-
-    <style>
-        /* ================= PREMIUM CORE VARIABLES & SHIFTS CONTROL ================= */
-        :root {
-            --user-font: 'Inter', sans-serif;
-            --user-bg: #fafafa;
-            --user-surface: #ffffff;
-            --user-text: #000000;
-            --user-font-size: 16px;
-            --user-radius: 24px;
-        }
-
-        /* 1. Bulletproof Flash Prevention / No Layout Break on Boot */
-        #splash-screen {
-            position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center;
-            background-color: #fafafa; flex-direction: column; gap: 12px;
-        }
-        .dark #splash-screen { background-color: #0c0c0e; }
-
-        .spa-view { display: none; opacity: 0; transform: translateY(10px) scale(0.99); }
-        .spa-view.active { display: block; opacity: 1; transform: translateY(0) scale(1); }
-
-        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-        body {
-            background-color: var(--user-bg); color: var(--user-text); margin: 0;
-            overflow-x: hidden; font-size: var(--user-font-size);
-            transition: background-color 0.4s ease, color 0.4s ease;
-            -webkit-font-smoothing: antialiased; min-height: 100vh;
-        }
-
-        /* Glassmorphism Header */
-        .ios-nav {
-            background: rgba(250, 250, 250, 0.8);
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .dark .ios-nav { 
-            background: rgba(12, 12, 14, 0.8); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
-        }
-
-        /* Hero Bento Layout */
-        .hero-bento {
-            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.5rem;
-            align-items: center; border-bottom: 2px solid #000000; padding-bottom: 1.5rem; margin-bottom: 2rem;
-        }
-        .dark .hero-bento { border-bottom-color: #ffffff; }
-        .hero-massive {
-            font-family: 'Anton', sans-serif; font-size: clamp(2.6rem, 8vw, 5rem);
-            line-height: 0.85; letter-spacing: -0.02em; text-transform: uppercase; color: var(--user-text);
-        }
-        .hero-massive span { color: #71717a; display: inline-block; }
-        .dark .hero-massive span { color: #a1a1aa; }
-
-        /* Stark Buttons */
-        .fah-btn {
-            background-color: var(--user-text); color: var(--user-bg);
-            border: 2px solid var(--user-text); padding: 0.75rem 1.5rem; font-weight: 800; font-size: 0.95rem;
-            text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
-            transition: all 0.25s ease; box-shadow: 4px 4px 0px rgba(113, 113, 122, 0.3); border-radius: 40px;
-        }
-        .fah-btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px rgba(113, 113, 122, 0.5); }
-        .fah-btn:active { transform: translate(1px, 1px); box-shadow: 0px 0px 0px transparent; }
-
-        /* Floating Navigation Panel */
-        .floating-nav {
-            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(0, 0, 0, 0.1); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            border-radius: 99px; display: flex; align-items: center; justify-content: space-between;
-            padding: 8px 12px; gap: 12px; z-index: 50; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 0;
-        }
-        .floating-nav.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .dark .floating-nav { background: rgba(12, 12, 14, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); }
-
-        .tab-link { 
-            color: #71717a; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: transparent;
-            position: relative;
-        }
-        .tab-link:active { transform: scale(0.85); }
-        .tab-link.active-tab { color: #FFFFFF; background: #000000; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transform: translateY(-4px); }
-        .dark .tab-link.active-tab { color: #000000; background: #FFFFFF; box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3); transform: translateY(-4px); }
-
-        /* Premium Bento Cards */
-        .ios-card { background-color: var(--user-surface); border-radius: var(--user-radius); border: 1px solid rgba(0,0,0,0.06); transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-        .dark .ios-card { border-color: rgba(255,255,255,0.06); }
-        .ios-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0,0,0,0.04); }
-        .dark .ios-card:hover { box-shadow: 0 12px 24px rgba(0,0,0,0.5); }
-        
-        /* Glassmorphic Cards specifically for results */
-        .glass-result-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.45);
-            border-radius: var(--user-radius);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        .dark .glass-result-card {
-            background: rgba(18, 18, 22, 0.65);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .glass-result-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-        }
-        .dark .glass-result-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .btn-3d {
-            background: #000000; color: #FFFFFF; border-radius: calc(var(--user-radius) * 0.8);
-            font-weight: 700; padding: 16px 24px; display: flex; align-items: center; justify-content: center; gap: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); width: 100%; cursor: pointer;
-        }
-        .btn-3d:active { transform: scale(0.96); box-shadow: none; }
-        .dark .btn-3d { background: #FFFFFF; color: #000000; border-color: rgba(0,0,0,0.1); }
-
-        .ios-input {
-            width: 100%; padding: 16px; border-radius: calc(var(--user-radius) * 0.8); background-color: var(--user-surface); border: 1.5px solid rgba(0,0,0,0.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02); color: var(--user-text); outline: none; transition: all 0.3s ease;
-        }
-        .dark .ios-input { border-color: rgba(255,255,255,0.1); }
-        .ios-input:focus { border-color: var(--user-text); box-shadow: 0 0 0 4px rgba(0,0,0,0.05); transform: translateY(-2px); }
-
-        /* Premium Skeleton Loading Animations (Shimmer Effect) */
-        .shimmer-bg {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading-shimmer 1.5s infinite;
-        }
-        .dark .shimmer-bg {
-            background: linear-gradient(90deg, #1f1f23 25%, #2a2a30 50%, #1f1f23 75%);
-            background-size: 200% 100%;
-            animation: loading-shimmer 1.5s infinite;
-        }
-        @keyframes loading-shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Settings CSS */
-        .setting-group-title { font-size: 12px; text-transform: uppercase; font-weight: 700; color: #71717a; margin: 0 0 8px 16px; letter-spacing: 0.05em; }
-        .setting-card { background: var(--user-surface); border-radius: var(--user-radius); margin-bottom: 28px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.08); transition: all 0.3s; }
-        .dark .setting-card { border-color: rgba(255,255,255,0.08); }
-
-        .setting-item { display: flex; align-items: center; padding-left: 16px; cursor: pointer; background: var(--user-surface); transition: background 0.2s; }
-        .setting-item:active { background: rgba(0,0,0,0.03); }
-        .dark .setting-item:active { background: rgba(255,255,255,0.05); }
-
-        .setting-icon-box { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .setting-content { flex: 1; margin-left: 14px; padding: 14px 16px 14px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
-        .dark .setting-content { border-bottom-color: rgba(255,255,255,0.08); }
-        
-        .setting-title { font-weight: 600; color: var(--user-text); }
-        .setting-value { font-size: 0.9em; color: #71717a; display: flex; align-items: center; gap: 4px; }
-        
-        /* Dynamic Gradients */
-        .grad-gray { background: linear-gradient(135deg, #71717a, #27272a); }
-        .grad-blue { background: linear-gradient(135deg, #09090b, #52525b); }
-        .grad-green { background: linear-gradient(135deg, #27272a, #18181b); }
-        .grad-orange { background: linear-gradient(135deg, #52525b, #3f3f46); }
-        .grad-purple { background: linear-gradient(135deg, #3f3f46, #09090b); }
-        .grad-red { background: linear-gradient(135deg, #18181b, #000000); }
-        .grad-cyan { background: linear-gradient(135deg, #71717a, #09090b); }
-
-        /* Expanding Pill Logic */
-        .pill-content { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s; }
-        .expand-pill.open .pill-content { max-height: 500px; opacity: 1; border-top: 0.5px solid rgba(0,0,0,0.05); }
-        .dark .expand-pill.open .pill-content { border-top-color: rgba(255,255,255,0.05); }
-        .expand-pill.open .transform-icon { transform: rotate(180deg); }
-        .pill-inner { padding: 12px 16px 16px 16px; }
-
-        /* Slider switch */
-        .custom-toggle { width: 50px; height: 30px; border-radius: 15px; background: #e4e4e7; position: relative; transition: background 0.3s; }
-        .dark .custom-toggle { background: #27272a; }
-        .custom-toggle.active { background: #000000; }
-        .dark .custom-toggle.active { background: #ffffff; }
-        .toggle-knob { width: 26px; height: 26px; background: #fff; border-radius: 50%; position: absolute; top: 2px; left: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: transform 0.3s; }
-        .dark .toggle-knob { background: #000000; }
-        .dark .custom-toggle.active .toggle-knob { background: #ffffff; }
-        .custom-toggle.active .toggle-knob { transform: translateX(20px); }
-
-        /* Lists controls styling */
-        .option-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .option-item { padding: 10px 12px; border: 1px solid rgba(0,0,0,0.1); border-radius: calc(var(--user-radius) * 0.6); text-align: center; cursor: pointer; transition: all 0.2s; font-weight: 500; color: var(--user-text); }
-        .dark .option-item { border-color: rgba(255,255,255,0.1); }
-        .option-item.selected { background-color: #000000; color: white !important; border-color: #000000; }
-        .dark .option-item.selected { background-color: #ffffff; color: black !important; border-color: #ffffff; }
-        
-        .color-palette { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-        .color-swatch { width: 44px; height: 44px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; }
-        .dark .color-swatch { border-color: rgba(255,255,255,0.1); }
-        .color-swatch.selected { transform: scale(1.15); border-color: var(--user-text); }
-
-        /* Premium sliding theme pill */
-        .theme-pill {
-            width: 60px; height: 30px; border-radius: 15px; background: rgba(0, 0, 0, 0.05);
-            position: relative; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
-            padding: 0 8px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); transition: background 0.4s ease;
-            outline: none; border: 1px solid rgba(0,0,0,0.05);
-        }
-        .dark .theme-pill { background: rgba(255, 255, 255, 0.1); border-color: rgba(255,255,255,0.05); }
-        .theme-pill-icon { width: 14px; height: 14px; z-index: 1; transition: color 0.3s ease; }
-        .theme-pill .icon-moon { color: #71717a; }
-        .theme-pill .icon-sun { color: #000000; }
-        .dark .theme-pill .icon-moon { color: #ffffff; }
-        .dark .theme-pill .icon-sun { color: #71717a; }
-        .theme-pill-knob {
-            position: absolute; top: 2px; left: 2px; width: 24px; height: 24px;
-            background: #FFFFFF; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 2;
-        }
-        .dark .theme-pill-knob { transform: translateX(30px); background: #000000; }
     </style>
 </head>
-<body class="bg-ios-bgLight dark:bg-ios-bgDark">
+<body>
 
-    <!-- SPLASH SCREEN -->
-    <div id="splash-screen">
-        <h1 class="font-massive text-6xl md:text-8xl text-ios-textLight dark:text-ios-textDark flex items-center justify-center">
-            <span id="splash-b" class="letter-b">BN</span>
-            <span id="splash-rest" class="ml-2">Jha College</span>
-        </h1>
-        <div class="mt-4 flex gap-2" id="splash-loader">
-            <div class="w-2.5 h-2.5 rounded-full bg-black dark:bg-white animate-bounce"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-black dark:bg-white animate-bounce" style="animation-delay: 0.1s"></div>
-            <div class="w-2.5 h-2.5 rounded-full bg-black dark:bg-white animate-bounce" style="animation-delay: 0.2s"></div>
+    <div class="error-container">
+        <!-- Text Content Area -->
+        <div class="content">
+            <h1>404</h1>
+            <h2>Oops! Connection Toot Gaya...</h2>
+            <p>Humne is page ko dhoodhne ki koshish ki, lekin hum stone age tak pahunch gaye jahan shayad internet abhi tak invent nahi hua hai.</p>
+            
+            <!-- Home Screen Redirect Button -->
+            <a href="index.html" class="btn-home">Home Screen Par Chalein</a>
+        </div>
+
+        <!-- GIF at the Bottom -->
+        <div class="illustration-container">
+            <img src="Eror.gif" alt="Offline Caveman">
         </div>
     </div>
 
-    <!-- DYNAMIC TOP NAV -->
-    <header class="ios-nav sticky top-0 z-40 w-full">
-        <div class="max-w-2xl mx-auto px-4 py-3 flex justify-between items-center h-[60px]">
-            <div class="w-1/3 flex justify-start items-center gap-3">
-                <div class="traffic-lights" onclick="toggleQuickMenu()">
-                    <span class="tl-red"></span><span class="tl-yellow"></span><span class="tl-green"></span>
-                </div>
-                <!-- FORCE HOMEPAGE REDIRECTION BUTTON -->
-                <button onclick="forceGoHome()" class="px-3 py-1.5 text-[0.65em] font-black uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black rounded-full border border-neutral-300 dark:border-zinc-700 hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5" title="Force Go To Search Page">
-                    <i data-lucide="home" class="w-3.5 h-3.5"></i> Home
-                </button>
-            </div>
-            <div class="w-1/3 flex justify-center items-center whitespace-nowrap">
-                <span id="nav-title" class="font-brand text-xl text-ios-textLight dark:text-ios-textDark tracking-tight transition-opacity">BN Jha</span>
-            </div>
-            <div class="w-1/3 flex justify-end items-center">
-                <div id="theme-toggle" class="theme-pill">
-                    <svg class="theme-pill-icon icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                    <svg class="theme-pill-icon icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <div class="theme-pill-knob"></div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- SPA ROUTER CONTAINER -->
-    <main id="app-router" class="max-w-2xl mx-auto w-full px-4 pt-6 pb-36 min-h-screen">
-
-        <!-- ==================== VIEW: HOME (SEARCH) ==================== -->
-        <div id="view-home" class="spa-view active" data-title="BN Jha">
-            <!-- Warning Banner -->
-            <div class="bg-neutral-100 dark:bg-zinc-900 border border-neutral-300 dark:border-zinc-800 p-4 mb-8 flex gap-3 items-start ui-elem opacity-0 shadow-sm" style="border-radius: var(--user-radius);">
-                <i data-lucide="info" class="w-5 h-5 text-neutral-600 dark:text-neutral-400 shrink-0 mt-0.5"></i>
-                <div class="text-[0.8em] text-ios-textLight dark:text-ios-textDark leading-tight">
-                    <strong class="font-semibold block mb-1">Informational Only</strong>
-                    Not an official BN Jha College website. See <a href="#about" class="text-neutral-500 dark:text-neutral-300 font-bold underline underline-offset-2">About</a> for details.
-                </div>
-            </div>
-
-            <!-- Bento Hero Segment -->
-            <div class="hero-bento ui-elem opacity-0">
-                <div class="hero-massive">
-                    PEN<span>FINDER</span>
-                </div>
-                <div class="text-right">
-                    <div class="font-serifAccent italic text-[1.1rem] opacity-60 mb-2">BN Jha College · Stark Minimal</div>
-                    <button class="fah-btn" onclick="window.open('https://instagram.com/anshurajhans', '_blank')"><i class="fab fa-instagram"></i> @anshurajhans</button>
-                </div>
-            </div>
-
-            <!-- Search Header text -->
-            <section class="mb-8 ui-elem opacity-0">
-                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark leading-relaxed">
-                    Simply enter your <strong>Full Name</strong> or partial name to fetch your Permanent Education Number (PEN) instantly.
-                </p>
-            </section>
-
-            <!-- Search Form -->
-            <section class="mb-10 ui-elem opacity-0">
-                <div class="relative mb-5">
-                    <i data-lucide="search" class="absolute left-4 top-4 text-ios-subLight dark:text-ios-subDark w-6 h-6"></i>
-                    <input type="text" id="searchInput" class="ios-input pl-14" placeholder="Student Name (e.g. Rahul)" autocomplete="off" />
-                    <button id="clearSearch" class="hidden absolute right-4 top-4 text-ios-subLight active:scale-75 transition-all bg-neutral-200 dark:bg-zinc-800 rounded-full p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>
-                <button id="searchBtn" class="btn-3d group">
-                    <i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database
-                </button>
-            </section>
-
-            <!-- Recent Searches -->
-            <section id="recentSearchesSection" class="mb-8 hidden ui-elem opacity-0">
-                <h3 class="text-[0.7em] uppercase font-bold text-ios-subLight dark:text-ios-subDark mb-3 ml-1 tracking-wider">Recent Searches</h3>
-                <div id="recentTags" class="flex flex-wrap gap-2"></div>
-            </section>
-
-            <!-- Data Status -->
-            <div id="dataStatus" class="flex items-center justify-center gap-2 text-[0.85em] font-bold text-black dark:text-white mb-6 bg-neutral-100 dark:bg-zinc-900 py-2 px-4 rounded-full w-fit mx-auto">
-                <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Securely syncing...
-            </div>
-            
-            <div id="searchCount" class="hidden text-center mb-6 text-[0.85em] font-semibold text-black dark:text-white bg-neutral-200 dark:bg-zinc-800 py-2 px-4 rounded-full w-fit mx-auto"></div>
-
-            <!-- Shimmering Skeleton Loader Section -->
-            <div id="shimmerLoader" class="hidden flex flex-col gap-5">
-                <!-- Skeleton Card 1 -->
-                <div class="glass-result-card p-6 border border-neutral-200 dark:border-zinc-800 relative shadow-sm">
-                    <div class="flex items-center gap-4 border-b border-neutral-200 dark:border-zinc-800 pb-5 mb-5">
-                        <div class="w-12 h-12 rounded-full shimmer-bg shrink-0"></div>
-                        <div class="flex-1 space-y-2">
-                            <div class="h-5 w-1/3 rounded shimmer-bg"></div>
-                            <div class="h-3 w-1/4 rounded shimmer-bg"></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div class="space-y-2">
-                            <div class="h-3 w-1/2 rounded shimmer-bg"></div>
-                            <div class="h-4 w-3/4 rounded shimmer-bg"></div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="h-3 w-1/2 rounded shimmer-bg"></div>
-                            <div class="h-4 w-3/4 rounded shimmer-bg"></div>
-                        </div>
-                    </div>
-                    <div class="h-16 w-full rounded-xl shimmer-bg"></div>
-                </div>
-            </div>
-
-            <!-- Results Area -->
-            <section id="resultsContainer" class="flex flex-col gap-5"></section>
-
-            <!-- No Results Fallback -->
-            <div id="noResults" class="hidden flex-col items-center justify-center py-12 text-center bg-ios-cardLight dark:bg-ios-cardDark border border-neutral-200 dark:border-zinc-800 shadow-sm" style="border-radius: var(--user-radius);">
-                <div class="bg-neutral-100 dark:bg-zinc-900 p-5 rounded-full mb-5">
-                    <i data-lucide="file-question" class="w-10 h-10 text-ios-subLight dark:text-ios-subDark"></i>
-                </div>
-                <h3 class="text-[1.2em] font-bold text-ios-textLight dark:text-ios-textDark mb-1">No match found</h3>
-                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark mt-1 max-w-[250px]">Check the spelling or try searching with only your first name.</p>
-            </div>
-        </div>
-
-        <!-- ==================== VIEW: SETTINGS (UPGRADED) ==================== -->
-        <div id="view-settings" class="spa-view" data-title="Settings" style="display: none;">
-            <section class="mb-6 ui-elem opacity-0 mt-2">
-                <h1 class="text-[2.2em] font-extrabold tracking-tight mb-2 text-ios-textLight dark:text-ios-textDark">Settings</h1>
-                <p class="text-[0.9em] text-ios-subLight dark:text-ios-subDark leading-relaxed">
-                    Personalize your app's typography, colors, interface style, and data.
-                </p>
-            </section>
-            
-            <div id="settings-container"></div>
-
-            <!-- Force Back Shortcut -->
-            <button onclick="forceGoHome()" class="mt-6 w-full btn-3d !py-3 !text-[0.9em]">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Search
-            </button>
-        </div>
-
-        <!-- ==================== VIEW: ABOUT / DISCLAIMER ==================== -->
-        <div id="view-about" class="spa-view" data-title="Notice" style="display: none;">
-            <div class="flex flex-col items-center justify-center text-center mt-6 mb-10">
-                <div class="w-20 h-20 bg-neutral-100 dark:bg-zinc-900 text-black dark:text-white rounded-full flex items-center justify-center mb-5 relative">
-                    <div class="absolute inset-0 bg-neutral-300 dark:bg-zinc-700 rounded-full animate-ping opacity-20"></div>
-                    <i data-lucide="shield-alert" class="w-10 h-10 relative z-10"></i>
-                </div>
-                <h1 class="text-[1.8em] font-extrabold tracking-tight text-ios-textLight dark:text-ios-textDark">Important Notice</h1>
-            </div>
-
-            <div class="ios-card p-6 mb-6 border border-neutral-200 dark:border-zinc-800 shadow-md">
-                <h3 class="text-[1.1em] font-bold border-b border-neutral-200 dark:border-zinc-800 pb-3 mb-4 text-ios-textLight dark:text-ios-textDark flex items-center gap-2">
-                    <i data-lucide="globe" class="w-5 h-5 text-neutral-600 dark:text-neutral-400"></i> English Disclaimer
-                </h3>
-                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed mb-4">
-                    This platform is <strong class="text-black dark:text-white">not officially affiliated, associated, authorized, or endorsed by</strong> BN Jha College, Deoghar, or any of its subsidiaries.
-                </p>
-                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed">
-                    This is an independent informational project developed solely by Anshu Rajhans to help students easily locate their Permanent Education Number (PEN) [Permanent Education Number] using publicly shared data.
-                </p>
-            </div>
-
-            <div class="ios-card p-6 mb-6 border border-neutral-200 dark:border-zinc-800 shadow-md">
-                <h3 class="text-[1.1em] font-bold border-b border-neutral-200 dark:border-zinc-800 pb-3 mb-4 text-ios-textLight dark:text-ios-textDark flex items-center gap-2">
-                    <i data-lucide="languages" class="w-5 h-5 text-neutral-600 dark:text-neutral-400"></i> हिंदी सूचना
-                </h3>
-                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed mb-4">
-                    यह वेबसाइट <strong class="text-ios-textLight dark:text-ios-textDark">बी. एन. झा कॉलेज, देवघर</strong> या किसी भी सरकारी/निजी शैक्षणिक संस्थान से आधिकारिक रूप से संबंधित नहीं है।
-                </p>
-                <p class="text-ios-subLight dark:text-ios-subDark text-[0.9em] leading-relaxed">
-                    यह एक स्वतंत्र पोर्टल है, जिसे केवल छात्रों की सुविधा के लिए विकसित किया गया है, ताकि वे आसानी से अपना PEN नंबर (Permanent Education Number) खोज सकें।
-                </p>
-            </div>
-
-            <!-- Force Back Shortcut -->
-            <button onclick="forceGoHome()" class="mt-4 w-full btn-3d !py-3 !text-[0.9em]">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Search
-            </button>
-            
-            <div class="text-center mt-10 opacity-60">
-                <p class="text-[0.8em] font-medium text-ios-textLight dark:text-ios-textDark">© Anshu Rajhans • All Rights Reserved</p>
-            </div>
-        </div>
-
-        <!-- ==================== VIEW: DEVELOPER ==================== -->
-        <div id="view-dev" class="spa-view" data-title="Developer" style="display: none;">
-            <div class="flex flex-col items-center mt-8 mb-10 text-center">
-                <div class="w-32 h-32 rounded-full bg-neutral-200 dark:bg-zinc-800 shadow-2xl flex items-center justify-center text-white mb-5 relative p-1.5 transform hover:scale-105 transition-transform duration-500">
-                    <div class="w-full h-full bg-ios-bgLight dark:bg-ios-bgDark rounded-full flex items-center justify-center overflow-hidden">
-                        <img src="https://ui-avatars.com/api/?name=Anshu+Rajhans&background=000000&color=fff&size=200&font-size=0.35&bold=true" alt="Anshu" class="w-full h-full object-cover relative z-10 rounded-full">
-                    </div>
-                </div>
-                <h1 class="text-[1.8em] font-extrabold tracking-tight text-ios-textLight dark:text-ios-textDark">Anshu Rajhans</h1>
-                <p class="text-black dark:text-white font-semibold mt-1 bg-neutral-200 dark:bg-zinc-800 px-4 py-1 rounded-full text-[0.8em] inline-block">System Architect</p>
-            </div>
-
-            <h2 class="text-[0.7em] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider">Connect With Me</h2>
-            <div class="ios-card overflow-hidden mb-6 shadow-md border border-neutral-200 dark:border-zinc-800">
-                <a href="https://instagram.com/anshurajhans" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-neutral-100 dark:active:bg-zinc-800 transition-colors">
-                    <div class="bg-neutral-200 dark:bg-zinc-800 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-black dark:text-white shadow-sm">
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </div>
-                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center border-b border-neutral-200 dark:border-zinc-800">
-                        <div>
-                            <span class="block text-[1em] font-semibold text-ios-textLight dark:text-ios-textDark">Instagram</span>
-                            <span class="block text-[0.8em] text-ios-subLight dark:text-ios-subDark mt-0.5">@anshurajhans</span>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-5 h-5 text-neutral-400"></i>
-                    </div>
-                </a>
-                <a href="https://youtube.com/@vitcoore" target="_blank" class="ios-list-item flex items-center pl-4 block active:bg-neutral-100 dark:active:bg-zinc-800 transition-colors">
-                    <div class="bg-neutral-200 dark:bg-zinc-800 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-black dark:text-white shadow-sm">
-                        <i data-lucide="youtube" class="w-5 h-5"></i>
-                    </div>
-                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center border-b border-neutral-200 dark:border-zinc-800">
-                        <div>
-                            <span class="block text-[1em] font-semibold text-ios-textLight dark:text-ios-textDark">YouTube</span>
-                            <span class="block text-[0.8em] text-ios-subLight dark:text-ios-subDark mt-0.5">@vitcoore</span>
-                        </div>
-                        <i data-lucide="external-link" class="w-5 h-5 text-neutral-400"></i>
-                    </div>
-                </a>
-                <a href="mailto:vipwebff@gmail.com" class="ios-list-item flex items-center pl-4 block active:bg-neutral-100 dark:active:bg-zinc-800 transition-colors">
-                    <div class="bg-neutral-200 dark:bg-zinc-800 w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-black dark:text-white shadow-sm">
-                        <i data-lucide="mail" class="w-5 h-5"></i>
-                    </div>
-                    <div class="list-content flex-1 ml-4 py-4 pr-4 flex justify-between items-center">
-                        <div>
-                            <span class="block text-[1em] font-semibold text-ios-textLight dark:text-ios-textDark">Email Me</span>
-                            <span class="block text-[0.8em] text-ios-subLight dark:text-ios-subDark mt-0.5">vipwebff@gmail.com</span>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-neutral-400"></i>
-                    </div>
-                </a>
-            </div>
-
-            <h2 class="text-[0.7em] uppercase font-bold text-ios-subLight dark:text-ios-subDark ml-4 mb-3 tracking-wider">Tech Stack</h2>
-            <div class="ios-card p-6 border border-neutral-200 dark:border-zinc-800 shadow-md flex flex-wrap gap-3 mb-6">
-                <span class="bg-neutral-100 dark:bg-zinc-900 px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-neutral-300 dark:border-zinc-700 shadow-sm flex items-center gap-2"><i data-lucide="file-code" class="w-4 h-4 text-black dark:text-white"></i> HTML/JS</span>
-                <span class="bg-neutral-100 dark:bg-zinc-900 px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-neutral-300 dark:border-zinc-700 shadow-sm flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-black dark:text-white"></i> Tailwind CSS</span>
-                <span class="bg-neutral-100 dark:bg-zinc-900 px-4 py-2 rounded-xl text-[0.8em] font-semibold border border-neutral-300 dark:border-zinc-700 shadow-sm flex items-center gap-2"><i data-lucide="database" class="w-4 h-4 text-black dark:text-white"></i> Google Sheets API</span>
-            </div>
-
-            <!-- Force Back Shortcut -->
-            <button onclick="forceGoHome()" class="w-full btn-3d !py-3 !text-[0.9em]">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Search
-            </button>
-        </div>
-
-    </main>
-
-    <!-- FLOATING TAB BAR -->
-    <nav class="floating-nav" id="floatingTabBar">
-        <a href="#home" class="tab-link active-tab" data-target="home" title="Search">
-            <i data-lucide="search" class="w-6 h-6"></i>
-        </a>
-        <a href="#about" class="tab-link" data-target="about" title="About Notice">
-            <i data-lucide="info" class="w-6 h-6"></i>
-        </a>
-        <a href="#developer" class="tab-link" data-target="developer" title="Developer">
-            <i data-lucide="code-2" class="w-6 h-6"></i>
-        </a>
-        <a href="#settings" class="tab-link group" data-target="settings" title="Settings">
-            <i data-lucide="settings" class="w-6 h-6 animate-[spin_4s_linear_infinite]"></i>
-        </a>
-    </nav>
-
-    <!-- Scripts -->
-    <script>
-        // Obfuscated Base64 Encoded Google Sheet URL
-        const encodedURL = 'aHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20vc3ByZWFkc2hlZXRzL2QvZS8yUEFDWC0xdlFzQkxDMnpDZ2E1b1E3MDZFYjl0dDc3d1h6SzBtYkZGR1B5R0dIMTlvYjZBTVNBR0JmVlU4ZHp4M0t4Ukh6SmJqLTI2ZGd2MDUtd0Zwci9wdWI/b3V0cHV0PWNzdg==';
-        const GOOGLE_SHEET_CSV_URL = atob(encodedURL);
-        
-        let studentData = [];
-        let recentSearches = JSON.parse(localStorage.getItem('pen_recent_searches')) || [];
-
-        /* ================= PREMIUM SETTINGS STATE & LOGIC ================= */
-        const FONTS = ['Inter', 'Poppins', 'Roboto', 'Montserrat', 'Nunito', 'Lora', 'Oswald', 'Raleway', 'Ubuntu', 'Merriweather'];
-        const BG_COLORS = ['#F2F2F7', '#FFFFFF', '#FFF5F5', '#F0FDF4', '#EFF6FF', '#000000', '#1C1C1E'];
-        const TEXT_COLORS = ['#000000', '#333333', '#007AFF', '#FF3B30', '#FFFFFF', '#EBEBF5'];
-        const RADIUS_OPTS = [
-            { label: 'Sharp', val: '0' },
-            { label: 'Medium', val: '12' },
-            { label: 'Rounded', val: '20' },
-            { label: 'Maximum', val: '32' }
-        ];
-
-        let prefs = {
-            font: 'Ubuntu',
-            bg: '#F2F2F7', 
-            text: '#000000', 
-            fontSize: '16',
-            radius: '20',
-            theme: 'system'
-        };
-
-        function isDarkHex(hex) { return (hex === '#000000' || hex === '#1C1C1E'); }
-
-        function loadPrefs() {
-            const saved = localStorage.getItem('anshu_prefs');
-            if (saved) {
-                prefs = JSON.parse(saved);
-            } else {
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    prefs.theme = 'dark';
-                } else {
-                    prefs.theme = 'light';
-                }
-            }
-            if(prefs.theme === 'dark') document.documentElement.classList.add('dark');
-            else document.documentElement.classList.remove('dark');
-            applyPrefsGlobally();
-            renderSettingsUI();
-        }
-
-        function savePrefs() {
-            localStorage.setItem('anshu_prefs', JSON.stringify(prefs));
-            applyPrefsGlobally();
-        }
-
-        function applyPrefsGlobally() {
-            const root = document.documentElement;
-            root.style.setProperty('--user-font', `'${prefs.font}', sans-serif`);
-            document.body.style.fontFamily = `'${prefs.font}', sans-serif`;
-            
-            if (prefs.theme === 'dark') {
-                root.style.setProperty('--user-bg', '#000000');
-                root.style.setProperty('--user-surface', '#0c0c0e');
-                root.style.setProperty('--user-text', '#FFFFFF');
-            } else {
-                root.style.setProperty('--user-bg', prefs.bg);
-                root.style.setProperty('--user-surface', isDarkHex(prefs.bg) ? '#0c0c0e' : '#FFFFFF');
-                root.style.setProperty('--user-text', prefs.text);
-            }
-            
-            root.style.setProperty('--user-font-size', `${prefs.fontSize}px`);
-            root.style.setProperty('--user-radius', `${prefs.radius}px`);
-            document.body.style.fontSize = `${prefs.fontSize}px`;
-        }
-
-        function renderSettingsUI() {
-            const container = document.getElementById('settings-container');
-            const currentRadiusLabel = RADIUS_OPTS.find(r => r.val === prefs.radius)?.label || 'Rounded';
-
-            container.innerHTML = `
-                <div class="setting-group-title ui-elem opacity-0">Appearance</div>
-                <div class="setting-card ui-elem opacity-0">
-                    <div class="setting-item" onclick="toggleThemeDirectly()">
-                        <div class="setting-icon-box grad-gray"><i data-lucide="moon" class="w-5 h-5"></i></div>
-                        <div class="setting-content">
-                            <span class="setting-title">Dark Mode</span>
-                            <div class="custom-toggle ${prefs.theme === 'dark' ? 'active' : ''}" id="ui-theme-toggle"><div class="toggle-knob"></div></div>
-                        </div>
-                    </div>
-                    <div class="expand-pill" onclick="togglePill(this)">
-                        <div class="setting-item">
-                            <div class="setting-icon-box grad-blue"><i data-lucide="type" class="w-5 h-5"></i></div>
-                            <div class="setting-content">
-                                <span class="setting-title">Typography</span>
-                                <span class="setting-value"><span id="set-font-label">${prefs.font}</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
-                            </div>
-                        </div>
-                        <div class="pill-content"><div class="pill-inner"><div class="option-list">
-                            ${FONTS.map(f => `<div class="option-item ${prefs.font===f?'selected':''}" style="font-family: '${f}', sans-serif;" onclick="event.stopPropagation(); updateSetting('font', '${f}'); resetSettingsSelection(this, 'option-item'); document.getElementById('set-font-label').innerText = '${f}';">${f}</div>`).join('')}
-                        </div></div></div>
-                    </div>
-                    <div class="expand-pill" onclick="togglePill(this)">
-                        <div class="setting-item">
-                            <div class="setting-icon-box grad-green"><i data-lucide="a-large-small" class="w-5 h-5"></i></div>
-                            <div class="setting-content">
-                                <span class="setting-title">Font Size</span>
-                                <span class="setting-value"><span id="set-fs-label">${prefs.fontSize}px</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
-                            </div>
-                        </div>
-                        <div class="pill-content"><div class="pill-inner">
-                            <input type="range" min="14" max="24" value="${prefs.fontSize}" class="w-full accent-black dark:accent-white" oninput="document.getElementById('set-fs-label').innerText = this.value + 'px'; updateSetting('fontSize', this.value)" onclick="event.stopPropagation()">
-                        </div></div>
-                    </div>
-                </div>
-
-                <div class="setting-group-title ui-elem opacity-0">Colors (Light Mode)</div>
-                <div class="setting-card ui-elem opacity-0">
-                    <div class="expand-pill" onclick="togglePill(this)">
-                        <div class="setting-item">
-                            <div class="setting-icon-box grad-orange"><i data-lucide="palette" class="w-5 h-5"></i></div>
-                            <div class="setting-content">
-                                <span class="setting-title">Background Color</span>
-                                <span class="setting-value"><i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
-                            </div>
-                        </div>
-                        <div class="pill-content"><div class="pill-inner"><div class="color-palette">
-                            ${BG_COLORS.map(c => `<div class="color-swatch ${prefs.bg===c?'selected':''}" style="background: ${c};" onclick="event.stopPropagation(); updateSetting('bg', '${c}'); resetSettingsSelection(this, 'color-swatch');"></div>`).join('')}
-                        </div></div></div>
-                    </div>
-                    <div class="expand-pill" onclick="togglePill(this)">
-                        <div class="setting-item">
-                            <div class="setting-icon-box grad-purple"><i data-lucide="baseline" class="w-5 h-5"></i></div>
-                            <div class="setting-content border-none">
-                                <span class="setting-title">Text Color</span>
-                                <span class="setting-value"><i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
-                            </div>
-                        </div>
-                        <div class="pill-content"><div class="pill-inner"><div class="color-palette">
-                            ${TEXT_COLORS.map(c => `<div class="color-swatch ${prefs.text===c?'selected':''}" style="background: ${c}; border-color: ${isDarkHex(c) ? '#27272a' : '#e4e4e7'};" onclick="event.stopPropagation(); updateSetting('text', '${c}'); resetSettingsSelection(this, 'color-swatch');"></div>`).join('')}
-                        </div></div></div>
-                    </div>
-                </div>
-
-                <div class="setting-group-title ui-elem opacity-0">Interface</div>
-                <div class="setting-card ui-elem opacity-0">
-                    <div class="expand-pill" onclick="togglePill(this)">
-                        <div class="setting-item">
-                            <div class="setting-icon-box grad-cyan"><i data-lucide="square" class="w-5 h-5"></i></div>
-                            <div class="setting-content border-none">
-                                <span class="setting-title">UI Style</span>
-                                <span class="setting-value"><span id="set-rad-label">${currentRadiusLabel}</span> <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300 transform-icon"></i></span>
-                            </div>
-                        </div>
-                        <div class="pill-content"><div class="pill-inner"><div class="option-list">
-                            ${RADIUS_OPTS.map(r => `<div class="option-item ${prefs.radius===r.val?'selected':''}" onclick="event.stopPropagation(); updateSetting('radius', '${r.val}'); resetSettingsSelection(this, 'option-item'); document.getElementById('set-rad-label').innerText = '${r.label}';">${r.label}</div>`).join('')}
-                        </div></div></div>
-                    </div>
-                </div>
-
-                <div class="setting-group-title ui-elem opacity-0">Data & Storage</div>
-                <div class="setting-card ui-elem opacity-0" style="margin-bottom:10px;">
-                    <div class="setting-item" onclick="clearSearchHistory()">
-                        <div class="setting-icon-box grad-gray"><i data-lucide="eraser" class="w-5 h-5"></i></div>
-                        <div class="setting-content">
-                            <span class="setting-title text-ios-textLight dark:text-ios-textDark">Clear Search History</span>
-                        </div>
-                    </div>
-                    <div class="setting-item" onclick="resetApp()">
-                        <div class="setting-icon-box grad-red"><i data-lucide="trash-2" class="w-5 h-5"></i></div>
-                        <div class="setting-content border-none">
-                            <span class="setting-title" style="color: #71717a;">Reset App Data</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col items-center justify-center mt-12 opacity-50 ui-elem opacity-0 pb-10">
-                    <i data-lucide="graduation-cap" class="w-10 h-10 mb-2 text-ios-subLight dark:text-ios-subDark"></i>
-                    <p class="text-[0.9em] font-bold text-ios-textLight dark:text-ios-textDark">BN Jha PEN Portal</p>
-                    <p class="text-[0.75em] text-ios-subLight dark:text-ios-subDark mt-1">Version 3.0 • Premium Glassmorphism Edition</p>
-                </div>
-            `;
-            lucide.createIcons(); 
-        }
-
-        window.togglePill = function(el) { el.classList.toggle('open'); };
-        
-        window.updateSetting = function(key, val) {
-            prefs[key] = val;
-            savePrefs();
-            iziToast.show({ title: 'Updated', message: 'Applied successfully.', position: 'topCenter', timeout: 1000, color: 'green', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
-        };
-        
-        window.resetSettingsSelection = function(el, cls) {
-            const siblings = el.parentElement.querySelectorAll('.'+cls);
-            siblings.forEach(s => s.classList.remove('selected'));
-            el.classList.add('selected');
-        };
-
-        window.toggleThemeDirectly = function() {
-            const willBeDark = prefs.theme !== 'dark';
-            applyTheme(willBeDark);
-            
-            const toggle = document.getElementById('ui-theme-toggle');
-            if(toggle) {
-                if(willBeDark) toggle.classList.add('active');
-                else toggle.classList.remove('active');
-            }
-            if(navigator.vibrate) navigator.vibrate(15);
-        };
-
-        function applyTheme(isDark) {
-            if (isDark) {
-                document.documentElement.classList.add('dark');
-                prefs.theme = 'dark';
-                localStorage.theme = 'dark';
-            } else {
-                document.documentElement.classList.remove('dark');
-                prefs.theme = 'light';
-                localStorage.theme = 'light';
-            }
-            savePrefs();
-        }
-
-        window.clearSearchHistory = function() {
-            Swal.fire({
-                title: 'Clear History?',
-                text: "Your recent searches will be deleted.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#000000',
-                cancelButtonColor: '#71717a',
-                confirmButtonText: 'Yes, clear it',
-                background: prefs.theme === 'dark' ? '#0c0c0e' : '#FFFFFF',
-                color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000',
-                customClass: { popup: 'rounded-ios' }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    localStorage.removeItem('pen_recent_searches');
-                    recentSearches = [];
-                    updateRecentSearches();
-                    iziToast.success({ title: 'Cleared', message: 'History removed.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
-                }
-            })
-        };
-
-        window.resetApp = function() {
-            Swal.fire({
-                title: 'Reset App Data?',
-                text: "Your preferences, custom themes, and history will be permanently deleted.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#000000',
-                cancelButtonColor: '#71717a',
-                confirmButtonText: 'Yes, reset it',
-                background: prefs.theme === 'dark' ? '#0c0c0e' : '#FFFFFF',
-                color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000',
-                customClass: { popup: 'rounded-ios' }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    localStorage.removeItem('anshu_prefs');
-                    localStorage.removeItem('pen_recent_searches');
-                    localStorage.removeItem('theme');
-                    window.location.reload();
-                }
-            })
-        };
-
-        /* FORCE HOMEPAGE REDIRECTION FUNCTION */
-        window.forceGoHome = function() {
-            window.location.hash = '#home';
-            
-            document.querySelectorAll('.spa-view').forEach(view => {
-                view.classList.remove('active');
-                view.style.opacity = '0';
-                view.style.transform = 'scale(0.98)';
-                view.style.display = 'none';
-            });
-
-            const homeView = document.getElementById('view-home');
-            if (homeView) {
-                homeView.classList.add('active');
-                homeView.style.display = 'block';
-                
-                gsap.to(homeView, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.2)" });
-                gsap.to("#view-home .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" });
-            }
-
-            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active-tab'));
-            document.querySelector('.tab-link[href="#home"]')?.classList.add('active-tab');
-
-            const navTitle = document.getElementById('nav-title');
-            if (navTitle) {
-                navTitle.style.fontFamily = "'Kavoon', serif";
-                navTitle.innerText = "BN Jha";
-            }
-
-            window.currentActiveId = 'view-home';
-
-            if (navigator.vibrate) navigator.vibrate(20);
-            iziToast.show({
-                title: 'Home',
-                message: 'Returned to Search Page',
-                position: 'topCenter',
-                timeout: 1200,
-                backgroundColor: prefs.theme === 'dark' ? '#0c0c0e' : '#fafafa',
-                titleColor: prefs.theme === 'dark' ? '#ffffff' : '#000000',
-                messageColor: prefs.theme === 'dark' ? '#a1a1aa' : '#71717a'
-            });
-        };
-
-        document.addEventListener("DOMContentLoaded", () => {
-            loadPrefs(); 
-            lucide.createIcons();
-
-            const themeBtnHeader = document.getElementById('theme-toggle');
-            themeBtnHeader.addEventListener('click', () => {
-                window.toggleThemeDirectly();
-                gsap.fromTo(themeBtnHeader, {rotation: -180, scale: 0.5}, {rotation: 0, scale: 1, duration: 0.5, ease: "back.out(1.5)"});
-            });
-
-            const routes = { '': 'view-home', '#': 'view-home', '#home': 'view-home', '#about': 'view-about', '#developer': 'view-dev', '#settings': 'view-settings' };
-            const navTitle = document.getElementById('nav-title');
-            const tabLinks = document.querySelectorAll('.tab-link');
-            window.currentActiveId = 'view-home';
-
-            function handleRouting() {
-                const hash = window.location.hash || '#home';
-                const targetId = routes[hash] || 'view-home';
-                if (targetId === window.currentActiveId) return;
-
-                const currentEl = document.getElementById(window.currentActiveId);
-                const targetEl = document.getElementById(targetId);
-                
-                if(targetId === 'view-settings') renderSettingsUI();
-
-                gsap.to(currentEl, {
-                    opacity: 0, scale: 0.95, y: -20, duration: 0.3, ease: "power2.inOut",
-                    onComplete: () => {
-                        currentEl.classList.remove('active');
-                        currentEl.style.display = 'none';
-                        targetEl.classList.add('active');
-                        targetEl.style.display = 'block';
-                        window.scrollTo(0, 0);
-                        
-                        gsap.to(navTitle, {opacity: 0, y: -5, duration: 0.15, onComplete: () => {
-                            if(hash === '#home' || hash === '') {
-                                navTitle.style.fontFamily = "'Kavoon', serif";
-                                navTitle.innerText = "BN Jha";
-                            } else {
-                                navTitle.style.fontFamily = `var(--user-font), sans-serif`;
-                                navTitle.innerText = targetEl.getAttribute('data-title');
-                            }
-                            gsap.to(navTitle, {opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.5)"});
-                        }});
-
-                        tabLinks.forEach(link => link.classList.remove('active-tab'));
-                        document.querySelector(`.tab-link[href="${hash}"]`)?.classList.add('active-tab');
-
-                        gsap.fromTo(targetEl, 
-                            { opacity: 0, scale: 0.95, y: 30 }, 
-                            { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "back.out(1.2)" }
-                        );
-                        
-                        gsap.to("#" + targetId + " .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)", delay: 0.1 });
-
-                        window.currentActiveId = targetId;
-                    }
-                });
-            }
-
-            window.addEventListener('hashchange', handleRouting);
-            if(window.location.hash && window.location.hash !== '#home') {
-                const initialTarget = routes[window.location.hash] || 'view-home';
-                document.getElementById('view-home').classList.remove('active');
-                document.getElementById('view-home').style.display = 'none';
-                
-                const initialEl = document.getElementById(initialTarget);
-                initialEl.classList.add('active');
-                initialEl.style.display = 'block';
-                
-                document.querySelector(`.tab-link[href="${window.location.hash}"]`)?.classList.add('active-tab');
-                document.querySelector('.tab-link[href="#home"]')?.classList.remove('active-tab');
-                
-                navTitle.style.fontFamily = `var(--user-font), sans-serif`;
-                navTitle.innerText = initialEl.getAttribute('data-title');
-                window.currentActiveId = initialTarget;
-                
-                gsap.to("#" + initialTarget + " .ui-elem", { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" });
-            }
-
-            const tl = gsap.timeline();
-            document.body.style.overflow = "hidden";
-            tl.fromTo("#splash-b", { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "bounce.out" })
-              .to("#splash-rest", { width: "auto", opacity: 1, duration: 0.6, ease: "power3.out" }, "-=0.2")
-              .to("#splash-loader", { opacity: 0, duration: 0.3, delay: 0.5 })
-              .to("#splash-screen", {
-                  opacity: 0, duration: 0.5,
-                  onComplete: () => {
-                      document.getElementById("splash-screen").style.display = "none";
-                      document.body.style.overflow = ""; 
-                      document.getElementById("floatingTabBar").classList.add("visible");
-                  }
-              });
-            tl.to("#" + window.currentActiveId + " .ui-elem", { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }, "-=0.2");
-
-            const statusEl = document.getElementById('dataStatus');
-            function loadData() {
-                Papa.parse(GOOGLE_SHEET_CSV_URL, {
-                    download: true, header: true, skipEmptyLines: true,
-                    transformHeader: function(header) { return header.trim().toLowerCase(); },
-                    complete: function(results) {
-                        studentData = results.data;
-                        gsap.to(statusEl, {opacity: 0, scale: 0.9, duration: 0.3, onComplete: () => statusEl.classList.add('hidden')});
-                    },
-                    error: function(err) {
-                        statusEl.classList.add('hidden');
-                        iziToast.error({ title: 'Error', message: 'Connection failed. Please refresh.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
-                    }
-                });
-            }
-            loadData();
-
-            const searchInput = document.getElementById('searchInput');
-            const clearSearchBtn = document.getElementById('clearSearch');
-            const searchBtn = document.getElementById('searchBtn');
-            const resultsContainer = document.getElementById('resultsContainer');
-            const noResults = document.getElementById('noResults');
-            const recentSection = document.getElementById('recentSearchesSection');
-            const recentTags = document.getElementById('recentTags');
-            const searchCount = document.getElementById('searchCount');
-            const shimmerLoader = document.getElementById('shimmerLoader');
-
-            window.updateRecentSearches = function() {
-                if(recentSearches.length === 0) {
-                    recentSection.classList.add('hidden');
-                    return;
-                }
-                recentSection.classList.remove('hidden');
-                recentTags.innerHTML = '';
-                recentSearches.forEach(term => {
-                    const chip = document.createElement('button');
-                    chip.className = "bg-neutral-200 dark:bg-zinc-800 px-4 py-2 rounded-full text-[0.8em] font-semibold text-ios-textLight dark:text-ios-textDark active:scale-90 transition-all hover:bg-neutral-300 dark:hover:bg-zinc-700";
-                    chip.innerText = term;
-                    chip.onclick = () => { searchInput.value = term; performSearch(); };
-                    recentTags.appendChild(chip);
-                });
-            }
-            updateRecentSearches();
-
-            searchInput.addEventListener('input', () => {
-                if(searchInput.value.length > 0) {
-                    clearSearchBtn.classList.remove('hidden');
-                    gsap.to(clearSearchBtn, {opacity: 1, scale: 1, duration: 0.2});
-                } else {
-                    gsap.to(clearSearchBtn, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearchBtn.classList.add('hidden')});
-                }
-            });
-            
-            clearSearchBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                gsap.to(clearSearchBtn, {opacity: 0, scale: 0.5, duration: 0.2, onComplete: ()=>clearSearchBtn.classList.add('hidden')});
-                resultsContainer.innerHTML = '';
-                noResults.classList.add('hidden');
-                searchCount.classList.add('hidden');
-                searchInput.focus();
-            });
-
-            function getValue(obj, keys) {
-                for (let key of keys) {
-                    if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') return obj[key];
-                }
-                return 'N/A';
-            }
-
-            function maskName(str) {
-                if (!str || str === 'N/A') return 'N/A';
-                str = str.trim();
-                if (str.length <= 4) {
-                    return str.charAt(0) + '***';
-                }
-                return str.substring(0, 2) + '***' + str.substring(str.length - 2);
-            }
-
-            function performSearch() {
-                const COOLDOWN_MS = 10 * 60 * 1000; 
-                let searchHistory = JSON.parse(localStorage.getItem('bnjha_search_history') || '[]');
-                const now = Date.now();
-                
-                searchHistory = searchHistory.filter(timestamp => (now - timestamp) < COOLDOWN_MS);
-                
-                if (searchHistory.length >= 2) {
-                    const oldestRemaining = searchHistory[0];
-                    const timeLeft = Math.ceil((COOLDOWN_MS - (now - oldestRemaining)) / 1000);
-                    const minutes = Math.floor(timeLeft / 60);
-                    const seconds = timeLeft % 60;
-                    
-                    Swal.fire({
-                        title: 'Rate Limit Reached',
-                        text: `You can search only 2 times in 10 minutes. Please wait ${minutes}m ${seconds}s.`,
-                        icon: 'warning',
-                        confirmButtonColor: '#000000',
-                        background: prefs.theme === 'dark' ? '#0c0c0e' : '#FFFFFF',
-                        color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000',
-                        customClass: { popup: 'rounded-ios' },
-                        backdrop: `rgba(0,0,0,0.6)`
-                    });
-                    return; 
-                }
-
-                const query = searchInput.value.trim().toLowerCase();
-                resultsContainer.innerHTML = '';
-                noResults.classList.add('hidden');
-                searchCount.classList.add('hidden');
-
-                if (studentData.length === 0) {
-                    iziToast.warning({ title: 'Wait', message: 'Syncing Data... Please wait.', position: 'topCenter' });
-                    return;
-                }
-
-                if (!query) {
-                    iziToast.error({ title: 'Empty', message: 'Please enter a name.', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
-                    if(navigator.vibrate) navigator.vibrate([10, 30, 10]);
-                    gsap.fromTo(searchInput, {x: -5}, {x: 5, duration: 0.1, yoyo: true, repeat: 3, onComplete: ()=>gsap.to(searchInput, {x:0})});
-                    return;
-                }
-
-                searchHistory.push(now);
-                localStorage.setItem('bnjha_search_history', JSON.stringify(searchHistory));
-
-                if(!recentSearches.includes(searchInput.value.trim())) {
-                    recentSearches.unshift(searchInput.value.trim());
-                    if(recentSearches.length > 5) recentSearches.pop();
-                    localStorage.setItem('pen_recent_searches', JSON.stringify(recentSearches));
-                    updateRecentSearches();
-                }
-
-                if(navigator.vibrate) navigator.vibrate(15);
-                searchBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Searching...';
-                lucide.createIcons();
-                
-                // Show Skeleton Shimmer Loading Screen
-                shimmerLoader.classList.remove('hidden');
-
-                setTimeout(() => {
-                    const matches = studentData.filter(student => {
-                        const studentName = getValue(student, ['name', 'student name', 'student_name']).toLowerCase();
-                        return studentName.includes(query) && studentName !== 'n/a';
-                    });
-
-                    searchBtn.innerHTML = '<i data-lucide="sparkles" class="w-5 h-5 group-active:rotate-12 transition-transform"></i> Search Database';
-                    shimmerLoader.classList.add('hidden');
-                    lucide.createIcons();
-
-                    if (matches.length === 0) {
-                        noResults.classList.remove('hidden');
-                        gsap.fromTo(noResults, {opacity: 0, scale: 0.9, y: 20}, {opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.5)"});
-                    } else {
-                        searchCount.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 inline-block mr-1 relative -top-0.5"></i> Found ${matches.length} result(s) for "${searchInput.value.trim()}"`;
-                        searchCount.classList.remove('hidden');
-                        gsap.fromTo(searchCount, {opacity: 0, y: -10}, {opacity: 1, y: 0, duration: 0.3});
-                        lucide.createIcons();
-                        renderResults(matches);
-                    }
-                }, 800); 
-            }
-
-            if(window.location.hash === '#settings') renderSettingsUI();
-
-            function renderResults(matches) {
-                matches.forEach((student, index) => {
-                    const name = getValue(student, ['name', 'student name', 'student_name']);
-                    
-                    const rawFather = getValue(student, ['father_name', 'father name', "father's name", 'father']);
-                    const rawMother = getValue(student, ['mother_name', 'mother name', "mother's name", 'mother']);
-                    const father = maskName(rawFather);
-                    const mother = maskName(rawMother);
-                    
-                    const dob = getValue(student, ['dob', 'date of birth', 'birth_date']);
-                    const studentClass = getValue(student, ['class', 'class_name']);
-                    const section = getValue(student, ['section', 'sec']);
-                    const gender = getValue(student, ['gender', 'sex']);
-                    const penNo = getValue(student, ['pen_no', 'pen no', 'pen number', 'pen']);
-
-                    const classBadge = studentClass !== 'N/A' ? `<span class="text-[0.65em] font-bold bg-neutral-200 text-black dark:bg-zinc-800 dark:text-white px-2.5 py-1 rounded-md uppercase border border-neutral-300 dark:border-zinc-700">Class ${studentClass}</span>` : '';
-                    const secBadge = section !== 'N/A' ? `<span class="text-[0.65em] font-bold bg-neutral-200 text-black dark:bg-zinc-800 dark:text-white px-2.5 py-1 rounded-md uppercase border border-neutral-300 dark:border-zinc-700">Sec ${section}</span>` : '';
-                    const genderBadge = gender !== 'N/A' ? `<span class="text-[0.65em] font-bold bg-neutral-200 text-black dark:bg-zinc-800 dark:text-white px-2.5 py-1 rounded-md uppercase border border-neutral-300 dark:border-zinc-700">${gender}</span>` : '';
-
-                    let badgesHtml = (classBadge || secBadge || genderBadge) 
-                        ? `<div class="flex flex-wrap gap-2 mt-2.5">${classBadge} ${secBadge} ${genderBadge}</div>` 
-                        : `<span class="text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold mt-1.5 inline-block bg-neutral-200 dark:bg-zinc-800 px-2.5 py-1 rounded-md">Student Record</span>`;
-
-                    const card = document.createElement('div');
-                    card.className = "glass-result-card p-6 opacity-0 shadow-lg relative overflow-hidden";
-                    
-                    card.innerHTML = `
-                        <div class="flex items-center gap-4 border-b border-neutral-200/50 dark:border-zinc-800/50 pb-5 mb-5">
-                            <!-- Student avatar placeholder -->
-                            <div class="bg-black text-white dark:bg-white dark:text-black w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-md shrink-0 uppercase">
-                                ${name.charAt(0)}
-                            </div>
-                            <div>
-                                <h2 class="text-[1.2em] font-extrabold text-ios-textLight dark:text-ios-textDark leading-none capitalize">${name}</h2>
-                                ${badgesHtml}
-                            </div>
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div>
-                                <p class="text-[0.65em] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Father's Name</p>
-                                <p class="text-[0.9em] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${father}</p>
-                            </div>
-                            <div>
-                                <p class="text-[0.65em] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Mother's Name</p>
-                                <p class="text-[0.9em] font-semibold text-ios-textLight dark:text-ios-textDark break-words capitalize">${mother}</p>
-                            </div>
-                            ${dob !== 'N/A' ? `
-                            <div class="col-span-2 mt-[-2px]">
-                                <p class="text-[0.65em] uppercase font-bold text-ios-subLight dark:text-ios-subDark tracking-wider mb-1">Date of Birth</p>
-                                <p class="text-[0.9em] font-semibold text-ios-textLight dark:text-ios-textDark break-words">${dob}</p>
-                            </div>` : ''}
-                        </div>
-                        
-                        <!-- Stacked Bento Display for PEN (Permanent Education Number) & APAAR ID -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-                            <!-- PEN Code -->
-                            <div class="bg-neutral-100/80 dark:bg-zinc-900/80 border border-neutral-200/50 dark:border-zinc-800/50 rounded-xl p-4 flex flex-col justify-center">
-                                <span class="text-[0.65em] font-extrabold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">Permanent Education Number (PEN)</span>
-                                <span class="text-[1.15em] font-black text-black dark:text-white tracking-wider font-mono select-all" id="pen-text-${index}">${penNo}</span>
-                            </div>
-                            <!-- APAAR ID (Voluntary Unique Student ID) -->
-                            <div class="bg-neutral-100/80 dark:bg-zinc-900/80 border border-neutral-200/50 dark:border-zinc-800/50 rounded-xl p-4 flex flex-col justify-center">
-                                <span class="text-[0.65em] font-extrabold uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-1">APAAR ID</span>
-                                <span class="text-[1.1em] font-black text-zinc-400 dark:text-zinc-500 tracking-wider font-mono">N/A</span>
-                            </div>
-                        </div>
-
-                        <!-- Dynamic local QR Code and utility action buttons -->
-                        <div class="mt-5 border-t border-neutral-200/50 dark:border-zinc-800/50 pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
-                            <div class="flex items-center gap-3">
-                                <div id="qr-container-${index}" class="bg-white p-1 rounded-lg border border-neutral-200"></div>
-                                <div class="text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold">
-                                    Scan to verify student details offline.
-                                </div>
-                            </div>
-                            
-                            <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                                <button onclick="copyPenValue('${penNo}')" class="flex-1 md:flex-none px-4 py-2 bg-neutral-100 dark:bg-zinc-900 hover:bg-neutral-200 dark:hover:bg-zinc-800 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 text-ios-textLight dark:text-ios-textDark">
-                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy PEN
-                                </button>
-                                <button onclick="sharePENRecord('${name}', '${penNo}')" class="flex-1 md:flex-none px-4 py-2 bg-neutral-100 dark:bg-zinc-900 hover:bg-neutral-200 dark:hover:bg-zinc-800 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 text-ios-textLight dark:text-ios-textDark">
-                                    <i data-lucide="share-2" class="w-3.5 h-3.5"></i> Share
-                                </button>
-                                <button class="flex-1 md:flex-none px-4 py-2 bg-black text-white dark:bg-white dark:text-black hover:opacity-80 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5" id="dl-card-btn-${index}">
-                                    <i data-lucide="download" class="w-3.5 h-3.5"></i> Download Card
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- @anshurajhans Watermark -->
-                        <div class="watermark hidden text-center mt-6 text-[0.7em] text-ios-subLight dark:text-ios-subDark font-semibold opacity-60 tracking-wider">
-                            designed by @anshurajhans
-                        </div>
-                    `;
-                    resultsContainer.appendChild(card);
-
-                    // Offline QR code container generation 
-                    new QRCode(document.getElementById(`qr-container-${index}`), {
-                        text: `Student: ${name}, PEN: ${penNo}`,
-                        width: 50,
-                        height: 50,
-                        colorDark : "#000000",
-                        colorLight : "#ffffff",
-                        correctLevel : QRCode.CorrectLevel.M
-                    });
-
-                    // Download card logic
-                    const dlBtn = document.getElementById(`dl-card-btn-${index}`);
-                    dlBtn.addEventListener('click', async () => {
-                        const originalBtnHtml = dlBtn.innerHTML;
-                        dlBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Processing...';
-                        lucide.createIcons();
-
-                        const watermark = card.querySelector('.watermark');
-                        watermark.classList.remove('hidden');
-
-                        try {
-                            await new Promise(r => setTimeout(r, 150));
-                            
-                            const canvas = await html2canvas(card, {
-                                scale: 2.5, 
-                                backgroundColor: prefs.theme === 'dark' ? '#0c0c0e' : (prefs.bg === '#000000' || prefs.bg === '#1C1C1E' ? '#0c0c0e' : '#FFFFFF'),
-                                useCORS: true,
-                                logging: false
-                            });
-
-                            const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                            const link = document.createElement('a');
-                            link.download = `PEN_Card_${name.replace(/\s+/g, '_')}.jpg`;
-                            link.href = imgData;
-                            link.click();
-                            
-                            iziToast.success({ title: 'Success', message: 'Card downloaded successfully!', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
-                        } catch (error) {
-                            iziToast.error({ title: 'Error', message: 'Download failed.', position: 'topCenter', theme: prefs.theme === 'dark' ? 'dark' : 'light' });
-                        } finally {
-                            watermark.classList.add('hidden');
-                            dlBtn.innerHTML = originalBtnHtml;
-                            lucide.createIcons();
-                        }
-                    });
-                });
-
-                lucide.createIcons();
-                gsap.to(".glass-result-card", { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.4)" });
-            }
-
-            searchBtn.addEventListener('click', performSearch);
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') { searchInput.blur(); performSearch(); }
-            });
-        });
-
-        // Copy and Share Helper functions
-        window.copyPenValue = function(penNo) {
-            navigator.clipboard.writeText(penNo).then(() => {
-                iziToast.success({ title: 'Copied', message: 'PEN Number copied successfully!', position: 'topCenter', timeout: 1500 });
-            }).catch(() => {
-                iziToast.error({ title: 'Error', message: 'Failed to copy to clipboard.' });
-            });
-        };
-
-        window.sharePENRecord = function(name, penNo) {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Student PEN Verification',
-                    text: `Check student details on BN Jha College portal. Student Name: ${name}, Permanent Education Number (PEN): ${penNo}`,
-                    url: window.location.href
-                }).catch(() => {});
-            } else {
-                window.copyPenValue(penNo);
-                iziToast.info({ title: 'Sharing', message: 'PEN copied. Share it anywhere manually.', position: 'topCenter' });
-            }
-        };
-
-        window.toggleQuickMenu = function() {
-            Swal.fire({
-                title: 'Notice & About',
-                text: 'Direct links to major features',
-                icon: 'info',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Settings',
-                denyButtonText: 'About Notice',
-                confirmButtonColor: '#000000',
-                denyButtonColor: '#71717a',
-                background: prefs.theme === 'dark' ? '#0c0c0e' : '#FFFFFF',
-                color: prefs.theme === 'dark' ? '#FFFFFF' : '#000000'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.hash = '#settings';
-                } else if (result.isDenied) {
-                    window.location.hash = '#about';
-                }
-            });
-        };
-    </script>
 </body>
 </html>
