@@ -1,148 +1,501 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
-    <style>
-        /* Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0d0d0f">
+  <title>महत्वपूर्ण सूचना · PEN Number Verification Portal · BNJHA College</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #ffffff; /* pure white background taaki GIF seamlessly blend ho jaye */
-            color: #2d3748;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px 0 20px; /* bottom padding zero rakhi hai taaki GIF bottom se touch rahe */
-            text-align: center;
-            overflow-x: hidden;
-        }
-
-        .error-container {
-            max-width: 650px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            min-height: calc(100vh - 40px);
-        }
-
-        /* Content Area (Top) */
-        .content {
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 5.5rem;
-            font-weight: 800;
-            color: #ff9f43; /* Caveman dress color scheme */
-            line-height: 1;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        h2 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 15px;
-        }
-
-        p {
-            font-size: 1rem;
-            color: #718096;
-            margin-bottom: 30px;
-            max-width: 480px;
-            line-height: 1.6;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Button styling */
-        .btn-home {
-            display: inline-block;
-            padding: 12px 35px;
-            background-color: #2c3e50; /* Rock/stone dark tone */
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 30px;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(44, 62, 80, 0.15);
-        }
-
-        .btn-home:hover {
-            background-color: #ff9f43; 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255, 159, 67, 0.3);
-        }
-
-        .btn-home:active {
-            transform: translateY(0);
-        }
-
-        /* GIF Container (Bottom) */
-        .illustration-container {
-            width: 100%;
-            max-width: 550px;
-            margin-top: auto; /* Ise bottom me push karne ke liye */
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-        }
-
-        .illustration-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Responsive design for smaller screens */
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 4rem;
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans Devanagari', '-apple-system', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            brand: {
+              green: '#10B981',
+              blue: '#3B82F6',
+              orange: '#F59E0B',
+              red: '#EF4444',
+              purple: '#8B5CF6'
+            },
+            slate: {
+              950: '#0d0d0f',
+              900: '#16161a',
+              800: '#202024',
+              700: '#2d2d34',
+              600: '#4a4a52',
             }
-            h2 {
-                font-size: 1.3rem;
-            }
-            p {
-                font-size: 0.95rem;
-            }
-            .btn-home {
-                padding: 10px 28px;
-                font-size: 0.95rem;
-            }
+          }
         }
-    </style>
+      }
+    }
+  </script>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- iziToast CDN (CSS & JS) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    .dark ::-webkit-scrollbar-track { background: #0d0d0f; }
+    ::-webkit-scrollbar-track { background: #f4f4f7; }
+    .dark ::-webkit-scrollbar-thumb { background: #2d2d34; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 4px; }
+    
+    .glass-panel {
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .premium-heading {
+      color: #121214;
+      text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.05);
+      transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s ease;
+    }
+
+    .dark .premium-heading {
+      color: #F4F4F7;
+      text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.05);
+    }
+
+    .bento-card {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-card:hover {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08);
+    }
+    .dark .bento-card:hover {
+      box-shadow: 0 20px 35px -10px rgba(255, 255, 255, 0.015);
+    }
+
+    /* Pulse wave for visual interest */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.5; }
+    }
+    .pulse-effect {
+      animation: pulse-ring 3s infinite ease-in-out;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-[#f4f4f6] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-brand-blue/20 transition-colors duration-500 overflow-x-hidden min-h-screen flex flex-col justify-between">
 
-    <div class="error-container">
-        <!-- Text Content Area -->
-        <div class="content">
-            <h1>404</h1>
-            <h2>Oops! Connection Toot Gaya...</h2>
-            <p>Humne is page ko dhoodhne ki koshish ki, lekin hum stone age tak pahunch gaye jahan shayad internet abhi tak invent nahi hua hai.</p>
-            
-            <!-- Home Screen Redirect Button -->
-            <a href="index.html" class="btn-home">Home Screen Par Chalein</a>
-        </div>
+  <!-- macOS System Style Header Bar -->
+  <header class="sticky top-0 z-40 border-b border-black/[0.06] dark:border-white/[0.06] bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-6 sm:px-10 py-4 flex items-center justify-between transition-colors duration-300">
+    <div class="flex items-center space-x-6 sm:space-x-10">
+      <!-- Traffic Lights -->
+      <div class="flex items-center space-x-2.5">
+        <span class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] border border-[#e0443e]"></span>
+        <span class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e] border border-[#dea123]"></span>
+        <span class="w-3.5 h-3.5 rounded-full bg-[#27c93f] border border-[#1aab29]"></span>
+      </div>
 
-        <!-- GIF at the Bottom -->
-        <div class="illustration-container">
-            <img src="eror.gif" alt="Offline Caveman">
-        </div>
+      <!-- Identity -->
+      <div class="flex items-center space-x-3">
+        <span class="font-extrabold text-base tracking-tight text-slate-900 dark:text-white uppercase font-mono">BNJHA College</span>
+        <span class="text-[10px] text-brand-orange dark:text-brand-orange font-mono border border-brand-orange/20 px-2 py-0.5 rounded bg-brand-orange/5 font-semibold tracking-wider">UDISE+ DESK</span>
+      </div>
     </div>
 
+    <!-- Actions Area -->
+    <div class="flex items-center space-x-3">
+      <!-- Info Trigger -->
+      <button onclick="triggerWelcomeAlert()" class="p-2.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02] hover:bg-black/[0.06] dark:hover:bg-white/[0.06] text-brand-blue transition-all" title="Help Directory">
+        <i data-lucide="help-circle" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button onclick="toggleTheme()" class="p-2.5 rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02] hover:bg-black/[0.06] dark:hover:bg-white/[0.06] text-slate-600 dark:text-slate-300 transition-all" aria-label="Toggle Theme">
+        <i id="theme-icon-dark" data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+        <i id="theme-icon-light" data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Notice Workspace Area -->
+  <main class="grid grid-cols-1 lg:grid-cols-12 flex-1 w-full max-w-[1600px] mx-auto">
+    
+    <!-- LEFT PANEL: Primary Warning & Announcement Details (5 columns) -->
+    <section class="lg:col-span-5 border-r border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-slate-900 p-6 sm:p-10 lg:p-12 flex flex-col justify-between transition-colors duration-500">
+      
+      <div class="space-y-8">
+        
+        <!-- Live Status Tag -->
+        <div class="inline-flex items-center space-x-2 bg-brand-red/10 border border-brand-red/20 px-4 py-1.5 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-brand-red animate-pulse"></span>
+          <span class="text-xs font-mono text-brand-red font-bold uppercase tracking-wider">अति आवश्यक सूचना / Urgent Notice</span>
+        </div>
+
+        <!-- Huge Interactive Headings -->
+        <div class="space-y-4">
+          <h1 class="text-4xl sm:text-5xl md:text-5xl font-black tracking-tight leading-tight premium-heading">
+            PEN नंबर संबंधी <br><span class="text-brand-blue">महत्वपूर्ण निर्देश</span>
+          </h1>
+          <p class="text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed max-w-2xl">
+            यू-डाइस प्लस (UDISE+) सिस्टम के अंतर्गत सभी नामांकित विद्यार्थियों के लिए राष्ट्रीय स्तर का परमानेंट एजुकेशन नंबर (PEN) जारी किया जाना अनिवार्य है।
+          </p>
+        </div>
+
+        <!-- Timeline / Process Card -->
+        <div class="bento-card p-6 rounded-3xl bg-slate-50 dark:bg-slate-950/40 border border-black/[0.05] dark:border-white/[0.05] space-y-4">
+          <div class="flex items-center space-x-3 text-brand-orange">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+            <h3 class="text-base font-bold text-slate-950 dark:text-white uppercase font-mono">कार्यवाही एवं अवधि</h3>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+            विवरण जमा करने के बाद आपका PEN नंबर जनरेट होने में <strong>1 सप्ताह (7 दिन)</strong> का समय लगेगा।
+          </p>
+          <div class="pt-4 border-t border-black/[0.05] dark:border-white/[0.05] flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-brand-blue">vitcoore@gmail.com</span>
+            <button onclick="copyToClipboard('vitcoore@gmail.com')" class="text-xs font-mono font-bold text-brand-orange bg-brand-orange/10 px-2 py-1 rounded border border-brand-orange/20 hover:bg-brand-orange/20 transition-all">Copy Email</button>
+          </div>
+        </div>
+
+        <!-- Banner Info: Admission Relief Information -->
+        <div class="p-6 rounded-3xl bg-gradient-to-r from-brand-purple/10 to-brand-blue/10 border border-brand-purple/20 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-5">
+          <div class="p-3 rounded-2xl bg-brand-purple/10 text-brand-purple flex-shrink-0">
+            <i data-lucide="check-circle" class="w-6 h-6"></i>
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-sm font-extrabold text-slate-800 dark:text-white">तत्काल राहत: बिना PEN के नामांकन संभव!</h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              आप बिना PEN नंबर के भी अभी आसानी से कॉलेज में नामांकन (Admission) प्राप्त कर सकते हैं।
+            </p>
+          </div>
+        </div>
+
+        <!-- Warnings / Mandatory Status -->
+        <div class="p-6 rounded-3xl bg-brand-red/5 dark:bg-brand-red/10 border border-brand-red/20 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-5">
+          <div class="p-3 rounded-2xl bg-brand-red/10 text-brand-red flex-shrink-0">
+            <i data-lucide="alert-triangle" class="w-6 h-6 animate-bounce"></i>
+          </div>
+          <div class="space-y-1">
+            <h4 class="text-sm font-extrabold text-brand-red">भविष्य की अनिवार्यता (Mandatory)</h4>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+              वर्तमान में बिना पेन नंबर के प्रवेश मिलने के बावजूद, भविष्य में PEN नंबर बनवाना पूर्णतः अनिवार्य है।
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Signature Area -->
+      <div class="pt-8 border-t border-black/[0.06] dark:border-white/[0.06] mt-8 flex flex-col space-y-2">
+        <span class="text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest block font-bold">Authorized Dispatch</span>
+        <div class="space-y-0.5">
+          <h4 class="text-base font-extrabold text-slate-800 dark:text-white">Udise+ Management Team</h4>
+          <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">B.N. Jha College, Deoghar</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT PANEL: Animated Elements & Interactive Student Registration Form (7 columns) -->
+    <section class="lg:col-span-7 bg-[#fbfbfd] dark:bg-slate-950/40 p-6 sm:p-10 lg:p-12 flex flex-col justify-between transition-colors duration-500">
+      
+      <div class="space-y-6">
+        
+        <!-- Header of the Form -->
+        <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.06] pb-4">
+          <div class="space-y-1">
+            <span class="text-xs font-mono text-brand-blue uppercase font-bold tracking-wider">E-Registration Node</span>
+            <h3 class="text-xl font-extrabold text-slate-800 dark:text-white">छात्र विवरण प्रपत्र / Student Details Form</h3>
+          </div>
+          
+          <div class="hidden sm:flex items-center space-x-1 bg-brand-green/10 border border-brand-green/20 px-3 py-1 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></span>
+            <span class="text-[10px] font-mono text-brand-green font-bold">READY</span>
+          </div>
+        </div>
+
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          कृपया नीचे दिए गए सभी विवरणों को सावधानीपूर्वक दर्ज करें। यह विवरण सीधे आपके ईमेल ड्राफ्ट में तैयार कर दिया जाएगा ताकि आपको टाइप न करना पड़े।
+        </p>
+
+        <!-- Dynamic Form Fields inside Bento Grid -->
+        <form id="pen-registration-form" onsubmit="handleFormSubmission(event)" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Student Name -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+                <i data-lucide="user" class="w-3.5 h-3.5 text-brand-blue"></i>
+                <span>छात्र का नाम (Student Name) <span class="text-brand-red">*</span></span>
+              </label>
+              <input id="input-student-name" required type="text" placeholder="पूरा नाम दर्ज करें (जैसे: Rahul Kumar)" class="w-full bg-white dark:bg-slate-900 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl p-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 transition-all">
+            </div>
+
+            <!-- Aadhaar Number -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+                <i data-lucide="credit-card" class="w-3.5 h-3.5 text-brand-blue"></i>
+                <span>आधार संख्या (Aadhaar Number) <span class="text-brand-red">*</span></span>
+              </label>
+              <input id="input-aadhaar-num" required type="text" maxlength="12" pattern="\d{12}" placeholder="12 अंकों का आधार संख्या दर्ज करें" class="w-full bg-white dark:bg-slate-900 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl p-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 transition-all">
+            </div>
+
+            <!-- Class -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+                <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-brand-blue"></i>
+                <span>कक्षा (Class) <span class="text-brand-red">*</span></span>
+              </label>
+              <input id="input-student-class" required type="text" placeholder="जैसे: B.Sc Semester 1, IA, I.Sc, etc" class="w-full bg-white dark:bg-slate-900 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl p-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 transition-all">
+            </div>
+
+            <!-- Father's Name -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+                <i data-lucide="users" class="w-3.5 h-3.5 text-brand-blue"></i>
+                <span>पिता का नाम (Father's Name) <span class="text-brand-red">*</span></span>
+              </label>
+              <input id="input-father-name" required type="text" placeholder="पिता का नाम दर्ज करें" class="w-full bg-white dark:bg-slate-900 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl p-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 transition-all">
+            </div>
+
+            <!-- Mother's Name -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+                <i data-lucide="heart" class="w-3.5 h-3.5 text-brand-blue"></i>
+                <span>माता का नाम (Mother's Name) <span class="text-brand-red">*</span></span>
+              </label>
+              <input id="input-mother-name" required type="text" placeholder="माता का नाम दर्ज करें" class="w-full bg-white dark:bg-slate-900 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl p-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 transition-all">
+            </div>
+
+            <!-- 10th School Name -->
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center space-x-1.5">
+                <i data-lucide="building-2" class="w-3.5 h-3.5 text-brand-blue"></i>
+                <span>10वीं विद्यालय का नाम (Class X School) <span class="text-brand-red">*</span></span>
+              </label>
+              <input id="input-school-10th" required type="text" placeholder="जहाँ से 10वीं पास किया हो" class="w-full bg-white dark:bg-slate-900 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl p-4 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-blue/30 transition-all">
+            </div>
+
+          </div>
+
+          <!-- Attachment Notice Alert inside form -->
+          <div class="p-4 rounded-2xl bg-brand-orange/5 dark:bg-brand-orange/10 border border-brand-orange/20 flex items-start space-x-3 mt-4">
+            <span class="text-base">📢</span>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">
+              <strong>ध्यान दें:</strong> इस फॉर्म को सबमिट करने पर आपका जीमेल या ईमेल ऐप खुलेगा। आपको बस अपने ईमेल में <strong>आधार कार्ड की साफ़ फोटो अटैच (Attach)</strong> करनी होगी और सेंड दबाना होगा।
+            </p>
+          </div>
+
+          <!-- Send Action Button -->
+          <button type="submit" class="w-full bg-brand-blue hover:bg-brand-blue/95 text-white font-extrabold text-sm sm:text-base py-4 rounded-2xl transition-all shadow-md flex items-center justify-center space-x-2">
+            <i data-lucide="mail-plus" class="w-5 h-5"></i>
+            <span>डेटा सहेजें और ईमेल तैयार करें</span>
+          </button>
+        </form>
+
+      </div>
+
+      <!-- Live Virtual Status Indicator -->
+      <div class="pt-6 border-t border-black/[0.06] dark:border-white/[0.06] mt-6 flex items-center justify-between">
+        <div class="flex items-center space-x-3 text-slate-400 dark:text-slate-500 font-mono text-xs">
+          <i data-lucide="shield-check" class="w-4 h-4 text-brand-green"></i>
+          <span>Secure AES Encryption Protocol Active</span>
+        </div>
+        <span class="text-xs font-mono text-slate-400">Node: vitcoore.xyz</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-black/[0.06] dark:border-white/[0.06] bg-white dark:bg-slate-950 py-6 px-10 text-center transition-colors">
+    <p class="text-xs text-slate-400 dark:text-slate-500 font-mono">
+      © 2026 UDISE+ Desk · B.N. Jha College, Deoghar. All Systems Operational.
+    </p>
+  </footer>
+
+  <script>
+    // System Init & Configuration
+    window.addEventListener('DOMContentLoaded', () => {
+      // Manage Theme Loading
+      const savedTheme = localStorage.getItem('bnjha_theme') || 'dark';
+      applyTheme(savedTheme);
+
+      lucide.createIcons();
+
+      // Welcome Modal Alert after page load
+      setTimeout(() => {
+        triggerWelcomeAlert();
+      }, 800);
+    });
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon-dark').classList.remove('hidden');
+        document.getElementById('theme-icon-light').classList.add('hidden');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('theme-icon-dark').classList.add('hidden');
+        document.getElementById('theme-icon-light').classList.remove('hidden');
+      }
+      localStorage.setItem('bnjha_theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+      applyTheme(currentTheme);
+      iziToast.show({
+        title: 'Theme Modified',
+        message: `Flipped interface environment to ${currentTheme} state.`,
+        position: 'bottomRight',
+        theme: currentTheme,
+        backgroundColor: currentTheme === 'dark' ? '#202024' : '#ffffff',
+        titleColor: currentTheme === 'dark' ? '#ffffff' : '#121214',
+        messageColor: currentTheme === 'dark' ? '#d1d1d6' : '#4a4a52',
+        icon: currentTheme === 'dark' ? 'lucide-moon' : 'lucide-sun',
+        timeout: 2000
+      });
+    }
+
+    // SwAl2 Portal Welcome Notice System
+    function triggerWelcomeAlert() {
+      Swal.fire({
+        title: '<strong>महत्वपूर्ण सूचना पत्रक</strong>',
+        icon: 'info',
+        html: `
+          <div class="text-left font-sans space-y-3 leading-relaxed text-slate-700 dark:text-slate-300">
+            <p><strong>B.N. Jha College, Deoghar</strong> के यू-डाइस प्लस (UDISE+) मैनेजमेंट द्वारा सूचित किया जाता है कि:</p>
+            <ul class="list-disc pl-5 space-y-1 text-sm">
+              <li>जो बच्चे <strong>PEN नंबर</strong> के लिए यहाँ आए हैं, उन्हें जल्द ही जारी किया जाएगा।</li>
+              <li>इसके लिए अपना विवरण दाहिने ओर दिए गए फॉर्म में भरें और ईमेल करें।</li>
+              <li>विवरण जांचने के <strong>1 सप्ताह बाद</strong> पेन नंबर भेज दिया जाएगा।</li>
+              <li>आप अभी भी <strong>बिना पेन नंबर के एडमिशन</strong> ले सकते हैं।</li>
+            </ul>
+            <p class="text-xs text-amber-500 font-bold border border-amber-500/20 bg-amber-500/5 p-2 rounded mt-2">
+              ⚠️ ध्यान दें: भविष्य में पेन नंबर बनवाना पूर्णतः अनिवार्य है!
+            </p>
+          </div>
+        `,
+        showCloseButton: true,
+        confirmButtonText: 'समझ गया (Acknowledge)',
+        confirmButtonColor: '#3B82F6',
+        background: document.documentElement.classList.contains('dark') ? '#16161a' : '#ffffff',
+        color: document.documentElement.classList.contains('dark') ? '#f4f4f7' : '#121214',
+      });
+    }
+
+    // Form Submission & Mailto Generation
+    function handleFormSubmission(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('input-student-name').value.trim();
+      const aadhaar = document.getElementById('input-aadhaar-num').value.trim();
+      const sClass = document.getElementById('input-student-class').value.trim();
+      const father = document.getElementById('input-father-name').value.trim();
+      const mother = document.getElementById('input-mother-name').value.trim();
+      const school10th = document.getElementById('input-school-10th').value.trim();
+
+      // Check Aadhaar validity roughly
+      if (aadhaar.length !== 12 || isNaN(aadhaar)) {
+        iziToast.error({
+          title: 'Aadhaar Invalid',
+          message: 'कृपया 12 अंकों की सही आधार संख्या दर्ज करें!',
+          position: 'topCenter',
+          timeout: 3000
+        });
+        return;
+      }
+
+      // Display SwAl Alert reminding student to attach the Aadhaar image
+      Swal.fire({
+        title: 'अंतिम चरण: आधार कार्ड फोटो संलग्न करें!',
+        icon: 'warning',
+        html: `
+          <div class="text-left font-sans space-y-3 leading-relaxed text-slate-700 dark:text-slate-300">
+            <p>ईमेल प्रेषण से पहले कृपया निम्नलिखित सुनिश्चित करें:</p>
+            <ol class="list-decimal pl-5 space-y-1.5 text-sm">
+              <li>ईमेल खुलने पर अपने <strong>आधार कार्ड की साफ़ फोटो/स्कैन कॉपी</strong> अवश्य अटैच (Attach) करें।</li>
+              <li>सभी भरा गया डेटा ईमेल के मुख्य भाग (body) में स्वतः ही टाइप हो चुका है।</li>
+            </ol>
+            <p class="text-xs text-blue-500 font-semibold bg-blue-500/5 border border-blue-500/10 p-2.5 rounded mt-2">
+              हमारा ईमेल पता <strong>vitcoore@gmail.com</strong> पहले से ही प्रेषक पते में सेट है।
+            </p>
+          </div>
+        `,
+        showCancelButton: true,
+        confirmButtonColor: '#10B981',
+        cancelButtonColor: '#EF4444',
+        confirmButtonText: 'हाँ, ईमेल तैयार करें',
+        cancelButtonText: 'वापस जाएं',
+        background: document.documentElement.classList.contains('dark') ? '#16161a' : '#ffffff',
+        color: document.documentElement.classList.contains('dark') ? '#f4f4f7' : '#121214',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Subject line formulation
+          const subject = `PEN Registration Form Submission - ${name} (${sClass})`;
+          
+          // Formatted structured body text
+          const body = `सादर प्रणाम,\n\nमैं बी.एन. झा कॉलेज, देवघर में नामांकन के लिए अपना विवरण प्रेषित कर रहा/रही हूँ ताकि मेरा PEN (Permanent Education Number) नंबर जारी किया जा सके।\n\n--- छात्र विवरण (Student Details) ---\n• छात्र का नाम (Student Name): ${name}\n• आधार संख्या (Aadhaar Number): ${aadhaar}\n• कक्षा (Class): ${sClass}\n• पिता का नाम (Father's Name): ${father}\n• माता का नाम (Mother's Name): ${mother}\n• 10वीं विद्यालय का नाम (Passed Class X School): ${school10th}\n\n[कृपया अपने आधार कार्ड की फोटो/स्कैन यहाँ ईमेल में अटैच करें]\n\nधन्यवाद,\nभवदीय,\n${name}`;
+
+          // Create Mailto string
+          const mailtoLink = `mailto:vitcoore@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+          // Redirect to Mail client
+          window.location.href = mailtoLink;
+
+          iziToast.success({
+            title: 'Redirecting',
+            message: 'आपका ईमेल ड्राफ्ट सफलतापूर्वक तैयार कर दिया गया है!',
+            position: 'bottomRight',
+            timeout: 4000
+          });
+        }
+      });
+    }
+
+    // copy to clipboard helper
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        iziToast.success({
+          title: 'Success',
+          message: 'ईमेल एड्रेस कॉपी हो गया है! (Email Copied)',
+          position: 'bottomRight',
+          backgroundColor: '#10B981',
+          titleColor: '#ffffff',
+          messageColor: '#ffffff',
+          iconColor: '#ffffff',
+          timeout: 2500
+        });
+      }).catch(() => {
+        iziToast.error({
+          title: 'Error',
+          message: 'कॉपी करने में असमर्थ।',
+          position: 'bottomRight',
+          timeout: 2000
+        });
+      });
+    }
+  </script>
 </body>
 </html>
